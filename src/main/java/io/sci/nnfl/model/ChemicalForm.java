@@ -1,16 +1,19 @@
 package io.sci.nnfl.model;
 
-import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Embeddable
+import java.math.BigDecimal;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ChemicalForm {
-  @Column(name = "compound_name")
-  private String compoundName;
-  @Column(name = "stoichiometry_deviation")
-  private String stoichiometryDeviation;
-
-  public String getCompoundName() { return compoundName; }
-  public void setCompoundName(String compoundName) { this.compoundName = compoundName; }
-  public String getStoichiometryDeviation() { return stoichiometryDeviation; }
-  public void setStoichiometryDeviation(String stoichiometryDeviation) { this.stoichiometryDeviation = stoichiometryDeviation; }
+    private Stage stage;
+    private String compoundName;          // U3O8, UF6, (NH4)2U2O7, etc.
+    private BigDecimal stoichiometryDeviation;
+    private String notes;
 }

@@ -5,17 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class IsotopeRatio {
+public class SerialNumber {
     private Stage stage;
-    private String name;
-    private BigDecimal value;
-    private BigDecimal uncertainty;
-    private String unit;            // per mil (‰), ratio, epsilon, etc.
+    private String serialNumber;
     private String notes;
 }

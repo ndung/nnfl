@@ -7,16 +7,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SourceActivityInfo {
+public class Container {
     private Stage stage;
-    private BigDecimal activityBq;
-    private LocalDate referenceDate;
-    private BigDecimal neutronIntensityPerSec; // for neutron sources
+    private String type;     // e.g., UF6 cylinder type
+    private BigDecimal volume;        // SI if used
+    private Dimension dimension;
+    private String serialNumber;
     private String notes;
 }

@@ -5,17 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class IsotopeRatio {
+public class Mineralogy {
     private Stage stage;
-    private String name;
-    private BigDecimal value;
-    private BigDecimal uncertainty;
-    private String unit;            // per mil (‰), ratio, epsilon, etc.
+    private String mineralsPresent;      // free text or CSV
+    private String mineralChemistry;     // composition notes
+    private String volumePercentages;    // "Quartz 40%, Feldspar 20%..."
     private String notes;
 }

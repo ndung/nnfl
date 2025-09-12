@@ -6,18 +6,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class IsotopeActivity {
+public class UraniumDecaySeriesRadionuclide {
     private Stage stage;
-    private String isotopeName;             // major or minor
+    private String isotopeName;          // 230Th, 231Pa, 226Ra, ...
     private BigDecimal activityBq;
     private BigDecimal activityUncertaintyBq;
-    private LocalDate referenceDate;
-    private Boolean major;                  // true = major, false = minor
     private String notes;
 }

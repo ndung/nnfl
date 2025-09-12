@@ -5,17 +5,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class IsotopeRatio {
+public class Geology {
     private Stage stage;
-    private String name;
-    private BigDecimal value;
-    private BigDecimal uncertainty;
-    private String unit;            // per mil (‰), ratio, epsilon, etc.
+    private String mineLocation;
+    private String geologicalFormation;
+    private String depositTypes;         // e.g., vein, roll-front
+    private String miningTechnique;
+    private String colour;
     private String notes;
 }
