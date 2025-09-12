@@ -14,34 +14,19 @@ app:
 jwt:
   secret: ${JWT_SECRET:}
   expiration: ${JWT_EXPIRATION:-1}
-#logging:
-#  level:
-#    root: ${LOGGING_LEVEL_ROOT:DEBUG}
+logging:
+  level:
+    root: ${LOGGING_LEVEL_ROOT:DEBUG}
 server:
   error:
     whitelabel:
       enabled: ${SERVER_ERROR_WHITELABEL_ENABLED:true}
   port: ${PORT:80}
 spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    hikari:
-      maximum-pool-size: ${SPRING_DATASOURCE_HIKARI-MAXIMUM-POOL-SIZE:10}
-      minimum-idle: ${SPRING_DATASOURCE_HIKARI-MAXIMUM-IDLE:2}
-      connection-timeout: ${SPRING_DATASOURCE_HIKARI-CONNECTION-TIMEOUT:30000}
-      idle-timeout: ${SPRING_DATASOURCE_HIKARI-IDLE-TIMEOUT:600000}
-      max-lifetime: ${SPRING_DATASOURCE_HIKARI-MAX-LIFETIME:1800000}
-    url: ${SPRING_DATASOURCE_URL:}
-    username: ${SPRING_DATASOURCE_USERNAME:}
-    password: ${SPRING_DATASOURCE_PASSWORD:}
-  jpa:
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
-        format_sql: ${SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL:false}
-    show-sql: ${SPRING_JPA_HIBERNATE_SHOW-SQL:false}
+  data:
+    mongodb:
+      uri: ${SPRING_DATA_MONGODB_URI:}
+      database: ${SPRING_DATA_MONGODB_DATABASE:}
   servlet:
     multipart:
       max-file-size: ${SPRING_SERVLET_MULTIPART_MAX-FILE-SIZE:10MB}

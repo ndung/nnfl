@@ -20,14 +20,13 @@ public class MaterialRecord {
     @Id
     private String id;
 
-    private GeneralInfo generalInfo;
-
+    private List<GeneralInfo> generalInfo;
     //use in stage 1
-    private Geology geology;
+    private List<Geology> geology;
     //use in stage 1
     private List<Mineralogy> mineralogy;
     //use in stage 1, 2
-    private Element uranium;
+    private List<Element> uranium;
     //use in stage 1, 2, 3, 4, 5, 6, 7
     private List<IsotopeRatio> uraniumIsotopes;
     //use in stage 1, 2
@@ -49,7 +48,7 @@ public class MaterialRecord {
     //use in stage 3, 8
     private List<Container> containers;
     //use in stage 4, 5, 6, 8
-    private SerialNumber serialNumber;
+    private List<SerialNumber> serialNumbers;
     //use in stage 4, 5, 6, 7
     private List<IsotopeRatio> plutoniumIsotopes;
     //use in stage 6
