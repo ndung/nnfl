@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -59,4 +61,6 @@ public class MaterialRecord {
     //use in stage 9, 10
     private List<SourceActivityInfo> sourceActivityInfo;
     private String notes;
+    private User creator;
+    private LocalDate creationDate;
 }
