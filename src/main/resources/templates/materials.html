@@ -14,6 +14,7 @@
         </div>
         <div class="kt-card-content">
             <link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css}" />
+            <link rel="stylesheet" th:href="@{https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css}" />
             <div class="table-responsive">
                 <table id="materialsTable" class="display table w-full min-w-[600px]">
                     <thead>
@@ -31,7 +32,7 @@
                         <td th:text="${m.creator != null ? m.creator.username : ''}">alice</td>
                         <td th:text="${m.creationDateTime}">2023-01-01</td>
                         <td>
-                            
+                            <button type="button" class="kt-btn kt-btn-light editMaterialBtn" th:data-id="${m.id}">Edit</button>
                         </td>
                         <td>
                             <form th:action="@{|/materials/${m.id}/delete|}" method="post"
@@ -46,14 +47,43 @@
                 </table>
             </div>
         </div>
+        <div id="stageDialog" title="Select Stage" style="display:none;">
+            <div class="grid gap-5">
+                <select id="stageSelect" class="kt-input">
+                    <option th:each="t : ${typeOptions}" th:value="${t.key}" th:text="${t.value}"></option>
+                </select>
+                <div class="flex justify-end gap-2">
+                    <button type="button" id="stageSelectBtn" class="kt-btn kt-btn-primary">Select</button>
+                    <button type="button" class="kt-btn" onclick="$('#stageDialog').dialog('close');">Cancel</button>
+                </div>
+            </div>
+        </div>
+
         <script th:src="@{https://code.jquery.com/jquery-3.7.1.min.js}"></script>
         <script th:src="@{https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js}"></script>
+        <script th:src="@{https://code.jquery.com/ui/1.13.2/jquery-ui.js}"></script>
         <script>
             $(function(){
                 $('#materialsTable').DataTable({
                     scrollX: true,
                     autoWidth: false,
                     columnDefs: [ { targets: '_all', className: 'whitespace-nowrap' } ]
+                });
+
+                var stageDialog = $('#stageDialog').dialog({ autoOpen: false, modal: true, width: 400 });
+                var materialId;
+
+                $('.editMaterialBtn').on('click', function(){
+                    materialId = $(this).data('id');
+                    stageDialog.dialog('open');
+                });
+
+                $('#stageSelectBtn').on('click', function(){
+                    var stage = $('#stageSelect').val();
+                    if(stage){
+                        var url = /*[[@{/material-form.html}]]*/ '/material-form.html';
+                        window.location.href = url + '?id=' + materialId + '&stage=' + stage;
+                    }
                 });
             });
         </script>
