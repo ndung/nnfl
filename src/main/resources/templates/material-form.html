@@ -1,0 +1,267 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body},'index')}">
+<body>
+<div class="kt-container-fluid px=0">
+    <div class="grid grid-cols-1 gap-5">
+        <div class="kt-card">
+            <div class="kt-card-header">
+                <h3 class="kt-card-title">Create Material Record</h3>
+            </div>
+            <form th:action="@{/materials}" th:object="${material}" method="post" class="kt-card-content grid gap-5">
+                <input type="hidden" th:if="${_csrf != null}"
+                       th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <div class="flex justify-end">
+                    <button class="kt-btn kt-btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Chemical -->
+        <div class="kt-card">
+            <div class="kt-card-header flex justify-between">
+                <h3 class="kt-card-title">Chemical</h3>
+                <button type="button" id="addChemical" class="kt-btn kt-btn-light">Add</button>
+            </div>
+            <div class="kt-card-content">
+                <div class="table-responsive">
+                    <table id="chemicalTable" class="table w-full">
+                        <thead>
+                        <tr><th>Compound Name</th><th>Stoichiometry Deviation</th><th>Comment(s)</th></tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Elements -->
+        <div class="kt-card">
+            <div class="kt-card-header flex justify-between">
+                <h3 class="kt-card-title">Element(s)</h3>
+                <button type="button" id="addElement" class="kt-btn kt-btn-light">Add</button>
+            </div>
+            <div class="kt-card-content">
+                <div class="table-responsive">
+                    <table id="elementTable" class="table w-full">
+                        <thead>
+                        <tr><th>Name</th><th>Concentration</th><th>Uncertainty</th><th>Comment(s)</th></tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Isotopes -->
+        <div class="kt-card">
+            <div class="kt-card-header flex justify-between">
+                <h3 class="kt-card-title">Isotope(s) ratio</h3>
+                <button type="button" id="addIsotope" class="kt-btn kt-btn-light">Add</button>
+            </div>
+            <div class="kt-card-content">
+                <div class="table-responsive">
+                    <table id="isotopeTable" class="table w-full">
+                        <thead>
+                        <tr><th>Isotope Name</th><th>Ratio</th><th>Uncertainty</th><th>Comment(s)</th></tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Morphology -->
+        <div class="kt-card">
+            <div class="kt-card-header flex justify-between">
+                <h3 class="kt-card-title">Morphology/Crystallography</h3>
+                <button type="button" id="addMorphology" class="kt-btn kt-btn-light">Add</button>
+            </div>
+            <div class="kt-card-content">
+                <div class="table-responsive">
+                    <table id="morphologyTable" class="table w-full">
+                        <thead>
+                        <tr><th>Crystal Structure</th><th>Lattice A</th><th>Lattice B</th><th>Lattice C</th><th>Comment(s)</th></tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uranium decays -->
+        <div class="kt-card">
+            <div class="kt-card-header flex justify-between">
+                <h3 class="kt-card-title">Uranium decays</h3>
+                <button type="button" id="addDecay" class="kt-btn kt-btn-light">Add</button>
+            </div>
+            <div class="kt-card-content">
+                <div class="table-responsive">
+                    <table id="decayTable" class="table w-full">
+                        <thead>
+                        <tr><th>Nuclide</th><th>Activity</th><th>Comment(s)</th></tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Dialogs -->
+<div id="chemicalDialog" title="Edit Chemical" style="display:none;">
+    <div class="grid gap-5">
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Compound Name :</label>
+            <input class="kt-input" id="chemicalName" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Stoichiometry Deviation :</label>
+            <input class="kt-input" id="chemicalDeviation" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Comment(s) :</label>
+            <input class="kt-input" id="chemicalComment" type="text"/>
+        </div>
+        <div class="flex justify-end gap-2">
+            <button type="button" id="saveChemical" class="kt-btn kt-btn-primary">Save</button>
+            <button type="button" class="kt-btn" onclick="$('#chemicalDialog').dialog('close');">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<div id="elementDialog" title="Edit Data" style="display:none;">
+    <div class="grid gap-5">
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Element Name :</label>
+            <input class="kt-input" id="elementName" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Element Concentration :</label>
+            <input class="kt-input" id="elementConcentration" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Element Uncertainty :</label>
+            <input class="kt-input" id="elementUncertainty" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Comment(s) :</label>
+            <input class="kt-input" id="elementComment" type="text"/>
+        </div>
+        <div class="flex justify-end gap-2">
+            <button type="button" id="saveElement" class="kt-btn kt-btn-primary">Save</button>
+            <button type="button" class="kt-btn" onclick="$('#elementDialog').dialog('close');">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<div id="isotopeDialog" title="Edit Isotope" style="display:none;">
+    <div class="grid gap-5">
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Isotope Name :</label>
+            <input class="kt-input" id="isotopeName" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Isotope Ratio :</label>
+            <input class="kt-input" id="isotopeRatio" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Isotope Uncertainty :</label>
+            <input class="kt-input" id="isotopeUncertainty" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Comment(s) :</label>
+            <input class="kt-input" id="isotopeComment" type="text"/>
+        </div>
+        <div class="flex justify-end gap-2">
+            <button type="button" id="saveIsotope" class="kt-btn kt-btn-primary">Save</button>
+            <button type="button" class="kt-btn" onclick="$('#isotopeDialog').dialog('close');">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<div id="morphologyDialog" title="Edit Morphology" style="display:none;">
+    <div class="grid gap-5">
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Crystal Structure :</label>
+            <input class="kt-input" id="morphCrystal" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Lattice A :</label>
+            <input class="kt-input" id="morphA" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Lattice B :</label>
+            <input class="kt-input" id="morphB" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Lattice C :</label>
+            <input class="kt-input" id="morphC" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Comment(s) :</label>
+            <input class="kt-input" id="morphComment" type="text"/>
+        </div>
+        <div class="flex justify-end gap-2">
+            <button type="button" id="saveMorphology" class="kt-btn kt-btn-primary">Save</button>
+            <button type="button" class="kt-btn" onclick="$('#morphologyDialog').dialog('close');">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<div id="decayDialog" title="Edit Uranium Decay" style="display:none;">
+    <div class="grid gap-5">
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Nuclide :</label>
+            <input class="kt-input" id="decayNuclide" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Activity :</label>
+            <input class="kt-input" id="decayActivity" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Comment(s) :</label>
+            <input class="kt-input" id="decayComment" type="text"/>
+        </div>
+        <div class="flex justify-end gap-2">
+            <button type="button" id="saveDecay" class="kt-btn kt-btn-primary">Save</button>
+            <button type="button" class="kt-btn" onclick="$('#decayDialog').dialog('close');">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" th:href="@{https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css}" />
+<script th:src="@{https://code.jquery.com/jquery-3.7.1.min.js}"></script>
+<script th:src="@{https://code.jquery.com/ui/1.13.2/jquery-ui.js}"></script>
+<script>
+    $(function(){
+        function initDialog(dialogId, addBtnId, saveBtnId, tableId, getData){
+            $(dialogId).dialog({ autoOpen:false, modal:true, width:400 });
+            $(addBtnId).click(function(){ $(dialogId).dialog('open'); });
+            $(saveBtnId).click(function(){
+                var data = getData();
+                var row = '<tr>' + data.map(function(d){ return '<td>'+d+'</td>'; }).join('') + '</tr>';
+                $(tableId+' tbody').append(row);
+                $(dialogId).dialog('close');
+                $(dialogId + ' input').val('');
+            });
+        }
+        initDialog('#chemicalDialog','#addChemical','#saveChemical','#chemicalTable', function(){
+            return [$('#chemicalName').val(), $('#chemicalDeviation').val(), $('#chemicalComment').val()];
+        });
+        initDialog('#elementDialog','#addElement','#saveElement','#elementTable', function(){
+            return [$('#elementName').val(), $('#elementConcentration').val(), $('#elementUncertainty').val(), $('#elementComment').val()];
+        });
+        initDialog('#isotopeDialog','#addIsotope','#saveIsotope','#isotopeTable', function(){
+            return [$('#isotopeName').val(), $('#isotopeRatio').val(), $('#isotopeUncertainty').val(), $('#isotopeComment').val()];
+        });
+        initDialog('#morphologyDialog','#addMorphology','#saveMorphology','#morphologyTable', function(){
+            return [$('#morphCrystal').val(), $('#morphA').val(), $('#morphB').val(), $('#morphC').val(), $('#morphComment').val()];
+        });
+        initDialog('#decayDialog','#addDecay','#saveDecay','#decayTable', function(){
+            return [$('#decayNuclide').val(), $('#decayActivity').val(), $('#decayComment').val()];
+        });
+    });
+</script>
+</body>
+</html>

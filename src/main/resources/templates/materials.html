@@ -1,0 +1,45 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body},'index')}">
+<body>
+<div class="kt-container-fluid px=0">
+    <div class="kt-card">
+        <div class="kt-card-header flex justify-between">
+            <h3 class="kt-card-title">Material Records</h3>
+            <a th:href="@{/materials/new}" class="kt-btn kt-btn-primary">Create</a>
+        </div>
+        <div class="kt-card-content">
+            <link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css}" />
+            <div class="table-responsive">
+                <table id="materialsTable" class="display table w-full min-w-[600px]">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Creator</th>
+                        <th>Creation Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="m : ${materials}">
+                        <td th:text="${m.id}">1</td>
+                        <td th:text="${m.creator != null ? m.creator.username : ''}">alice</td>
+                        <td th:text="${m.creationDate}">2023-01-01</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <script th:src="@{https://code.jquery.com/jquery-3.7.1.min.js}"></script>
+        <script th:src="@{https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js}"></script>
+        <script>
+            $(function(){
+                $('#materialsTable').DataTable({
+                    scrollX: true,
+                    autoWidth: false,
+                    columnDefs: [ { targets: '_all', className: 'whitespace-nowrap' } ]
+                });
+            });
+        </script>
+    </div>
+</div>
+</body>
+</html>
