@@ -79,4 +79,11 @@ public class MaterialRecordController {
         ra.addFlashAttribute("materialSaved", true);
         return "redirect:/materials";
     }
+
+    @PostMapping("/{property}")
+    @ResponseBody
+    public void saveProperty(@PathVariable("property") String property,
+                             @RequestBody java.util.List<String> values) {
+        service.saveProperty(property, values);
+    }
 }
