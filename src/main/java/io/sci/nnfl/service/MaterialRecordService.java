@@ -2,6 +2,8 @@ package io.sci.nnfl.service;
 
 import io.sci.nnfl.model.MaterialRecord;
 import io.sci.nnfl.model.repository.MaterialRecordRepository;
+import io.sci.nnfl.model.repository.MaterialPropertyRepository;
+import io.sci.nnfl.model.MaterialProperty;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -15,9 +17,12 @@ import java.util.List;
 public class MaterialRecordService extends BaseService {
 
     private final MaterialRecordRepository repository;
+    private final MaterialPropertyRepository propertyRepository;
 
-    public MaterialRecordService(MaterialRecordRepository repository) {
+    public MaterialRecordService(MaterialRecordRepository repository,
+                                 MaterialPropertyRepository propertyRepository) {
         this.repository = repository;
+        this.propertyRepository = propertyRepository;
     }
 
     @Transactional(readOnly = true)
@@ -39,5 +44,14 @@ public class MaterialRecordService extends BaseService {
     @Transactional
     public void delete(String id) {
         repository.deleteById(id);
+    }
+
+    @Transactional
+    public void saveProperty(String type, java.util.List<String> values) {
+        MaterialProperty property = MaterialProperty.builder()
+                .type(type)
+                .values(values)
+                .build();
+        propertyRepository.save(property);
     }
 }
