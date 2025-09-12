@@ -45,7 +45,7 @@ public class MenuController {
     }
 
     @GetMapping("/{id}/edit")
-    public String editForm(@PathVariable("id") Long id, Model model) {
+    public String editForm(@PathVariable("id") String id, Model model) {
         var entity = service.getById(id);
         model.addAttribute("menuId", id);
         model.addAttribute("menu", MenuRequest.fromEntity(entity));
@@ -54,7 +54,7 @@ public class MenuController {
     }
 
     @PostMapping("/{id}")
-    public String update(@PathVariable("id") Long id,
+    public String update(@PathVariable("id") String id,
                          @Valid @ModelAttribute("menu") MenuRequest form,
                          BindingResult binding,
                          RedirectAttributes ra,
@@ -70,7 +70,7 @@ public class MenuController {
     }
 
     @PostMapping("/{id}/delete")
-    public String delete(@PathVariable("id") Long id, RedirectAttributes ra) {
+    public String delete(@PathVariable("id") String id, RedirectAttributes ra) {
         service.delete(id);
         ra.addFlashAttribute("success", "Menu item deleted.");
         return "redirect:/admin/menu";

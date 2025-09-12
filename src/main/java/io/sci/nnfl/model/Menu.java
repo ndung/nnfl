@@ -1,45 +1,49 @@
 package io.sci.nnfl.model;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-@Entity
-@Table(name = "menu")
+/**
+ * Menu entry stored in MongoDB. Parent relationship is kept as a simple
+ * parentId reference to avoid complex DBRef mappings.
+ */
+@Document(collection = "menu")
 public class Menu {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @Column(nullable = false, length = 120)
+    @Id
+    private String id;
+
     private String title;
 
     // Null = non-clickable header/accordion
-    @Column(length = 255)
     private String href;
 
-    @Column(length = 80)
     private String icon; // optional (e.g., "ki-filled ki-home")
 
     private Integer orderIndex = 0;
 
     private boolean enabled = true;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id")
-    private Menu parent;
+    /** Identifier of the parent menu item; null for top-level items. */
+    private String parentId;
 
-    @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "menu_roles", joinColumns = @JoinColumn(name = "menu_id"))
-    @Column(name = "role")
     private Set<String> requiredRoles = new LinkedHashSet<>();
 
+    /**
+     * Transient list used when building menu trees. Not persisted in MongoDB.
+     */
+    @Transient
+    private List<Menu> children = new ArrayList<>();
+
     // getters/setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
     public String getHref() { return href; }
@@ -50,20 +54,11 @@ public class Menu {
     public void setOrderIndex(Integer orderIndex) { this.orderIndex = orderIndex; }
     public boolean isEnabled() { return enabled; }
     public void setEnabled(boolean enabled) { this.enabled = enabled; }
-    public Menu getParent() { return parent; }
-    public void setParent(Menu parent) { this.parent = parent; }
+    public String getParentId() { return parentId; }
+    public void setParentId(String parentId) { this.parentId = parentId; }
     public Set<String> getRequiredRoles() { return requiredRoles; }
     public void setRequiredRoles(Set<String> requiredRoles) { this.requiredRoles = requiredRoles; }
-
-    /** Child collection (inverse side), ordered by orderIndex then id */
-    @OneToMany(mappedBy = "parent",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY)
-    @OrderBy("orderIndex ASC, id ASC")
-    // @JsonManagedReference // <- with Jackson, pairs with @JsonBackReference
-    private List<Menu> children = new ArrayList<>();
     public List<Menu> getChildren() { return children; }
     public void setChildren(List<Menu> children) { this.children = children; }
-
 }
+

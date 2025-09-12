@@ -21,7 +21,7 @@ public class MenuRequest {
 
     private boolean enabled = true;
 
-    private Long parentId; // nullable
+    private String parentId; // nullable
 
     // CSV roles in the form; convert to set
     private String rolesCsv;
@@ -37,8 +37,8 @@ public class MenuRequest {
     public void setOrderIndex(Integer orderIndex) { this.orderIndex = orderIndex; }
     public boolean isEnabled() { return enabled; }
     public void setEnabled(boolean enabled) { this.enabled = enabled; }
-    public Long getParentId() { return parentId; }
-    public void setParentId(Long parentId) { this.parentId = parentId; }
+    public String getParentId() { return parentId; }
+    public void setParentId(String parentId) { this.parentId = parentId; }
     public String getRolesCsv() { return rolesCsv; }
     public void setRolesCsv(String rolesCsv) { this.rolesCsv = rolesCsv; }
 
@@ -58,7 +58,7 @@ public class MenuRequest {
         r.setIcon(e.getIcon());
         r.setOrderIndex(e.getOrderIndex());
         r.setEnabled(e.isEnabled());
-        r.setParentId(e.getParent() != null ? e.getParent().getId() : null);
+        r.setParentId(e.getParentId());
         r.setRolesCsv(String.join(", ", e.getRequiredRoles()));
         return r;
     }

@@ -26,7 +26,7 @@ public class MenuService {
     }
 
     @Transactional(readOnly = true)
-    public List<Menu> allParentsCandidates(Long excludeId) {
+    public List<Menu> allParentsCandidates(String excludeId) {
         var all = repo.findAllByOrderByParentIdAscOrderIndexAscTitleAsc();
         if (excludeId == null) return all;
         // prevent self as parent (naive – for deep cycle prevention, add more checks)
@@ -34,7 +34,7 @@ public class MenuService {
     }
 
     @Transactional(readOnly = true)
-    public Menu getById(Long id) {
+    public Menu getById(String id) {
         return repo.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
@@ -47,14 +47,14 @@ public class MenuService {
     }
 
     @Transactional
-    public Menu update(Long id, MenuRequest req) {
+    public Menu update(String id, MenuRequest req) {
         var e = getById(id);
         apply(e, req);
         return repo.save(e);
     }
 
     @Transactional
-    public void delete(Long id) {
+    public void delete(String id) {
         // optionally ensure no children exist before delete
         repo.deleteById(id);
     }
@@ -68,13 +68,13 @@ public class MenuService {
         e.setRequiredRoles(req.rolesAsSet());
 
         if (req.getParentId() != null) {
-            var p = repo.findById(req.getParentId())
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parent not found"));
-            if (e.getId() != null && p.getId().equals(e.getId()))
+            if (e.getId() != null && req.getParentId().equals(e.getId()))
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot set self as parent");
-            e.setParent(p);
+            if (!repo.existsById(req.getParentId()))
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parent not found");
+            e.setParentId(req.getParentId());
         } else {
-            e.setParent(null);
+            e.setParentId(null);
         }
     }
 
@@ -115,7 +115,7 @@ public class MenuService {
         copy.setRequiredRoles(group.getRequiredRoles() != null
                 ? new LinkedHashSet<>(group.getRequiredRoles())
                 : new LinkedHashSet<>());
-        copy.setParent(null);                     // avoid cycles in the returned tree
+        copy.setParentId(null);                   // avoid cycles in the returned tree
         copy.setChildren(filteredChildren);       // uses @Transient field
         return copy;
     }
@@ -128,7 +128,7 @@ public class MenuService {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toCollection(LinkedHashSet::new));
 
-        return repo.findAllByParentIsNullOrderByOrderIndexAscTitleAsc().stream()
+        return repo.findAllByParentIdIsNullOrderByOrderIndexAscTitleAsc().stream()
                 .map(top -> filterGroup(top, userRoles))
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
@@ -137,7 +137,7 @@ public class MenuService {
     // ----------------- helpers -----------------
 
     private List<Menu> childrenOf(Menu parent) {
-        return repo.findAllByParentOrderByOrderIndexAscTitleAsc(parent);
+        return repo.findAllByParentIdOrderByOrderIndexAscTitleAsc(parent.getId());
     }
 
     /** Normalize roles: trim, uppercase, strip ROLE_ prefix; null-safe. */

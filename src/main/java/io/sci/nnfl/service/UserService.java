@@ -29,7 +29,7 @@ public class UserService extends BaseService {
     }
 
     @Transactional(readOnly = true)
-    public User getById(Long id) {
+    public User getById(String id) {
         return userRepo.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
@@ -67,7 +67,7 @@ public class UserService extends BaseService {
     }
 
     @Transactional
-    public User update(Long id, UserRequest req) {
+    public User update(String id, UserRequest req) {
         var u = getById(id);
         u.setUsername(req.getUsername().trim());
         u.setFullName(req.getFullName().trim());

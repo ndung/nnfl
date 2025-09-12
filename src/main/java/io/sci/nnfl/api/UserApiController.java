@@ -24,7 +24,7 @@ public class UserApiController extends BaseApiController {
             }
 
             String userId = getUserId(token);
-            User user = userService.getById(Long.parseLong(userId));
+            User user = userService.getById(userId);
             userService.changePassword(user, request.getCurrentPassword(), request.getNewPassword());
             return getHttpStatus(new Response(user));
 
@@ -42,7 +42,7 @@ public class UserApiController extends BaseApiController {
             }
 
             String userId = getUserId(token);
-            User user = userService.getById(Long.parseLong(userId));
+            User user = userService.getById(userId);
             user = userService.updateProfile(user, request);
             return getHttpStatus(new Response(user));
 
