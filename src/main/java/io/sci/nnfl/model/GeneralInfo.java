@@ -11,15 +11,14 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class GeneralInfo {
+    private Stage stage;
     private LocalDate dataRecordDate;
-    private String custodianName;
-    private String custodianAddress;
-    private String analyticalLabName;
-    private String analyticalLabId;
+    private String custodian;
+    private String analyticalLab;
     private LocalDate analysisDate;
     private String countryOfOrigin;
-    private String supplierName;
-    private String supplierAddress;
+    private String producer;
+    private String supplier;
     private String batchId;
     private LocalDate batchProcessDate;
     private String shipperCarrier;

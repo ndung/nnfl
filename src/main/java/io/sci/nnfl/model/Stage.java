@@ -11,5 +11,5 @@ public enum Stage {
     WASTE_PROCESSING,
     SEALED_SOURCE,
     UNSEALED_SOURCE,
-    OTHER
+    UNKNOWN
 }

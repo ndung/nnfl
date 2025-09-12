@@ -33,12 +33,11 @@ public class MaterialRecordService extends BaseService {
 
     @Transactional
     public MaterialRecord save(MaterialRecord record) {
-        if (record.getCreationDate() == null) {
-            record.setCreationDate(LocalDate.now());
-        }
-        if (record.getCreator() == null) {
-            record.setCreator(getUser());
-        }
         return repository.save(record);
+    }
+
+    @Transactional
+    public void delete(String id) {
+        repository.deleteById(id);
     }
 }

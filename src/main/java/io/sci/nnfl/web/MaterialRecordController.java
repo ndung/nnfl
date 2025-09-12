@@ -1,20 +1,38 @@
 package io.sci.nnfl.web;
 
 import io.sci.nnfl.model.MaterialRecord;
+import io.sci.nnfl.model.Stage;
 import io.sci.nnfl.service.MaterialRecordService;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 @Controller
 @RequestMapping("/materials")
 public class MaterialRecordController {
 
     private final MaterialRecordService service;
+
+    @Getter @Setter
+    private String type;
+
+    private Map<String,String> typeOptions() {
+        Map<String,String> map = new TreeMap<>();
+        for (int i=0;i<Stage.values().length;i++) {
+            map.put(Stage.values()[i].name(),Stage.values()[i].name());
+        }
+        return map;
+    }
 
     public MaterialRecordController(MaterialRecordService service) {
         this.service = service;
@@ -23,6 +41,7 @@ public class MaterialRecordController {
     @GetMapping
     public String list(Model model) {
         model.addAttribute("materials", service.findAll());
+        model.addAttribute("typeOptions", typeOptions());
         return "materials";
     }
 
@@ -30,6 +49,27 @@ public class MaterialRecordController {
     public String createForm(Model model) {
         model.addAttribute("material", new MaterialRecord());
         return "material-form";
+    }
+
+    @PostMapping("/new")
+    public String create(Model model) {
+        MaterialRecord record = new MaterialRecord();
+        record.setCreator(service.getUser());
+        record.setCreationDateTime(LocalDateTime.now());
+        service.save(record);
+        return "redirect:/materials";
+    }
+
+    @PostMapping("/{id}/delete")
+    public String delete(@PathVariable("id") String id, RedirectAttributes ra) {
+        service.delete(id);
+        return "redirect:/materials";
+    }
+
+    @PostMapping("/{id}/edit")
+    public String edit(@PathVariable("id") String id, RedirectAttributes ra) {
+        service.delete(id);
+        return "redirect:/materials";
     }
 
     @PostMapping

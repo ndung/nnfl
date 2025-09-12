@@ -8,6 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -19,7 +20,7 @@ public class MaterialRecord {
 
     @Id
     private String id;
-
+    private String state;
     private List<GeneralInfo> generalInfo;
     //use in stage 1
     private List<Geology> geology;
@@ -61,5 +62,5 @@ public class MaterialRecord {
     private List<SourceActivityInfo> sourceActivityInfo;
     private String notes;
     private User creator;
-    private LocalDate creationDate;
+    private LocalDateTime creationDateTime;
 }

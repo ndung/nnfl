@@ -20,18 +20,6 @@ public class MenuService {
 
     public MenuService(MenuRepository repo) { this.repo = repo; }
 
-    @Transactional(readOnly = true)
-    public List<Menu> findAllFlatOrdered() {
-        return repo.findAllByOrderByParentIdAscOrderIndexAscTitleAsc();
-    }
-
-    @Transactional(readOnly = true)
-    public List<Menu> allParentsCandidates(String excludeId) {
-        var all = repo.findAllByOrderByParentIdAscOrderIndexAscTitleAsc();
-        if (excludeId == null) return all;
-        // prevent self as parent (naive – for deep cycle prevention, add more checks)
-        return all.stream().filter(m -> !m.getId().equals(excludeId)).toList();
-    }
 
     @Transactional(readOnly = true)
     public Menu getById(String id) {
@@ -86,40 +74,6 @@ public class MenuService {
         return false;
     }
 
-    public Menu filterGroup(Menu group, Set<String> roles) {
-        if (group == null || !group.isEnabled()) return null;
-
-        // If this node itself is not allowed, drop it
-        if (!hasAny(group.getRequiredRoles(), roles)) return null;
-
-        // Load children from DB and filter them recursively
-        List<Menu> filteredChildren = childrenOf(group).stream()
-                .map(child -> filterGroup(child, roles))
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
-
-        boolean isLeaf = group.getHref() != null && !group.getHref().isBlank();
-        if (!isLeaf && filteredChildren.isEmpty()) {
-            // hide empty accordion/header
-            return null;
-        }
-
-        // Shallow copy into a detached node (so we don't mutate managed entities)
-        Menu copy = new Menu();
-        copy.setId(group.getId());                // optional: keep id for links/anchors
-        copy.setTitle(group.getTitle());
-        copy.setHref(group.getHref());
-        copy.setIcon(group.getIcon());
-        copy.setOrderIndex(group.getOrderIndex());
-        copy.setEnabled(group.isEnabled());
-        copy.setRequiredRoles(group.getRequiredRoles() != null
-                ? new LinkedHashSet<>(group.getRequiredRoles())
-                : new LinkedHashSet<>());
-        copy.setParentId(null);                   // avoid cycles in the returned tree
-        copy.setChildren(filteredChildren);       // uses @Transient field
-        return copy;
-    }
-
     /** Build the permitted top-level menu for the current user. */
     public List<Menu> allowedFor(Authentication auth) {
         if (auth == null || auth.getAuthorities() == null) return List.of();
@@ -128,16 +82,28 @@ public class MenuService {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toCollection(LinkedHashSet::new));
 
-        return repo.findAllByParentIdIsNullOrderByOrderIndexAscTitleAsc().stream()
-                .map(top -> filterGroup(top, userRoles))
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
-    }
+        Menu menu1 = new Menu();
+        menu1.setId("1");
+        menu1.setOrderIndex(1);
+        menu1.setEnabled(true);
+        menu1.setTitle("Material");
+        menu1.setHref("/materials");
 
-    // ----------------- helpers -----------------
+        Menu menu2 = new Menu();
+        menu2.setId("2");
+        menu2.setOrderIndex(2);
+        menu2.setEnabled(true);
+        menu2.setTitle("User");
+        menu2.setHref("/admin/users");
 
-    private List<Menu> childrenOf(Menu parent) {
-        return repo.findAllByParentIdOrderByOrderIndexAscTitleAsc(parent.getId());
+        Menu menu3 = new Menu();
+        menu3.setId("3");
+        menu3.setOrderIndex(3);
+        menu3.setEnabled(true);
+        menu3.setTitle("Profile");
+        menu3.setHref("/profile");
+
+        return List.of(menu1, menu2, menu3);
     }
 
     /** Normalize roles: trim, uppercase, strip ROLE_ prefix; null-safe. */
