@@ -1,51 +1,47 @@
 package io.sci.nnfl.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.time.Instant;
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
-@Entity
-@Table(name = "user",
-        uniqueConstraints = {
-                @UniqueConstraint(name = "uk_users_username", columnNames = "username"),
-                @UniqueConstraint(name = "uk_users_email", columnNames = "email")
-        })
+/**
+ * MongoDB representation of application users.
+ */
+@Document(collection = "user")
 public class User {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @Column(nullable = false, length = 64)
+    @Id
+    private String id;
+
+    @Indexed(unique = true)
     private String username;
 
-    @Column(nullable = false, length = 120)
     private String fullName;
 
-    @Column(nullable = false, length = 160)
+    @Indexed(unique = true)
     private String email;
 
     @JsonIgnore
-    @Column(nullable = false, length = 255)
     private String passwordHash;         // store encoded password
 
     @JsonIgnore
     private boolean enabled = true;
 
     @JsonIgnore
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
-    @Column(name = "role")
     private Set<String> roles = new LinkedHashSet<>();
 
     @JsonIgnore
-    @Column(nullable = false, updatable = false)
     private Instant createdAt = Instant.now();
 
     // getters/setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
     public String getFullName() { return fullName; }
@@ -78,3 +74,4 @@ public class User {
         return Objects.hashCode(id);
     }
 }
+

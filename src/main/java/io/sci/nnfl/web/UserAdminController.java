@@ -21,7 +21,7 @@ public class UserAdminController {
     }
 
     @GetMapping
-    public String list(@RequestParam(name = "userId", required = false) Long userId,
+    public String list(@RequestParam(name = "userId", required = false) String userId,
                        Model model) {
         UserRequest form = new UserRequest();
         if(userId!=null) {
@@ -69,12 +69,12 @@ public class UserAdminController {
     }
 
     @GetMapping("/{id}/edit")
-    public String editForm(@PathVariable("id") Long id) {
+    public String editForm(@PathVariable("id") String id) {
         return "redirect:/admin/users?userId="+id;
     }
 
     @PostMapping("/{id}")
-    public String update(@PathVariable("id") Long id,
+    public String update(@PathVariable("id") String id,
                          @Valid @ModelAttribute("user") UserRequest form,
                          BindingResult binding,
                          RedirectAttributes ra,

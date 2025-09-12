@@ -11,7 +11,7 @@ import java.util.Set;
 
 public class UserRequest {
 
-    private Long id;
+    private String id;
     @NotBlank @Size(max = 64)
     private String username;
 
@@ -30,11 +30,11 @@ public class UserRequest {
     // CSV roles, e.g.: "ADMIN, USER"
     private String rolesCsv;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

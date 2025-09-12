@@ -1,11 +1,12 @@
 package io.sci.nnfl.model.repository;
 
 import io.sci.nnfl.model.Menu;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
+
 import java.util.List;
 
-public interface MenuRepository extends JpaRepository<Menu, Long> {
-    List<Menu> findAllByParentIsNullOrderByOrderIndexAscTitleAsc();
-    List<Menu> findAllByParentOrderByOrderIndexAscTitleAsc(Menu parent);
+public interface MenuRepository extends MongoRepository<Menu, String> {
+    List<Menu> findAllByParentIdIsNullOrderByOrderIndexAscTitleAsc();
+    List<Menu> findAllByParentIdOrderByOrderIndexAscTitleAsc(String parentId);
     List<Menu> findAllByOrderByParentIdAscOrderIndexAscTitleAsc();
 }
