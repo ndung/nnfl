@@ -1,0 +1,21 @@
+<div th:fragment="decayDialog"
+     id="decayDialog" title="Edit Uranium Decay" style="display:none;">
+    <div class="grid gap-5">
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Nuclide :</label>
+            <input class="kt-input" id="decayNuclide" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Activity :</label>
+            <input class="kt-input" id="decayActivity" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Comment(s) :</label>
+            <input class="kt-input" id="decayComment" type="text"/>
+        </div>
+        <div class="flex justify-end gap-2">
+            <button type="button" id="saveDecay" class="kt-btn kt-btn-primary">Save</button>
+            <button type="button" class="kt-btn" onclick="$('#decayDialog').dialog('close');">Cancel</button>
+        </div>
+    </div>
+</div>

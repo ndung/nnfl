@@ -2,6 +2,7 @@ package io.sci.nnfl.web;
 
 import io.sci.nnfl.model.MaterialRecord;
 import io.sci.nnfl.model.Stage;
+import io.sci.nnfl.model.repository.MaterialRecordRepository;
 import io.sci.nnfl.service.MaterialRecordService;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +23,7 @@ import java.util.TreeMap;
 public class MaterialRecordController {
 
     private final MaterialRecordService service;
+    private final MaterialRecordRepository materialRecordRepository;
 
     @Getter @Setter
     private String type;
@@ -34,8 +36,9 @@ public class MaterialRecordController {
         return map;
     }
 
-    public MaterialRecordController(MaterialRecordService service) {
+    public MaterialRecordController(MaterialRecordService service, MaterialRecordRepository materialRecordRepository) {
         this.service = service;
+        this.materialRecordRepository = materialRecordRepository;
     }
 
     @GetMapping
@@ -45,9 +48,13 @@ public class MaterialRecordController {
         return "materials";
     }
 
-    @GetMapping("/new")
-    public String createForm(Model model) {
+    @GetMapping("/new/{id}/{stage}")
+    public String createForm(Model model, @PathVariable("id") String id, @PathVariable("stage") String stage) {
         model.addAttribute("material", new MaterialRecord());
+        materialRecordRepository.findById(id).ifPresent(materialRecord -> {
+            model.addAttribute("material", materialRecord);
+        });
+        model.addAttribute("stage", stage);
         return "material-form";
     }
 

@@ -1,0 +1,25 @@
+<div th:fragment="generalInfoDialog"
+     id="generalInfoDialog" title="Edit General Info" style="display:none;">
+    <div class="grid gap-5">
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Custodian :</label>
+            <input class="kt-input" id="generalCustodian" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Analytical Lab :</label>
+            <input class="kt-input" id="generalLab" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Country :</label>
+            <input class="kt-input" id="generalCountry" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Notes :</label>
+            <input class="kt-input" id="generalNotes" type="text"/>
+        </div>
+        <div class="flex justify-end gap-2">
+            <button type="button" id="saveGeneralInfo" class="kt-btn kt-btn-primary">Save</button>
+            <button type="button" class="kt-btn" onclick="$('#generalInfoDialog').dialog('close');">Cancel</button>
+        </div>
+    </div>
+</div>

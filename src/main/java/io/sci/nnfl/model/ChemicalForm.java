@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 public class ChemicalForm {
+    private String id;
     private Stage stage;
     private String compoundName;          // U3O8, UF6, (NH4)2U2O7, etc.
     private BigDecimal stoichiometryDeviation;

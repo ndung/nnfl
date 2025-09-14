@@ -1,0 +1,21 @@
+<div th:fragment="chemicalDialog"
+     id="chemicalDialog" title="Edit Chemical" style="display:none;">
+    <div class="grid gap-5">
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Compound Name :</label>
+            <input class="kt-input" id="chemicalName" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Stoichiometry Deviation :</label>
+            <input class="kt-input" id="chemicalDeviation" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Comment(s) :</label>
+            <input class="kt-input" id="chemicalComment" type="text"/>
+        </div>
+        <div class="flex justify-end gap-2">
+            <button type="button" id="saveChemical" class="kt-btn kt-btn-primary">Save</button>
+            <button type="button" class="kt-btn" onclick="$('#chemicalDialog').dialog('close');">Cancel</button>
+        </div>
+    </div>
+</div>

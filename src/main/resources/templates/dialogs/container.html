@@ -1,0 +1,25 @@
+<div th:fragment="containerDialog"
+     id="containerDialog" title="Edit Container" style="display:none;">
+    <div class="grid gap-5">
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Type :</label>
+            <input class="kt-input" id="containerType" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Volume :</label>
+            <input class="kt-input" id="containerVolume" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Serial Number :</label>
+            <input class="kt-input" id="containerSerial" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Notes :</label>
+            <input class="kt-input" id="containerNotes" type="text"/>
+        </div>
+        <div class="flex justify-end gap-2">
+            <button type="button" id="saveContainer" class="kt-btn kt-btn-primary">Save</button>
+            <button type="button" class="kt-btn" onclick="$('#containerDialog').dialog('close');">Cancel</button>
+        </div>
+    </div>
+</div>

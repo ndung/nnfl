@@ -1,0 +1,21 @@
+<div th:fragment="mineralogyDialog"
+     id="mineralogyDialog" title="Edit Mineralogy" style="display:none;">
+    <div class="grid gap-5">
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Minerals Present :</label>
+            <input class="kt-input" id="mineralogyMinerals" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Volume % :</label>
+            <input class="kt-input" id="mineralogyVolume" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Notes :</label>
+            <input class="kt-input" id="mineralogyNotes" type="text"/>
+        </div>
+        <div class="flex justify-end gap-2">
+            <button type="button" id="saveMineralogy" class="kt-btn kt-btn-primary">Save</button>
+            <button type="button" class="kt-btn" onclick="$('#mineralogyDialog').dialog('close');">Cancel</button>
+        </div>
+    </div>
+</div>

@@ -3,36 +3,8 @@
 <body>
 <div class="kt-container-fluid px=0">
     <div class="grid grid-cols-1 gap-5">
-        <div class="kt-card">
-            <div class="kt-card-header">
-                <h3 class="kt-card-title">Create Material Record</h3>
-            </div>
-            <form th:action="@{/materials}" th:object="${material}" method="post" class="kt-card-content grid gap-5">
-                <input type="hidden" th:if="${_csrf != null}"
-                       th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                <div class="flex justify-end">
-                    <button class="kt-btn kt-btn-primary">Save</button>
-                </div>
-            </form>
-        </div>
 
-        <!-- Chemical -->
-        <div class="kt-card">
-            <div class="kt-card-header flex justify-between">
-                <h3 class="kt-card-title">Chemical</h3>
-                <button type="button" id="addChemical" class="kt-btn kt-btn-light">Add</button>
-            </div>
-            <div class="kt-card-content">
-                <div class="table-responsive">
-                    <table id="chemicalTable" class="table w-full">
-                        <thead>
-                        <tr><th>Compound Name</th><th>Stoichiometry Deviation</th><th>Comment(s)</th></tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+        <div th:replace="~{cards/chemical :: chemicalCard}"></div>
 
         <!-- Elements -->
         <div class="kt-card">
@@ -305,397 +277,23 @@
     </div>
 </div>
 
-<!-- Dialogs -->
-<div id="chemicalDialog" title="Edit Chemical" style="display:none;">
-    <div class="grid gap-5">
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Compound Name :</label>
-            <input class="kt-input" id="chemicalName" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Stoichiometry Deviation :</label>
-            <input class="kt-input" id="chemicalDeviation" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Comment(s) :</label>
-            <input class="kt-input" id="chemicalComment" type="text"/>
-        </div>
-        <div class="flex justify-end gap-2">
-            <button type="button" id="saveChemical" class="kt-btn kt-btn-primary">Save</button>
-            <button type="button" class="kt-btn" onclick="$('#chemicalDialog').dialog('close');">Cancel</button>
-        </div>
-    </div>
-</div>
+<div th:replace="~{dialogs/chemical :: chemicalDialog}"></div>
+<div th:replace="~{dialogs/element :: elementDialog}"></div>
+<div th:replace="~{dialogs/isotope :: isotopeDialog}"></div>
+<div th:replace="~{dialogs/morphology :: morphologyDialog}"></div>
+<div th:replace="~{dialogs/decay :: decayDialog}"></div>
+<div th:replace="~{dialogs/container :: containerDialog}"></div>
+<div th:replace="~{dialogs/general-info :: generalInfoDialog}"></div>
+<div th:replace="~{dialogs/geology :: geologyDialog}"></div>
+<div th:replace="~{dialogs/irradiation :: irradiationDialog}"></div>
+<div th:replace="~{dialogs/isotope-activity :: isotopeActivityDialog}"></div>
+<div th:replace="~{dialogs/mineralogy :: mineralogyDialog}"></div>
+<div th:replace="~{dialogs/physical :: physicalDialog}"></div>
+<div th:replace="~{dialogs/process-info :: processInfoDialog}"></div>
+<div th:replace="~{dialogs/serial-number :: serialNumberDialog}"></div>
+<div th:replace="~{dialogs/source-activity-info :: sourceActivityInfoDialog}"></div>
+<div th:replace="~{dialogs/source-description :: sourceDescriptionDialog}"></div>
 
-<div id="elementDialog" title="Edit Data" style="display:none;">
-    <div class="grid gap-5">
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Element Name :</label>
-            <input class="kt-input" id="elementName" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Element Concentration :</label>
-            <input class="kt-input" id="elementConcentration" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Element Uncertainty :</label>
-            <input class="kt-input" id="elementUncertainty" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Comment(s) :</label>
-            <input class="kt-input" id="elementComment" type="text"/>
-        </div>
-        <div class="flex justify-end gap-2">
-            <button type="button" id="saveElement" class="kt-btn kt-btn-primary">Save</button>
-            <button type="button" class="kt-btn" onclick="$('#elementDialog').dialog('close');">Cancel</button>
-        </div>
-    </div>
-</div>
-
-<div id="isotopeDialog" title="Edit Isotope" style="display:none;">
-    <div class="grid gap-5">
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Isotope Name :</label>
-            <input class="kt-input" id="isotopeName" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Isotope Ratio :</label>
-            <input class="kt-input" id="isotopeRatio" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Isotope Uncertainty :</label>
-            <input class="kt-input" id="isotopeUncertainty" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Comment(s) :</label>
-            <input class="kt-input" id="isotopeComment" type="text"/>
-        </div>
-        <div class="flex justify-end gap-2">
-            <button type="button" id="saveIsotope" class="kt-btn kt-btn-primary">Save</button>
-            <button type="button" class="kt-btn" onclick="$('#isotopeDialog').dialog('close');">Cancel</button>
-        </div>
-    </div>
-</div>
-
-<div id="morphologyDialog" title="Edit Morphology" style="display:none;">
-    <div class="grid gap-5">
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Crystal Structure :</label>
-            <input class="kt-input" id="morphCrystal" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Lattice A :</label>
-            <input class="kt-input" id="morphA" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Lattice B :</label>
-            <input class="kt-input" id="morphB" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Lattice C :</label>
-            <input class="kt-input" id="morphC" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Comment(s) :</label>
-            <input class="kt-input" id="morphComment" type="text"/>
-        </div>
-        <div class="flex justify-end gap-2">
-            <button type="button" id="saveMorphology" class="kt-btn kt-btn-primary">Save</button>
-            <button type="button" class="kt-btn" onclick="$('#morphologyDialog').dialog('close');">Cancel</button>
-        </div>
-    </div>
-</div>
-
-<div id="decayDialog" title="Edit Uranium Decay" style="display:none;">
-    <div class="grid gap-5">
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Nuclide :</label>
-            <input class="kt-input" id="decayNuclide" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Activity :</label>
-            <input class="kt-input" id="decayActivity" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Comment(s) :</label>
-            <input class="kt-input" id="decayComment" type="text"/>
-        </div>
-        <div class="flex justify-end gap-2">
-            <button type="button" id="saveDecay" class="kt-btn kt-btn-primary">Save</button>
-            <button type="button" class="kt-btn" onclick="$('#decayDialog').dialog('close');">Cancel</button>
-</div>
-</div>
-
-<div id="containerDialog" title="Edit Container" style="display:none;">
-    <div class="grid gap-5">
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Type :</label>
-            <input class="kt-input" id="containerType" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Volume :</label>
-            <input class="kt-input" id="containerVolume" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Serial Number :</label>
-            <input class="kt-input" id="containerSerial" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Notes :</label>
-            <input class="kt-input" id="containerNotes" type="text"/>
-        </div>
-        <div class="flex justify-end gap-2">
-            <button type="button" id="saveContainer" class="kt-btn kt-btn-primary">Save</button>
-            <button type="button" class="kt-btn" onclick="$('#containerDialog').dialog('close');">Cancel</button>
-        </div>
-    </div>
-</div>
-
-<div id="generalInfoDialog" title="Edit General Info" style="display:none;">
-    <div class="grid gap-5">
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Custodian :</label>
-            <input class="kt-input" id="generalCustodian" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Analytical Lab :</label>
-            <input class="kt-input" id="generalLab" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Country :</label>
-            <input class="kt-input" id="generalCountry" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Notes :</label>
-            <input class="kt-input" id="generalNotes" type="text"/>
-        </div>
-        <div class="flex justify-end gap-2">
-            <button type="button" id="saveGeneralInfo" class="kt-btn kt-btn-primary">Save</button>
-            <button type="button" class="kt-btn" onclick="$('#generalInfoDialog').dialog('close');">Cancel</button>
-        </div>
-    </div>
-</div>
-
-<div id="geologyDialog" title="Edit Geology" style="display:none;">
-    <div class="grid gap-5">
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Mine Location :</label>
-            <input class="kt-input" id="geologyLocation" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Formation :</label>
-            <input class="kt-input" id="geologyFormation" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Deposit Types :</label>
-            <input class="kt-input" id="geologyDeposit" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Notes :</label>
-            <input class="kt-input" id="geologyNotes" type="text"/>
-        </div>
-        <div class="flex justify-end gap-2">
-            <button type="button" id="saveGeology" class="kt-btn kt-btn-primary">Save</button>
-            <button type="button" class="kt-btn" onclick="$('#geologyDialog').dialog('close');">Cancel</button>
-        </div>
-    </div>
-</div>
-
-<div id="irradiationDialog" title="Edit Irradiation History" style="display:none;">
-    <div class="grid gap-5">
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Reactor Type :</label>
-            <input class="kt-input" id="irradiationReactor" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Burn Up :</label>
-            <input class="kt-input" id="irradiationBurnUp" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Load Date :</label>
-            <input class="kt-input" id="irradiationLoadDate" type="date"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Discharge Date :</label>
-            <input class="kt-input" id="irradiationDischargeDate" type="date"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Notes :</label>
-            <input class="kt-input" id="irradiationNotes" type="text"/>
-        </div>
-        <div class="flex justify-end gap-2">
-            <button type="button" id="saveIrradiation" class="kt-btn kt-btn-primary">Save</button>
-            <button type="button" class="kt-btn" onclick="$('#irradiationDialog').dialog('close');">Cancel</button>
-        </div>
-    </div>
-</div>
-
-<div id="isotopeActivityDialog" title="Edit Isotope Activity" style="display:none;">
-    <div class="grid gap-5">
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Isotope :</label>
-            <input class="kt-input" id="isotopeActivityName" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Activity (Bq) :</label>
-            <input class="kt-input" id="isotopeActivityValue" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Reference Date :</label>
-            <input class="kt-input" id="isotopeActivityDate" type="date"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Notes :</label>
-            <input class="kt-input" id="isotopeActivityNotes" type="text"/>
-        </div>
-        <div class="flex justify-end gap-2">
-            <button type="button" id="saveIsotopeActivity" class="kt-btn kt-btn-primary">Save</button>
-            <button type="button" class="kt-btn" onclick="$('#isotopeActivityDialog').dialog('close');">Cancel</button>
-        </div>
-    </div>
-</div>
-
-<div id="mineralogyDialog" title="Edit Mineralogy" style="display:none;">
-    <div class="grid gap-5">
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Minerals Present :</label>
-            <input class="kt-input" id="mineralogyMinerals" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Volume % :</label>
-            <input class="kt-input" id="mineralogyVolume" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Notes :</label>
-            <input class="kt-input" id="mineralogyNotes" type="text"/>
-        </div>
-        <div class="flex justify-end gap-2">
-            <button type="button" id="saveMineralogy" class="kt-btn kt-btn-primary">Save</button>
-            <button type="button" class="kt-btn" onclick="$('#mineralogyDialog').dialog('close');">Cancel</button>
-        </div>
-    </div>
-</div>
-
-<div id="physicalDialog" title="Edit Physical" style="display:none;">
-    <div class="grid gap-5">
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">State :</label>
-            <input class="kt-input" id="physicalState" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Description :</label>
-            <input class="kt-input" id="physicalDescription" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Mass :</label>
-            <input class="kt-input" id="physicalMass" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Notes :</label>
-            <input class="kt-input" id="physicalNotes" type="text"/>
-        </div>
-        <div class="flex justify-end gap-2">
-            <button type="button" id="savePhysical" class="kt-btn kt-btn-primary">Save</button>
-            <button type="button" class="kt-btn" onclick="$('#physicalDialog').dialog('close');">Cancel</button>
-        </div>
-    </div>
-</div>
-
-<div id="processInfoDialog" title="Edit Process Information" style="display:none;">
-    <div class="grid gap-5">
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Process Type :</label>
-            <input class="kt-input" id="processType" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Location :</label>
-            <input class="kt-input" id="processLocation" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Start Date :</label>
-            <input class="kt-input" id="processStart" type="date"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">End Date :</label>
-            <input class="kt-input" id="processEnd" type="date"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Notes :</label>
-            <input class="kt-input" id="processNotes" type="text"/>
-        </div>
-        <div class="flex justify-end gap-2">
-            <button type="button" id="saveProcessInfo" class="kt-btn kt-btn-primary">Save</button>
-            <button type="button" class="kt-btn" onclick="$('#processInfoDialog').dialog('close');">Cancel</button>
-        </div>
-    </div>
-</div>
-
-<div id="serialNumberDialog" title="Edit Serial Number" style="display:none;">
-    <div class="grid gap-5">
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Serial Number :</label>
-            <input class="kt-input" id="serialNumberValue" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Notes :</label>
-            <input class="kt-input" id="serialNumberNotes" type="text"/>
-        </div>
-        <div class="flex justify-end gap-2">
-            <button type="button" id="saveSerialNumber" class="kt-btn kt-btn-primary">Save</button>
-            <button type="button" class="kt-btn" onclick="$('#serialNumberDialog').dialog('close');">Cancel</button>
-        </div>
-    </div>
-</div>
-
-<div id="sourceActivityInfoDialog" title="Edit Source Activity Info" style="display:none;">
-    <div class="grid gap-5">
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Activity (Bq) :</label>
-            <input class="kt-input" id="sourceActivityValue" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Reference Date :</label>
-            <input class="kt-input" id="sourceActivityDate" type="date"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Neutron Intensity :</label>
-            <input class="kt-input" id="sourceActivityNeutron" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Notes :</label>
-            <input class="kt-input" id="sourceActivityNotes" type="text"/>
-        </div>
-        <div class="flex justify-end gap-2">
-            <button type="button" id="saveSourceActivityInfo" class="kt-btn kt-btn-primary">Save</button>
-            <button type="button" class="kt-btn" onclick="$('#sourceActivityInfoDialog').dialog('close');">Cancel</button>
-        </div>
-    </div>
-</div>
-
-<div id="sourceDescriptionDialog" title="Edit Source Description" style="display:none;">
-    <div class="grid gap-5">
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Source Type :</label>
-            <input class="kt-input" id="sourceDescriptionType" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Quantity :</label>
-            <input class="kt-input" id="sourceDescriptionQuantity" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Serial Number :</label>
-            <input class="kt-input" id="sourceDescriptionSerial" type="text"/>
-        </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Notes :</label>
-            <input class="kt-input" id="sourceDescriptionNotes" type="text"/>
-        </div>
-        <div class="flex justify-end gap-2">
-            <button type="button" id="saveSourceDescription" class="kt-btn kt-btn-primary">Save</button>
-            <button type="button" class="kt-btn" onclick="$('#sourceDescriptionDialog').dialog('close');">Cancel</button>
-        </div>
-    </div>
-</div>
 
 <link rel="stylesheet" th:href="@{https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css}" />
 <script th:src="@{https://code.jquery.com/jquery-3.7.1.min.js}"></script>
@@ -738,9 +336,6 @@
                 currentRow=null;
             });
         }
-        initDialog('#chemicalDialog','#addChemical','#saveChemical','#chemicalTable', function(){
-            return [$('#chemicalName').val(), $('#chemicalDeviation').val(), $('#chemicalComment').val()];
-        });
         initDialog('#elementDialog','#addElement','#saveElement','#elementTable', function(){
             return [$('#elementName').val(), $('#elementConcentration').val(), $('#elementUncertainty').val(), $('#elementComment').val()];
         });
@@ -753,6 +348,12 @@
         initDialog('#decayDialog','#addDecay','#saveDecay','#decayTable', function(){
             return [$('#decayNuclide').val(), $('#decayActivity').val(), $('#decayComment').val()];
         });
+
+        initEditableDialog('#chemicalDialog','#addChemical','#saveChemical','#chemicalTable', function(){
+            return [$('#containerType').val(), $('#containerVolume').val(), $('#containerSerial').val(), $('#containerNotes').val()];
+        }, function(v){
+            $('#containerType').val(v[0]); $('#containerVolume').val(v[1]); $('#containerSerial').val(v[2]); $('#containerNotes').val(v[3]);
+        }, '/materials/chemical');
 
         initEditableDialog('#containerDialog','#addContainer','#saveContainer','#containerTable', function(){
             return [$('#containerType').val(), $('#containerVolume').val(), $('#containerSerial').val(), $('#containerNotes').val()];

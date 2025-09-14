@@ -1,0 +1,29 @@
+<div th:fragment="morphologyDialog"
+     id="morphologyDialog" title="Edit Morphology" style="display:none;">
+    <div class="grid gap-5">
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Crystal Structure :</label>
+            <input class="kt-input" id="morphCrystal" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Lattice A :</label>
+            <input class="kt-input" id="morphA" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Lattice B :</label>
+            <input class="kt-input" id="morphB" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Lattice C :</label>
+            <input class="kt-input" id="morphC" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Comment(s) :</label>
+            <input class="kt-input" id="morphComment" type="text"/>
+        </div>
+        <div class="flex justify-end gap-2">
+            <button type="button" id="saveMorphology" class="kt-btn kt-btn-primary">Save</button>
+            <button type="button" class="kt-btn" onclick="$('#morphologyDialog').dialog('close');">Cancel</button>
+        </div>
+    </div>
+</div>

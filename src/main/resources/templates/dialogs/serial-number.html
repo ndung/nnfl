@@ -1,0 +1,17 @@
+<div th:fragment="serialNumberDialog"
+     id="serialNumberDialog" title="Edit Serial Number" style="display:none;">
+    <div class="grid gap-5">
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Serial Number :</label>
+            <input class="kt-input" id="serialNumberValue" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Notes :</label>
+            <input class="kt-input" id="serialNumberNotes" type="text"/>
+        </div>
+        <div class="flex justify-end gap-2">
+            <button type="button" id="saveSerialNumber" class="kt-btn kt-btn-primary">Save</button>
+            <button type="button" class="kt-btn" onclick="$('#serialNumberDialog').dialog('close');">Cancel</button>
+        </div>
+    </div>
+</div>

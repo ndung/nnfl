@@ -1,0 +1,29 @@
+<div th:fragment="processInfoDialog"
+     id="processInfoDialog" title="Edit Process Information" style="display:none;">
+    <div class="grid gap-5">
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Process Type :</label>
+            <input class="kt-input" id="processType" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Location :</label>
+            <input class="kt-input" id="processLocation" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Start Date :</label>
+            <input class="kt-input" id="processStart" type="date"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">End Date :</label>
+            <input class="kt-input" id="processEnd" type="date"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Notes :</label>
+            <input class="kt-input" id="processNotes" type="text"/>
+        </div>
+        <div class="flex justify-end gap-2">
+            <button type="button" id="saveProcessInfo" class="kt-btn kt-btn-primary">Save</button>
+            <button type="button" class="kt-btn" onclick="$('#processInfoDialog').dialog('close');">Cancel</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+<div th:fragment="irradiationDialog"
+     id="irradiationDialog" title="Edit Irradiation History" style="display:none;">
+    <div class="grid gap-5">
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Reactor Type :</label>
+            <input class="kt-input" id="irradiationReactor" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Burn Up :</label>
+            <input class="kt-input" id="irradiationBurnUp" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Load Date :</label>
+            <input class="kt-input" id="irradiationLoadDate" type="date"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Discharge Date :</label>
+            <input class="kt-input" id="irradiationDischargeDate" type="date"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Notes :</label>
+            <input class="kt-input" id="irradiationNotes" type="text"/>
+        </div>
+        <div class="flex justify-end gap-2">
+            <button type="button" id="saveIrradiation" class="kt-btn kt-btn-primary">Save</button>
+            <button type="button" class="kt-btn" onclick="$('#irradiationDialog').dialog('close');">Cancel</button>
+        </div>
+    </div>
+</div>

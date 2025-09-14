@@ -1,0 +1,25 @@
+<div th:fragment="elementDialog"
+     id="elementDialog" title="Edit Data" style="display:none;">
+    <div class="grid gap-5">
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Element Name :</label>
+            <input class="kt-input" id="elementName" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Element Concentration :</label>
+            <input class="kt-input" id="elementConcentration" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Element Uncertainty :</label>
+            <input class="kt-input" id="elementUncertainty" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Comment(s) :</label>
+            <input class="kt-input" id="elementComment" type="text"/>
+        </div>
+        <div class="flex justify-end gap-2">
+            <button type="button" id="saveElement" class="kt-btn kt-btn-primary">Save</button>
+            <button type="button" class="kt-btn" onclick="$('#elementDialog').dialog('close');">Cancel</button>
+        </div>
+    </div>
+</div>

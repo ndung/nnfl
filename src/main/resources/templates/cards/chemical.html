@@ -1,0 +1,64 @@
+<div th:fragment="chemicalCard" class="kt-card kt-card-grid h-full min-w-full">
+    <div class="kt-card-header flex justify-between">
+        <h3 class="kt-card-title">Chemical</h3>
+        <button type="button" id="addChemical" class="kt-btn kt-btn-light">Add</button>
+    </div>
+    <div class="kt-card-table">
+        <div class="grid" data-kt-datatable="true" data-kt-datatable-page-size="5" id="images_datatable">
+            <div class="kt-scrollable-x-auto">
+                <table id="chemicalTable" class="kt-table kt-table-border table-fixed" data-kt-datatable-table="true">
+                    <thead>
+                    <tr>
+                        <th class="w-[50px]">
+                            <span class="kt-table-col"><span class="kt-table-col-label">ID</span> </span>
+                        </th>
+                        <th class="w-[80px]">
+                            <span class="kt-table-col"><span class="kt-table-col-label">Stage</span></span>
+                        </th>
+                        <th class="w-[125px]">
+                            <span class="kt-table-col"><span class="kt-table-col-label">Compound name</span></span>
+                        </th>
+                        <th class="w-[100px]">
+                            <span class="kt-table-col"><span
+                                    class="kt-table-col-label">Stoichiometry Deviation</span></span>
+                        </th>
+                        <th class="w-[100px]">
+                            <span class="kt-table-col"><span class="kt-table-col-label">Notes</span></span>
+                        </th>
+                        <th class="w-[100px]">
+                            <span class="kt-table-col"><span class="kt-table-col-label">Edit</span></span>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody th:each="chemical : ${material.chemicalForms}">
+                    <tr>
+                        <td>
+                            <div class="flex flex-col gap-2">
+                                <span th:text="${chemical.id}"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="relative size-[44px] shrink-0">
+                                <span th:text="${chemical.stage}"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <span th:text="${chemical.compoundName}"></span>
+                        </td>
+                        <td>
+                            <span th:text="${chemical.stoichiometryDeviation}"></span>
+                        </td>
+                        <td class="flex gap-2">
+
+                        </td>
+                        <td class="flex gap-2">
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

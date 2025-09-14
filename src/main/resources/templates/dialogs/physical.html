@@ -1,0 +1,25 @@
+<div th:fragment="physicalDialog"
+     id="physicalDialog" title="Edit Physical" style="display:none;">
+    <div class="grid gap-5">
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">State :</label>
+            <input class="kt-input" id="physicalState" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Description :</label>
+            <input class="kt-input" id="physicalDescription" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Mass :</label>
+            <input class="kt-input" id="physicalMass" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Notes :</label>
+            <input class="kt-input" id="physicalNotes" type="text"/>
+        </div>
+        <div class="flex justify-end gap-2">
+            <button type="button" id="savePhysical" class="kt-btn kt-btn-primary">Save</button>
+            <button type="button" class="kt-btn" onclick="$('#physicalDialog').dialog('close');">Cancel</button>
+        </div>
+    </div>
+</div>

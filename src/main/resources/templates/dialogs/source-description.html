@@ -1,0 +1,25 @@
+<div th:fragment="sourceDescriptionDialog"
+     id="sourceDescriptionDialog" title="Edit Source Description" style="display:none;">
+    <div class="grid gap-5">
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Source Type :</label>
+            <input class="kt-input" id="sourceDescriptionType" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Quantity :</label>
+            <input class="kt-input" id="sourceDescriptionQuantity" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Serial Number :</label>
+            <input class="kt-input" id="sourceDescriptionSerial" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Notes :</label>
+            <input class="kt-input" id="sourceDescriptionNotes" type="text"/>
+        </div>
+        <div class="flex justify-end gap-2">
+            <button type="button" id="saveSourceDescription" class="kt-btn kt-btn-primary">Save</button>
+            <button type="button" class="kt-btn" onclick="$('#sourceDescriptionDialog').dialog('close');">Cancel</button>
+        </div>
+    </div>
+</div>

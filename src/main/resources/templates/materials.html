@@ -81,8 +81,8 @@
                 $('#stageSelectBtn').on('click', function(){
                     var stage = $('#stageSelect').val();
                     if(stage){
-                        var url = /*[[@{/material-form.html}]]*/ '/material-form.html';
-                        window.location.href = url + '?id=' + materialId + '&stage=' + stage;
+                        var url = /*[[@{/materials/new}]]*/ '/materials/new';
+                        window.location.href = url + '/' + materialId + '/' + stage;
                     }
                 });
             });

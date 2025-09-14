@@ -1,0 +1,25 @@
+<div th:fragment="sourceActivityInfoDialog"
+     id="sourceActivityInfoDialog" title="Edit Source Activity Info" style="display:none;">
+    <div class="grid gap-5">
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Activity (Bq) :</label>
+            <input class="kt-input" id="sourceActivityValue" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Reference Date :</label>
+            <input class="kt-input" id="sourceActivityDate" type="date"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Neutron Intensity :</label>
+            <input class="kt-input" id="sourceActivityNeutron" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Notes :</label>
+            <input class="kt-input" id="sourceActivityNotes" type="text"/>
+        </div>
+        <div class="flex justify-end gap-2">
+            <button type="button" id="saveSourceActivityInfo" class="kt-btn kt-btn-primary">Save</button>
+            <button type="button" class="kt-btn" onclick="$('#sourceActivityInfoDialog').dialog('close');">Cancel</button>
+        </div>
+    </div>
+</div>
