@@ -197,17 +197,67 @@
         });
 
         init('#generalInfoDialog','#addGeneralInfo','#saveGeneralInfo','#generalInfoTable', function(){
-            return [$('#generalCustodian').val(), $('#generalLab').val(), $('#generalCountry').val(), $('#generalNotes').val()];
+            return [
+                $('#generalId').val(),
+                $('#generalDataRecordDate').val(),
+                $('#generalCustodian').val(),
+                $('#generalLab').val(),
+                $('#generalAnalysisDate').val(),
+                $('#generalCountry').val(),
+                $('#generalProducer').val(),
+                $('#generalSupplier').val(),
+                $('#generalBatchId').val(),
+                $('#generalBatchProcessDate').val(),
+                $('#generalShipperCarrier').val(),
+                $('#generalReceiverInfo').val(),
+                $('#generalShippingDate').val(),
+                $('#generalReceivingDate').val(),
+                $('#generalDataEvaluationInfo').val(),
+                $('#generalVariationRangeNotes').val(),
+                $('#generalInformationAcquisitionDate').val(),
+                $('#generalUsedArchivedInformation').is(':checked'),
+                $('#generalNotes').val()
+            ];
         }, function(v){
-            $('#generalCustodian').val(v[0].trim());
-            $('#generalLab').val(v[1].trim());
-            $('#generalCountry').val(v[2].trim());
-            $('#generalNotes').val(v[3].trim());
+            $('#generalId').val(v[0].trim());
+            $('#generalDataRecordDate').val(v[2].trim());
+            $('#generalCustodian').val(v[3].trim());
+            $('#generalLab').val(v[4].trim());
+            $('#generalAnalysisDate').val(v[5].trim());
+            $('#generalCountry').val(v[6].trim());
+            $('#generalProducer').val(v[7].trim());
+            $('#generalSupplier').val(v[8].trim());
+            $('#generalBatchId').val(v[9].trim());
+            $('#generalBatchProcessDate').val(v[10].trim());
+            $('#generalShipperCarrier').val(v[11].trim());
+            $('#generalReceiverInfo').val(v[12].trim());
+            $('#generalShippingDate').val(v[13].trim());
+            $('#generalReceivingDate').val(v[14].trim());
+            $('#generalDataEvaluationInfo').val(v[15].trim());
+            $('#generalVariationRangeNotes').val(v[16].trim());
+            $('#generalInformationAcquisitionDate').val(v[17].trim());
+            $('#generalUsedArchivedInformation').prop('checked', v[18].trim().toLowerCase() === 'true');
+            $('#generalNotes').val(v[19].trim());
         }, '/general-info/' + materialId + '/' + stage, function(){
             return {
+                id: $('#generalId').val(),
+                dataRecordDate: $('#generalDataRecordDate').val(),
                 custodian: $('#generalCustodian').val(),
                 analyticalLab: $('#generalLab').val(),
+                analysisDate: $('#generalAnalysisDate').val(),
                 countryOfOrigin: $('#generalCountry').val(),
+                producer: $('#generalProducer').val(),
+                supplier: $('#generalSupplier').val(),
+                batchId: $('#generalBatchId').val(),
+                batchProcessDate: $('#generalBatchProcessDate').val(),
+                shipperCarrier: $('#generalShipperCarrier').val(),
+                receiverInfo: $('#generalReceiverInfo').val(),
+                shippingDate: $('#generalShippingDate').val(),
+                receivingDate: $('#generalReceivingDate').val(),
+                dataEvaluationInfo: $('#generalDataEvaluationInfo').val(),
+                variationRangeNotes: $('#generalVariationRangeNotes').val(),
+                informationAcquisitionDate: $('#generalInformationAcquisitionDate').val(),
+                usedArchivedInformation: $('#generalUsedArchivedInformation').is(':checked'),
                 notes: $('#generalNotes').val()
             };
         });
