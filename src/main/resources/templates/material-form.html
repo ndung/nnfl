@@ -263,17 +263,31 @@
         });
 
         init('#geologyDialog','#addGeology','#saveGeology','#geologyTable', function(){
-            return [$('#geologyLocation').val(), $('#geologyFormation').val(), $('#geologyDeposit').val(), $('#geologyNotes').val()];
+            return [
+                $('#geologyId').val(),
+                $('#geologyLocation').val(),
+                $('#geologyFormation').val(),
+                $('#geologyDeposit').val(),
+                $('#geologyTechnique').val(),
+                $('#geologyColour').val(),
+                $('#geologyNotes').val()
+            ];
         }, function(v){
-            $('#geologyLocation').val(v[0].trim());
-            $('#geologyFormation').val(v[1].trim());
-            $('#geologyDeposit').val(v[2].trim());
-            $('#geologyNotes').val(v[3].trim());
+            $('#geologyId').val(v[0].trim());
+            $('#geologyLocation').val(v[1].trim());
+            $('#geologyFormation').val(v[2].trim());
+            $('#geologyDeposit').val(v[3].trim());
+            $('#geologyTechnique').val(v[4].trim());
+            $('#geologyColour').val(v[5].trim());
+            $('#geologyNotes').val(v[6].trim());
         }, '/geology/' + materialId + '/' + stage, function(){
             return {
+                id: $('#geologyId').val(),
                 mineLocation: $('#geologyLocation').val(),
                 geologicalFormation: $('#geologyFormation').val(),
                 depositTypes: $('#geologyDeposit').val(),
+                miningTechnique: $('#geologyTechnique').val(),
+                colour: $('#geologyColour').val(),
                 notes: $('#geologyNotes').val()
             };
         });
