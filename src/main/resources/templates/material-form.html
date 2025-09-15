@@ -106,9 +106,7 @@
 <div th:replace="~{dialogs/source-description :: sourceDescriptionDialog}"></div>
 
 
-<link rel="stylesheet" th:href="@{https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css}" />
 <script th:src="@{https://code.jquery.com/jquery-3.7.1.min.js}"></script>
-<script th:src="@{https://code.jquery.com/ui/1.13.2/jquery-ui.js}"></script>
 <script>
     $(function(){
         var materialId = window.location.pathname.split('/')[3];
@@ -116,15 +114,40 @@
         var csrfToken = document.querySelector('meta[name="_csrf"]')?.getAttribute('content');
         var csrfHeader = document.querySelector('meta[name="_csrf_header"]')?.getAttribute('content');
 
+        function convertToModal(dialogId) {
+            var el = document.querySelector(dialogId);
+            if (!el) { return null; }
+            var title = el.getAttribute('title') || '';
+            var body = el.innerHTML;
+            var modal = document.createElement('div');
+            modal.className = 'modal fade';
+            modal.id = el.id;
+            modal.setAttribute('tabindex', '-1');
+            modal.setAttribute('aria-hidden', 'true');
+            modal.innerHTML =
+                '<div class="modal-dialog modal-dialog-centered mw-650px"><div class="modal-content"><div class="modal-header"><h2 class="modal-title">' +
+                title +
+                '</h2><div class="btn btn-sm btn-icon btn-active-light-primary" data-bs-dismiss="modal"><i class="ki-outline ki-cross fs-2"></i></div></div><div class="modal-body">' +
+                body +
+                '</div></div></div>';
+            el.replaceWith(modal);
+            return modal;
+        }
+
         function init(dialogId, addBtnId, saveBtnId, tableId, getData, setData, endpoint, getJsonData){
             var currentRow = null;
-            $(dialogId).dialog({ autoOpen:false, modal:true, width:640 });
-            $(addBtnId).click(function(){ currentRow=null; $(dialogId).dialog('open'); });
+            var modalElement = convertToModal(dialogId);
+            if (!modalElement) { return; }
+            var modal = new bootstrap.Modal(modalElement);
+            $(addBtnId).click(function(){ currentRow=null; modal.show(); });
             $(tableId).on('click','.editRow', function(){
                 currentRow = $(this).closest('tr');
                 var values = currentRow.children('td').slice(0,-1).map(function(){ return $(this).text(); }).get();
                 setData(values);
-                $(dialogId).dialog('open');
+                modal.show();
+            });
+            $(modalElement).on('hidden.bs.modal', function(){
+                $(dialogId + ' input').val('');
             });
             $(saveBtnId).click(function(){
                 var data = getData();
@@ -151,8 +174,7 @@
                         console.error(err);
                         alert('Save failed: ' + err.message);
                     });
-                $(dialogId).dialog('close');
-                $(dialogId + ' input').val('');
+                modal.hide();
             });
         }
 
