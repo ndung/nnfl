@@ -35,7 +35,7 @@
         </th:block>
 
         <th:block th:if="${stage == 2}">
-            <div th:replace="~{cards/decay :: decayCard}"></div>
+            <div th:replace="~{cards/decay :: uraniumDecayCard}"></div>
         </th:block>
 
         <th:block th:if="${stage == 1 or stage == 2}">
@@ -68,7 +68,7 @@
 <div th:replace="~{dialogs/trace-element :: traceElementDialog}"></div>
 <div th:replace="~{dialogs/element :: elementDialog}"></div>
 <div th:replace="~{dialogs/morphology :: morphologyDialog}"></div>
-<div th:replace="~{dialogs/decay :: decayDialog}"></div>
+<div th:replace="~{dialogs/decay :: uraniumDecayDialog}"></div>
 <div th:replace="~{dialogs/container :: containerDialog}"></div>
 <div th:replace="~{dialogs/general-info :: generalInfoDialog}"></div>
 <div th:replace="~{dialogs/geology :: geologyDialog}"></div>
@@ -336,17 +336,29 @@
             };
         });
 
-        init('#decayDialog','#addDecay','#saveDecay','#decayTable', function(){
-            return [$('#decayNuclide').val(), $('#decayActivity').val(), $('#decayComment').val()];
+        init('#uraniumDecayDialog','#addUraniumDecay','#saveUraniumDecay','#uraniumDecayTable', function(){
+            return [
+                $('#uraniumDecayId').val(),
+                $('#uraniumDecayStage').val(),
+                $('#uraniumDecayNuclide').val(),
+                $('#uraniumDecayActivity').val(),
+                $('#uraniumDecayUncertainty').val(),
+                $('#uraniumDecayComment').val()
+            ];
         }, function(v){
-            $('#decayNuclide').val(v[0].trim());
-            $('#decayActivity').val(v[1].trim());
-            $('#decayComment').val(v[2].trim());
+            $('#uraniumDecayId').val(v[0].trim());
+            $('#uraniumDecayStage').val(v[1].trim());
+            $('#uraniumDecayNuclide').val(v[2].trim());
+            $('#uraniumDecayActivity').val(v[3].trim());
+            $('#uraniumDecayUncertainty').val(v[4].trim());
+            $('#uraniumDecayComment').val(v[5].trim());
         }, '/decay/' + materialId + '/' + stage, function(){
             return {
-                isotopeName: $('#decayNuclide').val(),
-                activityBq: parseFloat($('#decayActivity').val() || 0),
-                notes: $('#decayComment').val()
+                id: $('#uraniumDecayId').val(),
+                isotopeName: $('#uraniumDecayNuclide').val(),
+                activityBq: parseFloat($('#uraniumDecayActivity').val() || 0),
+                activityUncertaintyBq: parseFloat($('#uraniumDecayUncertainty').val() || 0),
+                notes: $('#uraniumDecayComment').val()
             };
         });
 
