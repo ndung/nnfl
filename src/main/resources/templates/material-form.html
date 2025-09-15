@@ -529,19 +529,38 @@
         });
 
         init('#irradiationDialog','#addIrradiation','#saveIrradiation','#irradiationTable', function(){
-            return [$('#irradiationReactor').val(), $('#irradiationBurnUp').val(), $('#irradiationLoadDate').val(), $('#irradiationDischargeDate').val(), $('#irradiationNotes').val()];
+            return [
+                $('#irradiationId').val(),
+                $('#irradiationStage').val(),
+                $('#irradiationReactor').val(),
+                $('#irradiationBurnUp').val(),
+                $('#irradiationAssemblyPowerHistory').val(),
+                $('#irradiationOperatingRecordsRef').val(),
+                $('#irradiationLoadDate').val(),
+                $('#irradiationDischargeDate').val(),
+                $('#irradiationRadiationLevel').val(),
+                $('#irradiationNotes').val()];
         }, function(v){
-            $('#irradiationReactor').val(v[0].trim());
-            $('#irradiationBurnUp').val(v[1].trim());
-            $('#irradiationLoadDate').val(v[2].trim());
-            $('#irradiationDischargeDate').val(v[3].trim());
-            $('#irradiationNotes').val(v[4].trim());
+            $('#irradiationId').val(v[0].trim());
+            $('#irradiationStage').val(v[1].trim());
+            $('#irradiationReactor').val(v[2].trim());
+            $('#irradiationBurnUp').val(v[3].trim());
+            $('#irradiationAssemblyPowerHistory').val(v[4].trim());
+            $('#irradiationOperatingRecordsRef').val(v[5].trim());
+            $('#irradiationLoadDate').val(v[6].trim());
+            $('#irradiationDischargeDate').val(v[7].trim());
+            $('#irradiationRadiationLevel').val(v[8].trim());
+            $('#irradiationNotes').val(v[9].trim());
         }, '/irradiation/' + materialId + '/' + stage, function(){
             return {
+                id: $('#irradiationId').val(),
                 reactorType: $('#irradiationReactor').val(),
                 burnUp: $('#irradiationBurnUp').val(),
+                assemblyPowerHistory: $('#irradiationAssemblyPowerHistory').val(),
+                operatingRecordsRef: $('#irradiationOperatingRecordsRef').val(),
                 loadDate: $('#irradiationLoadDate').val(),
                 dischargeDate: $('#irradiationDischargeDate').val(),
+                radiationLevel: $('#irradiationRadiationLevel').val(),
                 notes: $('#irradiationNotes').val()
             };
         });
