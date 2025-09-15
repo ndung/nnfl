@@ -16,13 +16,14 @@
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Density Value</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Density Unit</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Mechanical Info</span></span></th>
-                        <th><span class="kt-table-col"><span class="kt-table-col-label">Dimension</span></span></th>
+                        <th><span class="kt-table-col"><span class="kt-table-col-label">Dimensions</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Cladding Info</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Coating Info</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Assembly Structure</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Surface Oxide</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Mass Value</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Mass Unit</span></span></th>
+                        <th><span class="kt-table-col"><span class="kt-table-col-label">Serial Numbers</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Notes</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Action</span></span></th>
                     </tr>
@@ -36,13 +37,14 @@
                         <td><span th:text="${phys.densityValue}"></span></td>
                         <td><span th:text="${phys.densityUnit}"></span></td>
                         <td><span th:text="${phys.mechanicalProperties}"></span></td>
-                        <td><span th:text="${phys.dimension}"></span></td>
+                        <td><span th:text="${phys.dimensions}"></span></td>
                         <td><span th:text="${phys.claddingInfo}"></span></td>
                         <td><span th:text="${phys.coatingInfo}"></span></td>
                         <td><span th:text="${phys.assemblyStructure}"></span></td>
                         <td><span th:text="${phys.surfaceOxideThickness}"></span></td>
                         <td><span th:text="${phys.massValue}"></span></td>
                         <td><span th:text="${phys.massUnit}"></span></td>
+                        <td><span th:text="${phys.serialNumbers}"></span></td>
                         <td><span th:text="${phys.notes}"></span></td>
                         <td class="flex gap-2">
                             <button class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost editRow">

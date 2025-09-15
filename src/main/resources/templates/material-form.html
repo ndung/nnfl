@@ -646,13 +646,14 @@
                 $('#physicalDensityValue').val(),
                 $('#physicalDensityUnit').val(),
                 $('#physicalMechanical').val(),
-                $('#physicalDimension').val(),
+                $('#physicalDimensions').val(),
                 $('#physicalCladding').val(),
                 $('#physicalCoating').val(),
                 $('#physicalAssembly').val(),
                 $('#physicalOxide').val(),
                 $('#physicalMassValue').val(),
                 $('#physicalMassUnit').val(),
+                $('#physicalSerialNumbers').val(),
                 $('#physicalNotes').val()
             ];
         }, function(v){
@@ -663,17 +664,16 @@
             $('#physicalDensityValue').val(v[4].trim());
             $('#physicalDensityUnit').val(v[5].trim());
             $('#physicalMechanical').val(v[6].trim());
-            $('#physicalDimension').val(v[7].trim());
+            $('#physicalDimensions').val(v[7].trim());
             $('#physicalCladding').val(v[8].trim());
             $('#physicalCoating').val(v[9].trim());
             $('#physicalAssembly').val(v[10].trim());
             $('#physicalOxide').val(v[11].trim());
             $('#physicalMassValue').val(v[12].trim());
             $('#physicalMassUnit').val(v[13].trim());
-            $('#physicalNotes').val(v[14].trim());
+            $('#physicalSerialNumbers').val(v[14].trim());
+            $('#physicalNotes').val(v[15].trim());
         }, '/physical/' + materialId + '/' + stage, function(){
-            var dimension = {};
-            //try { dimension = JSON.parse($('#physicalDimension').val() || '{}'); } catch(e) {}
             return {
                 id: $('#physicalId').val(),
                 densityValue: parseFloat($('#physicalDensityValue').val() || 0),
@@ -681,13 +681,14 @@
                 stateOfMatter: $('#physicalState').val(),
                 mechanicalProperties: $('#physicalMechanical').val(),
                 description: $('#physicalDescription').val(),
-                dimension: $('#physicalDimension').val(),
+                dimensions: $('#physicalDimensions').val(),
                 claddingInfo: $('#physicalCladding').val(),
                 coatingInfo: $('#physicalCoating').val(),
                 assemblyStructure: $('#physicalAssembly').val(),
                 surfaceOxideThickness: $('#physicalOxide').val(),
                 massValue: parseFloat($('#physicalMassValue').val() || 0),
                 massUnit: $('#physicalMassUnit').val(),
+                serialNumbers: $('#physicalSerialNumbers').val(),
                 notes: $('#physicalNotes').val()
             };
         });
