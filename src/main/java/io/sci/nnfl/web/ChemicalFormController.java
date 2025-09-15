@@ -62,7 +62,7 @@ public class ChemicalFormController extends BaseController{
     public String removeChemicalForm(@PathVariable("materialId") String materialId,
                                      @PathVariable("stage") Integer stage,
                                      @PathVariable("id") String id) {
-        service.removeChemicalForm(materialId, id);
+        service.removeProperty(materialId, "chemicalForms", id);
         return "redirect:/materials/new/"+materialId+"/"+stage;
     }
 }

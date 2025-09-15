@@ -50,12 +50,11 @@ public class MaterialRecordService extends BaseService {
     }
 
     @Transactional
-    public long removeChemicalForm(String materialId, String chemicalFormId) {
+    public void removeProperty(String materialId, String propertyName, String propertyId) {
         Query q = new Query(Criteria.where("_id").is(materialId)
-                .and("chemicalForms._id").is(chemicalFormId));
-        Update u = new Update().pull("chemicalForms",
-                new BasicDBObject("_id", chemicalFormId));
-        return template.updateFirst(q, u, MaterialRecord.class)
-                .getModifiedCount();
+                .and(propertyName+"._id").is(propertyId));
+        Update u = new Update().pull(propertyName,
+                new BasicDBObject("_id", propertyId));
+        template.updateFirst(q, u, MaterialRecord.class).getModifiedCount();
     }
 }
