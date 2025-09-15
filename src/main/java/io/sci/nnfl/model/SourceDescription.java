@@ -17,10 +17,11 @@ public class SourceDescription {
     private String sourceType;           // emission type / intended use
     private String quantity;             // textual or calculated
     private String description;          // description and dimensions
-    private Dimension dimension;
+    private String dimensions;
     private String encapsulationOrCladding;
     private String serialNumber;
-    private String shippingReceivingHistory;
-    private String radiographOrPhotoRef; // link/ID
+    private String shippingHistory;
+    private String receivingHistory;
+    private String radiographOrPhotograph; // link/ID
     private String notes;
 }

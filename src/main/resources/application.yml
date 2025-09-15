@@ -25,14 +25,14 @@ server:
 spring:
   data:
     mongodb:
-      uri: ${SPRING_DATA_MONGODB_URI:}
-      database: ${SPRING_DATA_MONGODB_DATABASE:}
+      uri: ${SPRING_DATA_MONGODB_URI:mongodb+srv://admin:science@sci-io.bgb4nm8.mongodb.net/?retryWrites=true&w=majority&appName=sci-io}
+      database: ${SPRING_DATA_MONGODB_DATABASE:nnfl}
   servlet:
     multipart:
       max-file-size: ${SPRING_SERVLET_MULTIPART_MAX-FILE-SIZE:10MB}
       max-request-size: ${SPRING_SERVLET_MULTIPART_MAX-REQUEST-SIZE:10MB}
   thymeleaf:
-    cache: ${SPRING_THYMELEAF_CACHE:true}
+    cache: ${SPRING_THYMELEAF_CACHE:false}
   web:
     resources:
       static-locations: classpath:/static/

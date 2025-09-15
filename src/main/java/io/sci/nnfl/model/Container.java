@@ -17,8 +17,8 @@ public class Container {
     private String id;
     private Stage stage;
     private String type;     // e.g., UF6 cylinder type
-    private BigDecimal volume;        // SI if used
-    private Dimension dimension;
-    private String serialNumber;
+    private BigDecimal volumeValue;        // SI if used
+    private String volumeUnit;
+    private String dimensions;
     private String notes;
 }

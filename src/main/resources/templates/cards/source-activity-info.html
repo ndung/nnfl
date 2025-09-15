@@ -1,12 +1,12 @@
 <div th:fragment="sourceActivityInfoCard" class="kt-card kt-card-grid h-full min-w-full">
     <div class="kt-card-header flex justify-between">
-        <h3 class="kt-card-title">Source Activity Info</h3>
-        <button type="button" id="addSourceActivityInfo" class="kt-btn kt-btn-light">Add</button>
+        <h3 class="kt-card-title">Source activity information</h3>
+        <button type="button" id="addSourceActivityInfo" class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost"><i class="ki-filled ki-additem"></i></button>
     </div>
     <div class="kt-card-table">
-        <div class="grid" data-kt-datatable="true" data-kt-datatable-page-size="5">
+        <div class="grid">
             <div class="kt-scrollable-x-auto">
-                <table id="sourceActivityInfoTable" class="kt-table kt-table-border table-fixed" data-kt-datatable-table="true">
+                <table id="sourceActivityInfoTable" class="kt-table kt-table-border table-fixed text-xs" data-kt-datatable-table="true">
                     <thead>
                     <tr>
                         <th style="width:0%"><span class="kt-table-col"><span class="kt-table-col-label" hidden>ID</span></span></th>
