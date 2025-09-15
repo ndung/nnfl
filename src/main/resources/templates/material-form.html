@@ -119,17 +119,23 @@
         });
 
         init('#elementDialog','#addElement','#saveElement','#elementTable', function(){
-            return [$('#elementName').val(), $('#elementConcentration').val(), $('#elementUncertainty').val(), $('#elementComment').val()];
+            return [$('#elementId').val(), $('#elementName').val(), $('#elementConcentration').val(), $('#elementUnit').val(), $('#elementUncertainty').val(), $('#elementBurnablePoison').val(), $('#elementComment').val()];
         }, function(v){
-            $('#elementName').val(v[0].trim());
-            $('#elementConcentration').val(v[1].trim());
-            $('#elementUncertainty').val(v[2].trim());
-            $('#elementComment').val(v[3].trim());
+            $('#elementId').val(v[0].trim());
+            $('#elementName').val(v[1].trim());
+            $('#elementConcentration').val(v[2].trim());
+            $('#elementUnit').val(v[3].trim());
+            $('#elementUncertainty').val(v[4].trim());
+            $('#elementBurnablePoison').val(v[5].trim());
+            $('#elementComment').val(v[6].trim());
         }, '/element/' + materialId + '/' + stage, function(){
             return {
+                id: $('#elementId').val(),
                 element: $('#elementName').val(),
                 concentration: parseFloat($('#elementConcentration').val() || 0),
+                unit: $('#elementUnit').val(),
                 uncertainty: parseFloat($('#elementUncertainty').val() || 0),
+                burnablePoison: $('#elementBurnablePoison').val(),
                 notes: $('#elementComment').val()
             };
         });
