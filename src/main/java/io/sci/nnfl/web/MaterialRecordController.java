@@ -83,47 +83,5 @@ public class MaterialRecordController {
         return "redirect:/materials";
     }
 
-    @PostMapping("/chemical/{materialId}/{stage}")
-    @ResponseBody
-    public ResponseEntity<Map<String, Object>> addChemical(@PathVariable("materialId") String materialId,
-                                                           @PathVariable("stage") Integer stage,
-                                                           @RequestBody ChemicalForm chemicalForm) {
-        MaterialRecord record = service.getById(materialId);
-        if (record.getChemicalForms() == null) {
-            record.setChemicalForms(new ArrayList<>());
-        }
-        if (stage==null || stage < 0 || stage>10){
-            return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
-        }
-        chemicalForm.setStage(Stage.values()[stage]);
-        if (chemicalForm.getId() == null || chemicalForm.getId().isEmpty()) {
-            chemicalForm.setId(UUID.randomUUID().toString());
-            record.getChemicalForms().add(chemicalForm);
-        } else {
-            Optional<ChemicalForm> existing = record.getChemicalForms().stream()
-                    .filter(cf -> cf.getId().equals(chemicalForm.getId()))
-                    .findFirst();
-            if (existing.isPresent()) {
-                ChemicalForm cf = existing.get();
-                cf.setStage(chemicalForm.getStage());
-                cf.setCompoundName(chemicalForm.getCompoundName());
-                cf.setStoichiometryDeviation(chemicalForm.getStoichiometryDeviation());
-                cf.setNotes(chemicalForm.getNotes());
-            } else {
-                record.getChemicalForms().add(chemicalForm);
-            }
-        }
-        service.save(record);
-        String redirect =  "/materials/new/"+materialId+"/"+stage;
-        return ResponseEntity.ok(Map.of("ok", true, "redirectUrl", redirect));
-    }
 
-
-    @PostMapping("/chemical/{materialId}/{stage}/{id}/delete")
-    public String removeChemicalForm(@PathVariable("materialId") String materialId,
-                                     @PathVariable("stage") Integer stage,
-                                     @PathVariable("id") String id) {
-        service.removeChemicalForm(materialId, id);
-        return "redirect:/materials/new/"+materialId+"/"+stage;
-    }
 }

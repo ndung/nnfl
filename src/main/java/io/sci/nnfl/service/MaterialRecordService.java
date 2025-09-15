@@ -49,6 +49,7 @@ public class MaterialRecordService extends BaseService {
         repository.deleteById(id);
     }
 
+    @Transactional
     public long removeChemicalForm(String materialId, String chemicalFormId) {
         Query q = new Query(Criteria.where("_id").is(materialId)
                 .and("chemicalForms._id").is(chemicalFormId));

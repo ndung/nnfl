@@ -4,8 +4,10 @@
 <div class="kt-container-fluid px=0">
     <div class="grid grid-cols-1 gap-5">
         <th:block th:if="${stage == 2 or stage == 3}">
-            <div th:replace="~{cards/chemical :: chemicalCard}"></div>
+            <div th:replace="~{cards/chemical-form :: chemicalCard}"></div>
         </th:block>
+
+
         <!-- Elements -->
         <div class="kt-card">
             <div class="kt-card-header flex justify-between">
@@ -277,7 +279,7 @@
     </div>
 </div>
 
-<div th:replace="~{dialogs/chemical :: chemicalDialog}"></div>
+<div th:replace="~{dialogs/chemical-form :: chemicalDialog}"></div>
 <div th:replace="~{dialogs/element :: elementDialog}"></div>
 <div th:replace="~{dialogs/isotope :: isotopeDialog}"></div>
 <div th:replace="~{dialogs/morphology :: morphologyDialog}"></div>
@@ -318,7 +320,7 @@
 
         function initEditableDialog(dialogId, addBtnId, saveBtnId, tableId, getData, setData, endpoint, getJsonData){
             var currentRow = null;
-            $(dialogId).dialog({ autoOpen:false, modal:true, width:400 });
+            $(dialogId).dialog({ autoOpen:false, modal:true, width:640 });
             $(addBtnId).click(function(){ currentRow=null; $(dialogId).dialog('open'); });
             $(tableId).on('click','.editRow', function(){
                 currentRow = $(this).closest('tr');
@@ -372,11 +374,11 @@
         initEditableDialog('#chemicalDialog','#addChemical','#saveChemical','#chemicalTable', function(){
             return [$('#chemicalId').val(), $('#chemicalName').val(), $('#chemicalDeviation').val(), $('#chemicalComment').val()];
         }, function(v){
-            $('#chemicalId').val(v[0]);
-            $('#chemicalName').val(v[2]);
-            $('#chemicalDeviation').val(v[3]);
-            $('#chemicalComment').val(v[4]);
-        }, '/materials/chemical/' + materialId + '/' + stage, function(){
+            $('#chemicalId').val(v[0].trim());
+            $('#chemicalName').val(v[2].trim());
+            $('#chemicalDeviation').val(v[3].trim());
+            $('#chemicalComment').val(v[4].trim());
+        }, '/chemical-form/' + materialId + '/' + stage, function(){
             return {
                 id: $('#chemicalId').val(),
                 compoundName: $('#chemicalName').val(),

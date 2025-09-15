@@ -1,31 +1,31 @@
 <div th:fragment="chemicalCard" class="kt-card kt-card-grid h-full min-w-full">
     <div class="kt-card-header flex justify-between">
-        <h3 class="kt-card-title">Chemical</h3>
+        <h3 class="kt-card-title">Chemical Form</h3>
         <button type="button" id="addChemical" class="kt-btn kt-btn-light">Add</button>
     </div>
     <div class="kt-card-table">
-        <div class="grid" data-kt-datatable="true" data-kt-datatable-page-size="5" id="images_datatable">
+        <div class="grid" data-kt-datatable="true" data-kt-datatable-page-size="5">
             <div class="kt-scrollable-x-auto">
                 <table id="chemicalTable" class="kt-table kt-table-border table-fixed" data-kt-datatable-table="true">
                     <thead>
                     <tr>
-                        <th class="w-[150px]">
+                        <th>
                             <span class="kt-table-col"><span class="kt-table-col-label">ID</span> </span>
                         </th>
-                        <th class="w-[150px]">
+                        <th>
                             <span class="kt-table-col"><span class="kt-table-col-label">Stage</span></span>
                         </th>
-                        <th class="w-[125px]">
+                        <th>
                             <span class="kt-table-col"><span class="kt-table-col-label">Compound name</span></span>
                         </th>
-                        <th class="w-[100px]">
+                        <th>
                             <span class="kt-table-col"><span
                                     class="kt-table-col-label">Stoichiometry Deviation</span></span>
                         </th>
-                        <th class="w-[100px]">
+                        <th>
                             <span class="kt-table-col"><span class="kt-table-col-label">Notes</span></span>
                         </th>
-                        <th class="w-[100px]">
+                        <th>
                             <span class="kt-table-col"><span class="kt-table-col-label">Action</span></span>
                         </th>
                     </tr>
@@ -52,11 +52,15 @@
                             <span th:text="${chemical.notes}"></span>
                         </td>
                         <td class="flex gap-2">
-                            <button type="button" class="kt-btn kt-btn-light editRow">Edit</button>
-                            <form th:action="@{|/materials/chemical/${material.id}/${stage}/${chemical.id}/delete|}" method="post"
+                            <button class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost editRow">
+                                <i class="ki-filled ki-notepad-edit">
+                                </i>
+                            </button>
+                            <form th:action="@{|/chemical-form/${material.id}/${stage}/${chemical.id}/delete|}" method="post"
                                           onsubmit="return confirm('Delete?');">
                                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                                <button class="kt-btn kt-btn-danger">Delete</button>
+                                <button class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost"><i class="ki-filled ki-trash">
+                                </i></button>
                             </form>
                         </td>
                     </tr>
