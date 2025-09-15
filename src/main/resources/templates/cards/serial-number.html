@@ -9,6 +9,8 @@
                 <table id="serialNumberTable" class="kt-table kt-table-border table-fixed" data-kt-datatable-table="true">
                     <thead>
                     <tr>
+                        <th style="width:0%"><span class="kt-table-col"><span class="kt-table-col-label" hidden>ID</span></span></th>
+                        <th><span class="kt-table-col"><span class="kt-table-col-label">Stage</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Serial Number</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Notes</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Action</span></span></th>
@@ -16,6 +18,8 @@
                     </thead>
                     <tbody th:each="sn : ${material.serialNumbers}">
                     <tr>
+                        <td><div><span th:text="${sn.id}" hidden></span></div></td>
+                        <td><span th:text="${sn.stage}"></span></td>
                         <td><span th:text="${sn.serialNumber}"></span></td>
                         <td><span th:text="${sn.notes}"></span></td>
                         <td class="flex gap-2">
