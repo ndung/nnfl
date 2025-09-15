@@ -547,17 +547,33 @@
         });
 
         init('#isotopeActivityDialog','#addIsotopeActivity','#saveIsotopeActivity','#isotopeActivityTable', function(){
-            return [$('#isotopeActivityName').val(), $('#isotopeActivityValue').val(), $('#isotopeActivityDate').val(), $('#isotopeActivityNotes').val()];
+            return [
+                $('#isotopeActivityId').val(),
+                $('#isotopeActivityStage').val(),
+                $('#isotopeActivityName').val(),
+                $('#isotopeActivityValue').val(),
+                $('#isotopeActivityUncertainty').val(),
+                $('#isotopeActivityDate').val(),
+                $('#isotopeActivityMajor').is(':checked'),
+                $('#isotopeActivityNotes').val()
+            ];
         }, function(v){
-            $('#isotopeActivityName').val(v[0].trim());
-            $('#isotopeActivityValue').val(v[1].trim());
-            $('#isotopeActivityDate').val(v[2].trim());
-            $('#isotopeActivityNotes').val(v[3].trim());
+            $('#isotopeActivityId').val(v[0].trim());
+            $('#isotopeActivityStage').val(v[1].trim());
+            $('#isotopeActivityName').val(v[2].trim());
+            $('#isotopeActivityValue').val(v[3].trim());
+            $('#isotopeActivityUncertainty').val(v[4].trim());
+            $('#isotopeActivityDate').val(v[5].trim());
+            $('#isotopeActivityMajor').prop('checked', v[6].trim().toLowerCase() === 'true');
+            $('#isotopeActivityNotes').val(v[7].trim());
         }, '/isotope-activity/' + materialId + '/' + stage, function(){
             return {
+                id: $('#isotopeActivityId').val(),
                 isotopeName: $('#isotopeActivityName').val(),
                 activityBq: parseFloat($('#isotopeActivityValue').val() || 0),
+                activityUncertaintyBq: parseFloat($('#isotopeActivityUncertainty').val() || 0),
                 referenceDate: $('#isotopeActivityDate').val(),
+                major: $('#isotopeActivityMajor').is(':checked'),
                 notes: $('#isotopeActivityNotes').val()
             };
         });

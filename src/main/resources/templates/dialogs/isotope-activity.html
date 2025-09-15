@@ -2,6 +2,14 @@
      id="isotopeActivityDialog" title="Edit Isotope Activity" style="display:none;">
     <div class="grid gap-5">
         <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">ID :</label>
+            <input class="kt-input" id="isotopeActivityId" disabled type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Stage :</label>
+            <input class="kt-input" id="isotopeActivityStage" disabled type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
             <label class="kt-form-label max-w-56">Isotope :</label>
             <input class="kt-input" id="isotopeActivityName" type="text"/>
         </div>
@@ -10,8 +18,16 @@
             <input class="kt-input" id="isotopeActivityValue" type="text"/>
         </div>
         <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Activity Uncertainty (Bq) :</label>
+            <input class="kt-input" id="isotopeActivityUncertainty" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
             <label class="kt-form-label max-w-56">Reference Date :</label>
             <input class="kt-input" id="isotopeActivityDate" type="date"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Major :</label>
+            <input class="kt-input" id="isotopeActivityMajor" type="checkbox"/>
         </div>
         <div class="flex items-baseline gap-2.5">
             <label class="kt-form-label max-w-56">Notes :</label>
