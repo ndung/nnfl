@@ -684,17 +684,27 @@
         });
 
         init('#sourceActivityInfoDialog','#addSourceActivityInfo','#saveSourceActivityInfo','#sourceActivityInfoTable', function(){
-            return [$('#sourceActivityValue').val(), $('#sourceActivityDate').val(), $('#sourceActivityNeutron').val(), $('#sourceActivityNotes').val()];
+            return [
+                $('#sourceActivityId').val(),
+                $('#sourceActivityStage').val(),
+                $('#sourceActivityValue').val(),
+                $('#sourceActivityDate').val(),
+                $('#sourceActivityNeutron').val(),
+                $('#sourceActivityNotes').val()
+            ];
         }, function(v){
-            $('#sourceActivityValue').val(v[0].trim());
-            $('#sourceActivityDate').val(v[1].trim());
-            $('#sourceActivityNeutron').val(v[2].trim());
-            $('#sourceActivityNotes').val(v[3].trim());
+            $('#sourceActivityId').val(v[0].trim());
+            $('#sourceActivityStage').val(v[1].trim());
+            $('#sourceActivityValue').val(v[2].trim());
+            $('#sourceActivityDate').val(v[3].trim());
+            $('#sourceActivityNeutron').val(v[4].trim());
+            $('#sourceActivityNotes').val(v[5].trim());
         }, '/source-activity-info/' + materialId + '/' + stage, function(){
             return {
+                id: $('#sourceActivityId').val(),
                 activityBq: parseFloat($('#sourceActivityValue').val() || 0),
                 referenceDate: $('#sourceActivityDate').val(),
-                neutronIntensityPerSec: $('#sourceActivityNeutron').val(),
+                neutronIntensityPerSec: parseFloat($('#sourceActivityNeutron').val() || 0),
                 notes: $('#sourceActivityNotes').val()
             };
         });

@@ -9,6 +9,8 @@
                 <table id="sourceActivityInfoTable" class="kt-table kt-table-border table-fixed" data-kt-datatable-table="true">
                     <thead>
                     <tr>
+                        <th style="width:0%"><span class="kt-table-col"><span class="kt-table-col-label" hidden>ID</span></span></th>
+                        <th><span class="kt-table-col"><span class="kt-table-col-label">Stage</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Activity (Bq)</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Reference Date</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Neutron Intensity</span></span></th>
@@ -18,6 +20,8 @@
                     </thead>
                     <tbody th:each="sai : ${material.sourceActivityInfo}">
                     <tr>
+                        <td><span th:text="${sai.id}" hidden></span></td>
+                        <td><span th:text="${sai.stage}"></span></td>
                         <td><span th:text="${sai.activityBq}"></span></td>
                         <td><span th:text="${sai.referenceDate}"></span></td>
                         <td><span th:text="${sai.neutronIntensityPerSec}"></span></td>
