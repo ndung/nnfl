@@ -672,16 +672,27 @@
         });
 
         init('#serialNumberDialog','#addSerialNumber','#saveSerialNumber','#serialNumberTable', function(){
-            return [$('#serialNumberValue').val(), $('#serialNumberNotes').val()];
+            return [
+                $('#serialNumberId').val(),
+                $('#serialNumberStage').val() || stage,
+                $('#serialNumberValue').val(),
+                $('#serialNumberNotes').val()
+            ];
         }, function(v){
-            $('#serialNumberValue').val(v[0].trim());
-            $('#serialNumberNotes').val(v[1].trim());
+            $('#serialNumberId').val(v[0].trim());
+            $('#serialNumberStage').val(v[1].trim());
+            $('#serialNumberValue').val(v[2].trim());
+            $('#serialNumberNotes').val(v[3].trim());
         }, '/serial-number/' + materialId + '/' + stage, function(){
             return {
+                id: $('#serialNumberId').val(),
+                stage: $('#serialNumberStage').val() || stage,
                 serialNumber: $('#serialNumberValue').val(),
                 notes: $('#serialNumberNotes').val()
             };
         });
+
+        $('#addSerialNumber').click(function(){ $('#serialNumberStage').val(stage); });
 
         init('#sourceActivityInfoDialog','#addSourceActivityInfo','#saveSourceActivityInfo','#sourceActivityInfoTable', function(){
             return [$('#sourceActivityValue').val(), $('#sourceActivityDate').val(), $('#sourceActivityNeutron').val(), $('#sourceActivityNotes').val()];
