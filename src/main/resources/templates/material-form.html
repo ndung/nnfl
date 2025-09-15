@@ -168,17 +168,21 @@
         });
 
         init('#isotopeDialog','#addIsotope','#saveIsotope','#isotopeTable', function(){
-            return [$('#isotopeName').val(), $('#isotopeRatio').val(), $('#isotopeUncertainty').val(), $('#isotopeComment').val()];
+            return [$('#isotopeId').val(), $('#isotopeName').val(), $('#isotopeRatio').val(), $('#isotopeUncertainty').val(), $('#isotopeUnit').val(), $('#isotopeComment').val()];
         }, function(v){
-            $('#isotopeName').val(v[0].trim());
-            $('#isotopeRatio').val(v[1].trim());
-            $('#isotopeUncertainty').val(v[2].trim());
-            $('#isotopeComment').val(v[3].trim());
+            $('#isotopeId').val(v[0].trim());
+            $('#isotopeName').val(v[1].trim());
+            $('#isotopeRatio').val(v[2].trim());
+            $('#isotopeUncertainty').val(v[3].trim());
+            $('#isotopeUnit').val(v[4].trim());
+            $('#isotopeComment').val(v[5].trim());
         }, '/isotope/' + materialId + '/' + stage, function(){
             return {
+                id: $('#isotopeId').val(),
                 name: $('#isotopeName').val(),
                 value: parseFloat($('#isotopeRatio').val() || 0),
                 uncertainty: parseFloat($('#isotopeUncertainty').val() || 0),
+                unit: $('#isotopeUnit').val(),
                 notes: $('#isotopeComment').val()
             };
         });
