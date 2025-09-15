@@ -6,14 +6,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import org.springframework.data.annotation.Id;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Element {
-
-    private Stage stage;
+      @Id
+      private String id;
+      private Stage stage;
     private String element;
     private BigDecimal concentration;
     private String unit;

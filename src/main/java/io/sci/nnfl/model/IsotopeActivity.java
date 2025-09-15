@@ -7,12 +7,15 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import org.springframework.data.annotation.Id;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class IsotopeActivity {
+    @Id
+    private String id;
     private Stage stage;
     private String isotopeName;             // major or minor
     private BigDecimal activityBq;

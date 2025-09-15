@@ -6,11 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import org.springframework.data.annotation.Id;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class GeneralInfo {
+    @Id
+    private String id;
     private Stage stage;
     private LocalDate dataRecordDate;
     private String custodian;

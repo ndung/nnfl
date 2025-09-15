@@ -6,12 +6,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import org.springframework.data.annotation.Id;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class ProcessInformation {
+    @Id
+    private String id;
     private Stage stage;
     private String processTypeOrDescription;   // milling, fluorination, fab, repro...
     private String locationOfProcessingSite;
