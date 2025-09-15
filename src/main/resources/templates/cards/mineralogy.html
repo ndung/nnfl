@@ -9,7 +9,9 @@
                 <table id="mineralogyTable" class="kt-table kt-table-border table-fixed" data-kt-datatable-table="true">
                     <thead>
                     <tr>
+                        <th style="width:0%"><span class="kt-table-col"><span class="kt-table-col-label" hidden>ID</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Minerals Present</span></span></th>
+                        <th><span class="kt-table-col"><span class="kt-table-col-label">Mineral Chemistry</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Volume %</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Notes</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Action</span></span></th>
@@ -17,7 +19,9 @@
                     </thead>
                     <tbody th:each="min : ${material.mineralogy}">
                     <tr>
+                        <td><span th:text="${min.id}" hidden></span></td>
                         <td><span th:text="${min.mineralsPresent}"></span></td>
+                        <td><span th:text="${min.mineralChemistry}"></span></td>
                         <td><span th:text="${min.volumePercentages}"></span></td>
                         <td><span th:text="${min.notes}"></span></td>
                         <td class="flex gap-2">
