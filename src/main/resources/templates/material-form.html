@@ -327,14 +327,18 @@
         });
 
         init('#mineralogyDialog','#addMineralogy','#saveMineralogy','#mineralogyTable', function(){
-            return [$('#mineralogyMinerals').val(), $('#mineralogyVolume').val(), $('#mineralogyNotes').val()];
+            return [$('#mineralogyId').val(), $('#mineralogyMinerals').val(), $('#mineralogyChemistry').val(), $('#mineralogyVolume').val(), $('#mineralogyNotes').val()];
         }, function(v){
-            $('#mineralogyMinerals').val(v[0].trim());
-            $('#mineralogyVolume').val(v[1].trim());
-            $('#mineralogyNotes').val(v[2].trim());
+            $('#mineralogyId').val(v[0].trim());
+            $('#mineralogyMinerals').val(v[1].trim());
+            $('#mineralogyChemistry').val(v[2].trim());
+            $('#mineralogyVolume').val(v[3].trim());
+            $('#mineralogyNotes').val(v[4].trim());
         }, '/mineralogy/' + materialId + '/' + stage, function(){
             return {
+                id: $('#mineralogyId').val(),
                 mineralsPresent: $('#mineralogyMinerals').val(),
+                mineralChemistry: $('#mineralogyChemistry').val(),
                 volumePercentages: parseFloat($('#mineralogyVolume').val() || 0),
                 notes: $('#mineralogyNotes').val()
             };
