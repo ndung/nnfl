@@ -534,7 +534,7 @@
             $('#physicalNotes').val(v[14].trim());
         }, '/physical/' + materialId + '/' + stage, function(){
             var dimension = {};
-            try { dimension = JSON.parse($('#physicalDimension').val() || '{}'); } catch(e) {}
+            //try { dimension = JSON.parse($('#physicalDimension').val() || '{}'); } catch(e) {}
             return {
                 id: $('#physicalId').val(),
                 densityValue: parseFloat($('#physicalDensityValue').val() || 0),
@@ -542,13 +542,13 @@
                 stateOfMatter: $('#physicalState').val(),
                 mechanicalProperties: $('#physicalMechanical').val(),
                 description: $('#physicalDescription').val(),
-                dimension: dimension,
+                dimension: $('#physicalDimension').val(),
                 claddingInfo: $('#physicalCladding').val(),
                 coatingInfo: $('#physicalCoating').val(),
                 assemblyStructure: $('#physicalAssembly').val(),
                 surfaceOxideThickness: $('#physicalOxide').val(),
                 massValue: parseFloat($('#physicalMassValue').val() || 0),
-                massUnit: parseFloat($('#physicalMassUnit').val() || 0),
+                massUnit: $('#physicalMassUnit').val(),
                 notes: $('#physicalNotes').val()
             };
         });

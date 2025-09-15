@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 import java.math.BigDecimal;
-import java.util.Map;
 
 @Data
 @NoArgsConstructor
@@ -22,7 +21,7 @@ public class Physical {
     private String stateOfMatter;           // solid/liquid/gas
     private String mechanicalProperties;    // e.g., hardness, strength
     private String description;             // pellet/rod/plate description
-    private Map<String, Measurement> dimension;
+    private String dimension;
     private String claddingInfo;
     private String coatingInfo;
     private String assemblyStructure;
