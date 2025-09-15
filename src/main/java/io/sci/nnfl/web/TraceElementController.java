@@ -1,6 +1,6 @@
 package io.sci.nnfl.web;
 
-import io.sci.nnfl.model.Geology;
+import io.sci.nnfl.model.Element;
 import io.sci.nnfl.model.MaterialRecord;
 import io.sci.nnfl.model.Stage;
 import io.sci.nnfl.service.MaterialRecordService;
@@ -13,11 +13,11 @@ import java.util.Map;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/geology")
-public class GeologyController extends BaseController {
+@RequestMapping("/trace-element")
+public class TraceElementController extends BaseController {
     private final MaterialRecordService service;
 
-    public GeologyController(MaterialRecordService service) {
+    public TraceElementController(MaterialRecordService service) {
         this.service = service;
     }
 
@@ -25,22 +25,20 @@ public class GeologyController extends BaseController {
     @ResponseBody
     public ResponseEntity<Map<String, Object>> save(@PathVariable String materialId,
                                                     @PathVariable Integer stage,
-                                                    @RequestBody Geology geology) {
+                                                    @RequestBody Element element) {
         MaterialRecord record = service.getById(materialId);
-        if (record.getGeology() == null) {
-            record.setGeology(new ArrayList<>());
+        if (record.getTraceElements() == null) {
+            record.setTraceElements(new ArrayList<>());
         }
         if (stage == null || stage < 0 || stage >= Stage.values().length) {
             return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
         }
-        System.out.println("stage:"+stage);
-        geology.setStage(Stage.values()[stage]);
-        System.out.println("stage:"+geology.getStage());
-        if (geology.getId() == null || geology.getId().isEmpty()) {
-            geology.setId(UUID.randomUUID().toString());
+        element.setStage(Stage.values()[stage]);
+        if (element.getId() == null || element.getId().isEmpty()) {
+            element.setId(UUID.randomUUID().toString());
         }
-        record.getGeology().removeIf(g -> g.getId().equals(geology.getId()));
-        record.getGeology().add(geology);
+        record.getTraceElements().removeIf(e -> e.getId().equals(element.getId()));
+        record.getTraceElements().add(element);
         service.save(record);
         String redirect = "/materials/new/" + materialId + "/" + stage;
         return ResponseEntity.ok(Map.of("ok", true, "redirectUrl", redirect));
@@ -50,7 +48,7 @@ public class GeologyController extends BaseController {
     public String delete(@PathVariable String materialId,
                          @PathVariable Integer stage,
                          @PathVariable String id) {
-        service.removeProperty(materialId, "geology", id);
+        service.removeProperty(materialId, "traceElements", id);
         return "redirect:/materials/new/" + materialId + "/" + stage;
     }
 }

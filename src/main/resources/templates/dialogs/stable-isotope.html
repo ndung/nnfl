@@ -1,0 +1,37 @@
+<div th:fragment="stableIsotopeDialog"
+     id="stableIsotopeDialog" title="Edit Stable Isotope" style="display:none;">
+    <div class="grid gap-5">
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">ID :</label>
+            <input class="kt-input" id="stableIsotopeId" disabled type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Stage :</label>
+            <input class="kt-input" id="stableIsotopeStage" disabled type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Isotope Ratio Name :</label>
+            <input class="kt-input" id="stableIsotopeName" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Isotope Ratio Value :</label>
+            <input class="kt-input" id="stableIsotopeRatio" type="number"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Uncertainty :</label>
+            <input class="kt-input" id="stableIsotopeUncertainty" type="number"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Unit :</label>
+            <input class="kt-input" id="stableIsotopeUnit" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Comment(s) :</label>
+            <input class="kt-input" id="stableIsotopeComment" type="text"/>
+        </div>
+        <div class="flex justify-end gap-2">
+            <button type="button" id="saveStableIsotope" class="kt-btn kt-btn-primary">Save</button>
+            <button type="button" class="kt-btn" onclick="$('#stableIsotopeDialog').dialog('close');">Cancel</button>
+        </div>
+    </div>
+</div>

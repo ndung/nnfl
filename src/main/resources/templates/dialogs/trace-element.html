@@ -1,41 +1,39 @@
-<div th:fragment="uraniumDialog"
-     id="uraniumDialog" title="Edit Data" style="display:none;">
+<div th:fragment="traceElementDialog" id="traceElementDialog" title="Trace Element" style="display:none;">
     <div class="grid gap-5">
         <div class="flex items-baseline gap-2.5">
             <label class="kt-form-label max-w-56">ID :</label>
-            <input class="kt-input" id="uraniumId" disabled type="text"/>
+            <input class="kt-input" id="traceElementId" disabled type="text"/>
         </div>
         <div class="flex items-baseline gap-2.5">
             <label class="kt-form-label max-w-56">Stage :</label>
-            <input class="kt-input" id="uraniumStage" disabled type="text"/>
+            <input class="kt-input" id="traceElementStage" disabled type="text"/>
         </div>
         <div class="flex items-baseline gap-2.5">
             <label class="kt-form-label max-w-56">Element Name :</label>
-            <input class="kt-input" id="uraniumName" type="text"/>
+            <input class="kt-input" id="traceElementName" type="text"/>
         </div>
         <div class="flex items-baseline gap-2.5">
             <label class="kt-form-label max-w-56">Element Concentration :</label>
-            <input class="kt-input" id="uraniumConcentration" type="number"/>
+            <input class="kt-input" id="traceElementConcentration" type="number"/>
         </div>
         <div class="flex items-baseline gap-2.5">
             <label class="kt-form-label max-w-56">Element Unit :</label>
-            <input class="kt-input" id="uraniumUnit" type="text"/>
+            <input class="kt-input" id="traceElementUnit" type="text"/>
         </div>
         <div class="flex items-baseline gap-2.5">
             <label class="kt-form-label max-w-56">Element Uncertainty :</label>
-            <input class="kt-input" id="uraniumUncertainty" type="number"/>
+            <input class="kt-input" id="traceElementUncertainty" type="number"/>
         </div>
         <div class="flex items-baseline gap-2.5">
             <label class="kt-form-label max-w-56">Burnable Poison :</label>
-            <input class="kt-input" id="uraniumBurnablePoison" type="text"/>
+            <input class="kt-input" id="traceElementBurnablePoison" type="text"/>
         </div>
         <div class="flex items-baseline gap-2.5">
             <label class="kt-form-label max-w-56">Comment(s) :</label>
-            <input class="kt-input" id="uraniumComment" type="text"/>
+            <input class="kt-input" id="traceElementComment" type="text"/>
         </div>
         <div class="flex justify-end gap-2">
-            <button type="button" id="saveUranium" class="kt-btn kt-btn-primary">Save</button>
-            <button type="button" class="kt-btn" onclick="$('#uraniumDialog').dialog('close');">Cancel</button>
+            <button type="button" id="saveTraceElement" class="kt-btn kt-btn-primary">Save</button>
         </div>
     </div>
 </div>

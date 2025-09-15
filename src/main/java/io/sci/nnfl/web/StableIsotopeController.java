@@ -13,11 +13,11 @@ import java.util.Map;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/isotope")
-public class IsotopeController extends BaseController {
+@RequestMapping("/stable-isotope")
+public class StableIsotopeController extends BaseController {
     private final MaterialRecordService service;
 
-    public IsotopeController(MaterialRecordService service) {
+    public StableIsotopeController(MaterialRecordService service) {
         this.service = service;
     }
 
@@ -27,8 +27,8 @@ public class IsotopeController extends BaseController {
                                                     @PathVariable Integer stage,
                                                     @RequestBody IsotopeRatio isotope) {
         MaterialRecord record = service.getById(materialId);
-        if (record.getUraniumIsotopes() == null) {
-            record.setUraniumIsotopes(new ArrayList<>());
+        if (record.getStableIsotopes() == null) {
+            record.setStableIsotopes(new ArrayList<>());
         }
         if (stage == null || stage < 0 || stage >= Stage.values().length) {
             return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
@@ -37,8 +37,8 @@ public class IsotopeController extends BaseController {
         if (isotope.getId() == null || isotope.getId().isEmpty()) {
             isotope.setId(UUID.randomUUID().toString());
         }
-        record.getUraniumIsotopes().removeIf(i -> i.getId().equals(isotope.getId()));
-        record.getUraniumIsotopes().add(isotope);
+        record.getStableIsotopes().removeIf(i -> i.getId().equals(isotope.getId()));
+        record.getStableIsotopes().add(isotope);
         service.save(record);
         String redirect = "/materials/new/" + materialId + "/" + stage;
         return ResponseEntity.ok(Map.of("ok", true, "redirectUrl", redirect));
@@ -48,7 +48,7 @@ public class IsotopeController extends BaseController {
     public String delete(@PathVariable String materialId,
                          @PathVariable Integer stage,
                          @PathVariable String id) {
-        service.removeProperty(materialId, "uraniumIsotopes", id);
+        service.removeProperty(materialId, "stableIsotopes", id);
         return "redirect:/materials/new/" + materialId + "/" + stage;
     }
 }

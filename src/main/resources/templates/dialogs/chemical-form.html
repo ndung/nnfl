@@ -1,9 +1,13 @@
 <div th:fragment="chemicalDialog"
-     id="chemicalDialog" title="Edit Chemical" style="display:none;">
+     id="chemicalDialog" title="Chemical form" style="display:none;">
     <div class="grid gap-5">
         <div class="flex items-baseline gap-2.5">
             <label class="kt-form-label max-w-56">ID :</label>
             <input class="kt-input" id="chemicalId" disabled type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Stage :</label>
+            <input class="kt-input" id="chemicalStage" disabled type="text"/>
         </div>
         <div class="flex items-baseline gap-2.5">
             <label class="kt-form-label max-w-56">Compound Name :</label>

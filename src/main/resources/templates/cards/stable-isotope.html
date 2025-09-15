@@ -1,0 +1,47 @@
+<div th:fragment="stableIsotopeCard" class="kt-card kt-card-grid h-full min-w-full">
+    <div class="kt-card-header flex justify-between">
+        <h3 class="kt-card-title">Stable isotopes</h3>
+        <button type="button" id="addStableIsotope" class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost"><i class="ki-filled ki-additem"></i></button>
+    </div>
+    <div class="kt-card-table">
+        <div class="grid">
+            <div class="kt-scrollable-x-auto">
+                <table id="stableIsotopeTable" class="kt-table kt-table-border table-fixed text-xs" data-kt-datatable-table="true">
+                    <thead>
+                    <tr>
+                        <th style="width:0%"><span class="kt-table-col"><span class="kt-table-col-label" hidden>ID</span></span></th>
+                        <th><span class="kt-table-col"><span class="kt-table-col-label">Stage</span></span></th>
+                        <th><span class="kt-table-col"><span class="kt-table-col-label">Isotope Ratio Name</span></span></th>
+                        <th><span class="kt-table-col"><span class="kt-table-col-label">Ratio Value</span></span></th>
+                        <th><span class="kt-table-col"><span class="kt-table-col-label">Uncertainty</span></span></th>
+                        <th><span class="kt-table-col"><span class="kt-table-col-label">Unit</span></span></th>
+                        <th><span class="kt-table-col"><span class="kt-table-col-label">Notes</span></span></th>
+                        <th><span class="kt-table-col"><span class="kt-table-col-label">Action</span></span></th>
+                    </tr>
+                    </thead>
+                    <tbody th:each="iso : ${material.stableIsotopes}">
+                    <tr>
+                        <td><span th:text="${iso.id}" hidden></span></td>
+                        <td><span th:text="${iso.stage}"></span></td>
+                        <td><span th:text="${iso.name}"></span></td>
+                        <td><span th:text="${iso.value}"></span></td>
+                        <td><span th:text="${iso.uncertainty}"></span></td>
+                        <td><span th:text="${iso.unit}"></span></td>
+                        <td><span th:text="${iso.notes}"></span></td>
+                        <td class="flex gap-2">
+                            <button class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost editRow">
+                                <i class="ki-filled ki-notepad-edit"></i>
+                            </button>
+                            <form th:action="@{|/stable-isotope/${material.id}/${stage}/${iso.id}/delete|}" method="post" onsubmit="return confirm('Delete?');">
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                <button class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost"><i class="ki-filled ki-trash"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

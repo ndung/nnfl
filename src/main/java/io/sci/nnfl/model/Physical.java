@@ -6,6 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
+import java.math.BigDecimal;
+import java.util.Map;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,15 +17,17 @@ public class Physical {
     @Id
     private String id;
     private Stage stage;
-    private Measurement density;
+    private BigDecimal densityValue;
+    private String densityUnit;
     private String stateOfMatter;           // solid/liquid/gas
     private String mechanicalProperties;    // e.g., hardness, strength
     private String description;             // pellet/rod/plate description
-    private Dimension dimension;
+    private Map<String, Measurement> dimension;
     private String claddingInfo;
     private String coatingInfo;
     private String assemblyStructure;
     private String surfaceOxideThickness;
-    private Measurement mass;
+    private BigDecimal massValue;
+    private BigDecimal massUnit;
     private String notes;
 }

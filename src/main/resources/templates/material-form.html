@@ -10,27 +10,50 @@
             <div th:replace="~{cards/geology :: geologyCard}"></div>
         </th:block>
 
-        <th:block th:if="${stage == 1}">
-            <div th:replace="~{cards/mineralogy :: mineralogyCard}"></div>
-        </th:block>
-
-        <th:block th:if="${stage == 1}">
-            <div th:replace="~{cards/uranium :: uraniumCard}"></div>
-        </th:block>
-
         <th:block th:if="${stage == 2 or stage == 3}">
             <div th:replace="~{cards/chemical-form :: chemicalCard}"></div>
         </th:block>
 
+        <th:block th:if="${stage == 1}">
+            <div th:replace="~{cards/mineralogy :: mineralogyCard}"></div>
+        </th:block>
+
+        <th:block th:if="${stage == 2 or stage == 3}">
+            <div th:replace="~{cards/physical :: physicalCard}"></div>
+        </th:block>
+
+        <th:block th:if="${stage == 2 or stage == 3}">
+            <div th:replace="~{cards/morphology :: morphologyCard}"></div>
+        </th:block>
+
+        <th:block th:if="${stage == 1 or stage == 2}">
+            <div th:replace="~{cards/uranium :: uraniumCard}"></div>
+        </th:block>
+
+        <th:block th:if="${stage == 1 or stage == 2}">
+            <div th:replace="~{cards/uranium-isotope :: uraniumIsotopeCard}"></div>
+        </th:block>
+
+        <th:block th:if="${stage == 2}">
+            <div th:replace="~{cards/decay :: decayCard}"></div>
+        </th:block>
+
+        <th:block th:if="${stage == 1 or stage == 2}">
+            <div th:replace="~{cards/stable-isotope :: stableIsotopeCard}"></div>
+        </th:block>
+
+        <th:block th:if="${stage == 1 or stage == 2}">
+            <div th:replace="~{cards/trace-element :: traceElementCard}"></div>
+        </th:block>
+
+        <th:block th:if="${stage == 2}">
+            <div th:replace="~{cards/process-info :: processInfoCard}"></div>
+        </th:block>
+
         <div th:replace="~{cards/element :: elementCard}"></div>
-        <div th:replace="~{cards/isotope :: isotopeCard}"></div>
-        <div th:replace="~{cards/morphology :: morphologyCard}"></div>
-        <div th:replace="~{cards/decay :: decayCard}"></div>
         <div th:replace="~{cards/container :: containerCard}"></div>
         <div th:replace="~{cards/irradiation :: irradiationCard}"></div>
         <div th:replace="~{cards/isotope-activity :: isotopeActivityCard}"></div>
-        <div th:replace="~{cards/physical :: physicalCard}"></div>
-        <div th:replace="~{cards/process-info :: processInfoCard}"></div>
         <div th:replace="~{cards/serial-number :: serialNumberCard}"></div>
         <div th:replace="~{cards/source-activity-info :: sourceActivityInfoCard}"></div>
         <div th:replace="~{cards/source-description :: sourceDescriptionCard}"></div>
@@ -40,8 +63,10 @@
 
 <div th:replace="~{dialogs/chemical-form :: chemicalDialog}"></div>
 <div th:replace="~{dialogs/uranium :: uraniumDialog}"></div>
+<div th:replace="~{dialogs/uranium-isotope :: uraniumIsotopeDialog}"></div>
+<div th:replace="~{dialogs/stable-isotope :: stableIsotopeDialog}"></div>
+<div th:replace="~{dialogs/trace-element :: traceElementDialog}"></div>
 <div th:replace="~{dialogs/element :: elementDialog}"></div>
-<div th:replace="~{dialogs/isotope :: isotopeDialog}"></div>
 <div th:replace="~{dialogs/morphology :: morphologyDialog}"></div>
 <div th:replace="~{dialogs/decay :: decayDialog}"></div>
 <div th:replace="~{dialogs/container :: containerDialog}"></div>
@@ -108,9 +133,15 @@
         }
 
         init('#chemicalDialog','#addChemical','#saveChemical','#chemicalTable', function(){
-            return [$('#chemicalId').val(), $('#chemicalName').val(), $('#chemicalDeviation').val(), $('#chemicalComment').val()];
+            return [
+                $('#chemicalId').val(),
+                $('#chemicalStage').val(),
+                $('#chemicalName').val(),
+                $('#chemicalDeviation').val(),
+                $('#chemicalComment').val()];
         }, function(v){
             $('#chemicalId').val(v[0].trim());
+            $('#chemicalStage').val(v[1].trim());
             $('#chemicalName').val(v[2].trim());
             $('#chemicalDeviation').val(v[3].trim());
             $('#chemicalComment').val(v[4].trim());
@@ -124,26 +155,123 @@
         });
 
         init('#uraniumDialog','#addUranium','#saveUranium','#uraniumTable', function(){
-            return [$('#elementId').val(), $('#elementName').val(), $('#elementConcentration').val(), $('#elementUnit').val(), $('#elementUncertainty').val(), $('#elementBurnablePoison').val(), $('#elementComment').val()];
+            return [
+                $('#uraniumId').val(),
+                $('#uraniumStage').val(),
+                $('#uraniumName').val(),
+                $('#uraniumConcentration').val(),
+                $('#uraniumUnit').val(),
+                $('#uraniumUncertainty').val(),
+                $('#uraniumBurnablePoison').val(),
+                $('#uraniumComment').val()];
         }, function(v){
-            $('#elementId').val(v[0].trim());
-            $('#elementName').val(v[1].trim());
-            $('#elementConcentration').val(v[2].trim());
-            $('#elementUnit').val(v[3].trim());
-            $('#elementUncertainty').val(v[4].trim());
-            $('#elementBurnablePoison').val(v[5].trim());
-            $('#elementComment').val(v[6].trim());
+            $('#uraniumId').val(v[0].trim());
+            $('#uraniumStage').val(v[1].trim());
+            $('#uraniumName').val(v[2].trim());
+            $('#uraniumConcentration').val(v[3].trim());
+            $('#uraniumUnit').val(v[4].trim());
+            $('#uraniumUncertainty').val(v[5].trim());
+            $('#uraniumBurnablePoison').val(v[6].trim());
+            $('#uraniumComment').val(v[7].trim());
         }, '/uranium/' + materialId + '/' + stage, function(){
             return {
-                id: $('#elementId').val(),
-                element: $('#elementName').val(),
-                concentration: parseFloat($('#elementConcentration').val() || 0),
-                unit: $('#elementUnit').val(),
-                uncertainty: parseFloat($('#elementUncertainty').val() || 0),
-                burnablePoison: $('#elementBurnablePoison').val(),
-                notes: $('#elementComment').val()
+                id: $('#uraniumId').val(),
+                element: $('#uraniumName').val(),
+                concentration: parseFloat($('#uraniumConcentration').val() || 0),
+                unit: $('#uraniumUnit').val(),
+                uncertainty: parseFloat($('#uraniumUncertainty').val() || 0),
+                burnablePoison: $('#uraniumBurnablePoison').val(),
+                notes: $('#uraniumComment').val()
             };
         });
+
+        init('#uraniumIsotopeDialog','#addUraniumIsotope','#saveUraniumIsotope','#uraniumIsotopeTable', function(){
+            return [
+                $('#uraniumIsotopeId').val(),
+                $('#uraniumIsotopeStage').val(),
+                $('#uraniumIsotopeName').val(),
+                $('#uraniumIsotopeRatio').val(),
+                $('#uraniumIsotopeUncertainty').val(),
+                $('#uraniumIsotopeUnit').val(),
+                $('#uraniumIsotopeComment').val()];
+        }, function(v){
+            $('#uraniumIsotopeId').val(v[0].trim());
+            $('#uraniumIsotopeStage').val(v[1].trim());
+            $('#uraniumIsotopeName').val(v[2].trim());
+            $('#uraniumIsotopeRatio').val(v[3].trim());
+            $('#uraniumIsotopeUncertainty').val(v[4].trim());
+            $('#uraniumIsotopeUnit').val(v[5].trim());
+            $('#uraniumIsotopeComment').val(v[6].trim());
+        }, '/uranium-isotope/' + materialId + '/' + stage, function(){
+            return {
+                id: $('#uraniumIsotopeId').val(),
+                name: $('#uraniumIsotopeName').val(),
+                value: parseFloat($('#uraniumIsotopeRatio').val() || 0),
+                uncertainty: parseFloat($('#uraniumIsotopeUncertainty').val() || 0),
+                unit: $('#uraniumIsotopeUnit').val(),
+                notes: $('#uraniumIsotopeComment').val()
+            };
+        })
+
+        init('#stableIsotopeDialog','#addStableIsotope','#saveStableIsotope','#stableIsotopeTable', function(){
+            return [
+                $('#stableIsotopeId').val(),
+                $('#stableIsotopeStage').val(),
+                $('#stableIsotopeName').val(),
+                $('#stableIsotopeRatio').val(),
+                $('#stableIsotopeUncertainty').val(),
+                $('#stableIsotopeUnit').val(),
+                $('#stableIsotopeComment').val()];
+        }, function(v){
+            $('#stableIsotopeId').val(v[0].trim());
+            $('#stableIsotopeStage').val(v[1].trim());
+            $('#stableIsotopeName').val(v[2].trim());
+            $('#stableIsotopeRatio').val(v[3].trim());
+            $('#stableIsotopeUncertainty').val(v[4].trim());
+            $('#stableIsotopeUnit').val(v[5].trim());
+            $('#stableIsotopeComment').val(v[6].trim());
+        }, '/stable-isotope/' + materialId + '/' + stage, function(){
+            return {
+                id: $('#stableIsotopeId').val(),
+                name: $('#stableIsotopeName').val(),
+                value: parseFloat($('#stableIsotopeRatio').val() || 0),
+                uncertainty: parseFloat($('#stableIsotopeUncertainty').val() || 0),
+                unit: $('#stableIsotopeUnit').val(),
+                notes: $('#stableIsotopeComment').val()
+            };
+        });
+
+        init('#traceElementDialog','#addTraceElement','#saveTraceElement','#traceElementTable', function(){
+            return [
+                $('#traceElementId').val(),
+                $('#traceElementStage').val(),
+                $('#traceElementName').val(),
+                $('#traceElementConcentration').val(),
+                $('#traceElementUnit').val(),
+                $('#traceElementUncertainty').val(),
+                $('#traceElementBurnablePoison').val(),
+                $('#traceElementComment').val()];
+        }, function(v){
+            $('#traceElementId').val(v[0].trim());
+            $('#traceElementStage').val(v[1].trim());
+            $('#traceElementName').val(v[2].trim());
+            $('#traceElementConcentration').val(v[3].trim());
+            $('#traceElementUnit').val(v[4].trim());
+            $('#traceElementUncertainty').val(v[5].trim());
+            $('#traceElementBurnablePoison').val(v[6].trim());
+            $('#traceElementComment').val(v[7].trim());
+        }, '/trace-element/' + materialId + '/' + stage, function(){
+            return {
+                id: $('#traceElementId').val(),
+                element: $('#traceElementName').val(),
+                concentration: parseFloat($('#traceElementConcentration').val() || 0),
+                unit: $('#traceElementUnit').val(),
+                uncertainty: parseFloat($('#traceElementUncertainty').val() || 0),
+                burnablePoison: $('#traceElementBurnablePoison').val(),
+                notes: $('#traceElementComment').val()
+            };
+        });
+
 
         init('#elementDialog','#addElement','#saveElement','#elementTable', function(){
             return [$('#elementId').val(), $('#elementName').val(), $('#elementConcentration').val(), $('#elementUnit').val(), $('#elementUncertainty').val(), $('#elementBurnablePoison').val(), $('#elementComment').val()];
@@ -164,26 +292,6 @@
                 uncertainty: parseFloat($('#elementUncertainty').val() || 0),
                 burnablePoison: $('#elementBurnablePoison').val(),
                 notes: $('#elementComment').val()
-            };
-        });
-
-        init('#isotopeDialog','#addIsotope','#saveIsotope','#isotopeTable', function(){
-            return [$('#isotopeId').val(), $('#isotopeName').val(), $('#isotopeRatio').val(), $('#isotopeUncertainty').val(), $('#isotopeUnit').val(), $('#isotopeComment').val()];
-        }, function(v){
-            $('#isotopeId').val(v[0].trim());
-            $('#isotopeName').val(v[1].trim());
-            $('#isotopeRatio').val(v[2].trim());
-            $('#isotopeUncertainty').val(v[3].trim());
-            $('#isotopeUnit').val(v[4].trim());
-            $('#isotopeComment').val(v[5].trim());
-        }, '/isotope/' + materialId + '/' + stage, function(){
-            return {
-                id: $('#isotopeId').val(),
-                name: $('#isotopeName').val(),
-                value: parseFloat($('#isotopeRatio').val() || 0),
-                uncertainty: parseFloat($('#isotopeUncertainty').val() || 0),
-                unit: $('#isotopeUnit').val(),
-                notes: $('#isotopeComment').val()
             };
         });
 
@@ -302,6 +410,7 @@
         init('#geologyDialog','#addGeology','#saveGeology','#geologyTable', function(){
             return [
                 $('#geologyId').val(),
+                $('#geologyStage').val(),
                 $('#geologyLocation').val(),
                 $('#geologyFormation').val(),
                 $('#geologyDeposit').val(),
@@ -311,12 +420,13 @@
             ];
         }, function(v){
             $('#geologyId').val(v[0].trim());
-            $('#geologyLocation').val(v[1].trim());
-            $('#geologyFormation').val(v[2].trim());
-            $('#geologyDeposit').val(v[3].trim());
-            $('#geologyTechnique').val(v[4].trim());
-            $('#geologyColour').val(v[5].trim());
-            $('#geologyNotes').val(v[6].trim());
+            $('#geologyStage').val(v[1].trim());
+            $('#geologyLocation').val(v[2].trim());
+            $('#geologyFormation').val(v[3].trim());
+            $('#geologyDeposit').val(v[4].trim());
+            $('#geologyTechnique').val(v[5].trim());
+            $('#geologyColour').val(v[6].trim());
+            $('#geologyNotes').val(v[7].trim());
         }, '/geology/' + materialId + '/' + stage, function(){
             return {
                 id: $('#geologyId').val(),
@@ -364,13 +474,20 @@
         });
 
         init('#mineralogyDialog','#addMineralogy','#saveMineralogy','#mineralogyTable', function(){
-            return [$('#mineralogyId').val(), $('#mineralogyMinerals').val(), $('#mineralogyChemistry').val(), $('#mineralogyVolume').val(), $('#mineralogyNotes').val()];
+            return [
+                $('#mineralogyId').val(),
+                $('#mineralogyStage').val(),
+                $('#mineralogyMinerals').val(),
+                $('#mineralogyChemistry').val(),
+                $('#mineralogyVolume').val(),
+                $('#mineralogyNotes').val()];
         }, function(v){
             $('#mineralogyId').val(v[0].trim());
-            $('#mineralogyMinerals').val(v[1].trim());
-            $('#mineralogyChemistry').val(v[2].trim());
-            $('#mineralogyVolume').val(v[3].trim());
-            $('#mineralogyNotes').val(v[4].trim());
+            $('#mineralogyStage').val(v[1].trim());
+            $('#mineralogyMinerals').val(v[2].trim());
+            $('#mineralogyChemistry').val(v[3].trim());
+            $('#mineralogyVolume').val(v[4].trim());
+            $('#mineralogyNotes').val(v[5].trim());
         }, '/mineralogy/' + materialId + '/' + stage, function(){
             return {
                 id: $('#mineralogyId').val(),
