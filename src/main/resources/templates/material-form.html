@@ -499,17 +499,56 @@
         });
 
         init('#physicalDialog','#addPhysical','#savePhysical','#physicalTable', function(){
-            return [$('#physicalState').val(), $('#physicalDescription').val(), $('#physicalMass').val(), $('#physicalNotes').val()];
+            return [
+                $('#physicalId').val(),
+                $('#physicalStage').val(),
+                $('#physicalState').val(),
+                $('#physicalDescription').val(),
+                $('#physicalDensityValue').val(),
+                $('#physicalDensityUnit').val(),
+                $('#physicalMechanical').val(),
+                $('#physicalDimension').val(),
+                $('#physicalCladding').val(),
+                $('#physicalCoating').val(),
+                $('#physicalAssembly').val(),
+                $('#physicalOxide').val(),
+                $('#physicalMassValue').val(),
+                $('#physicalMassUnit').val(),
+                $('#physicalNotes').val()
+            ];
         }, function(v){
-            $('#physicalState').val(v[0].trim());
-            $('#physicalDescription').val(v[1].trim());
-            $('#physicalMass').val(v[2].trim());
-            $('#physicalNotes').val(v[3].trim());
+            $('#physicalId').val(v[0].trim());
+            $('#physicalStage').val(v[1].trim());
+            $('#physicalState').val(v[2].trim());
+            $('#physicalDescription').val(v[3].trim());
+            $('#physicalDensityValue').val(v[4].trim());
+            $('#physicalDensityUnit').val(v[5].trim());
+            $('#physicalMechanical').val(v[6].trim());
+            $('#physicalDimension').val(v[7].trim());
+            $('#physicalCladding').val(v[8].trim());
+            $('#physicalCoating').val(v[9].trim());
+            $('#physicalAssembly').val(v[10].trim());
+            $('#physicalOxide').val(v[11].trim());
+            $('#physicalMassValue').val(v[12].trim());
+            $('#physicalMassUnit').val(v[13].trim());
+            $('#physicalNotes').val(v[14].trim());
         }, '/physical/' + materialId + '/' + stage, function(){
+            var dimension = {};
+            try { dimension = JSON.parse($('#physicalDimension').val() || '{}'); } catch(e) {}
             return {
+                id: $('#physicalId').val(),
+                densityValue: parseFloat($('#physicalDensityValue').val() || 0),
+                densityUnit: $('#physicalDensityUnit').val(),
                 stateOfMatter: $('#physicalState').val(),
+                mechanicalProperties: $('#physicalMechanical').val(),
                 description: $('#physicalDescription').val(),
-                mass: parseFloat($('#physicalMass').val() || 0),
+                dimension: dimension,
+                claddingInfo: $('#physicalCladding').val(),
+                coatingInfo: $('#physicalCoating').val(),
+                assemblyStructure: $('#physicalAssembly').val(),
+                surfaceOxideThickness: $('#physicalOxide').val(),
+                massValue: parseFloat($('#physicalMassValue').val() || 0),
+                massUnit: parseFloat($('#physicalMassUnit').val() || 0),
                 notes: $('#physicalNotes').val()
             };
         });
