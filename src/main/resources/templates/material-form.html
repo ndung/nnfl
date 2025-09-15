@@ -415,20 +415,35 @@
         });
 
         init('#containerDialog','#addContainer','#saveContainer','#containerTable', function(){
-            return [$('#containerType').val(), $('#containerVolume').val(), $('#containerSerial').val(), $('#containerNotes').val()];
+            return [
+                $('#containerId').val(),
+                $('#containerStage').val(),
+                $('#containerType').val(),
+                $('#containerVolume').val(),
+                $('#containerUnit').val(),
+                $('#containerDimensions').val(),
+                $('#containerNotes').val()
+            ];
         }, function(v){
-            $('#containerType').val(v[0].trim());
-            $('#containerVolume').val(v[1].trim());
-            $('#containerSerial').val(v[2].trim());
-            $('#containerNotes').val(v[3].trim());
+            $('#containerId').val(v[0].trim());
+            $('#containerStage').val(v[1].trim());
+            $('#containerType').val(v[2].trim());
+            $('#containerVolume').val(v[3].trim());
+            $('#containerUnit').val(v[4].trim());
+            $('#containerDimensions').val(v[5].trim());
+            $('#containerNotes').val(v[6].trim());
         }, '/container/' + materialId + '/' + stage, function(){
             return {
+                id: $('#containerId').val(),
                 type: $('#containerType').val(),
-                volume: parseFloat($('#containerVolume').val() || 0),
-                serialNumber: $('#containerSerial').val(),
+                volumeValue: parseFloat($('#containerVolume').val() || 0),
+                volumeUnit: $('#containerUnit').val(),
+                dimensions: $('#containerDimensions').val(),
                 notes: $('#containerNotes').val()
             };
         });
+
+        $('#addContainer').click(function(){ $('#containerStage').val(stage); });
 
         init('#generalInfoDialog','#addGeneralInfo','#saveGeneralInfo','#generalInfoTable', function(){
             return [
@@ -631,13 +646,14 @@
                 $('#physicalDensityValue').val(),
                 $('#physicalDensityUnit').val(),
                 $('#physicalMechanical').val(),
-                $('#physicalDimension').val(),
+                $('#physicalDimensions').val(),
                 $('#physicalCladding').val(),
                 $('#physicalCoating').val(),
                 $('#physicalAssembly').val(),
                 $('#physicalOxide').val(),
                 $('#physicalMassValue').val(),
                 $('#physicalMassUnit').val(),
+                $('#physicalSerialNumbers').val(),
                 $('#physicalNotes').val()
             ];
         }, function(v){
@@ -648,17 +664,16 @@
             $('#physicalDensityValue').val(v[4].trim());
             $('#physicalDensityUnit').val(v[5].trim());
             $('#physicalMechanical').val(v[6].trim());
-            $('#physicalDimension').val(v[7].trim());
+            $('#physicalDimensions').val(v[7].trim());
             $('#physicalCladding').val(v[8].trim());
             $('#physicalCoating').val(v[9].trim());
             $('#physicalAssembly').val(v[10].trim());
             $('#physicalOxide').val(v[11].trim());
             $('#physicalMassValue').val(v[12].trim());
             $('#physicalMassUnit').val(v[13].trim());
-            $('#physicalNotes').val(v[14].trim());
+            $('#physicalSerialNumbers').val(v[14].trim());
+            $('#physicalNotes').val(v[15].trim());
         }, '/physical/' + materialId + '/' + stage, function(){
-            var dimension = {};
-            //try { dimension = JSON.parse($('#physicalDimension').val() || '{}'); } catch(e) {}
             return {
                 id: $('#physicalId').val(),
                 densityValue: parseFloat($('#physicalDensityValue').val() || 0),
@@ -666,13 +681,14 @@
                 stateOfMatter: $('#physicalState').val(),
                 mechanicalProperties: $('#physicalMechanical').val(),
                 description: $('#physicalDescription').val(),
-                dimension: $('#physicalDimension').val(),
+                dimensions: $('#physicalDimensions').val(),
                 claddingInfo: $('#physicalCladding').val(),
                 coatingInfo: $('#physicalCoating').val(),
                 assemblyStructure: $('#physicalAssembly').val(),
                 surfaceOxideThickness: $('#physicalOxide').val(),
                 massValue: parseFloat($('#physicalMassValue').val() || 0),
                 massUnit: $('#physicalMassUnit').val(),
+                serialNumbers: $('#physicalSerialNumbers').val(),
                 notes: $('#physicalNotes').val()
             };
         });
@@ -756,17 +772,45 @@
         });
 
         init('#sourceDescriptionDialog','#addSourceDescription','#saveSourceDescription','#sourceDescriptionTable', function(){
-            return [$('#sourceDescriptionType').val(), $('#sourceDescriptionQuantity').val(), $('#sourceDescriptionSerial').val(), $('#sourceDescriptionNotes').val()];
+            return [
+                $('#sourceDescriptionId').val(),
+                $('#sourceDescriptionStage').val(),
+                $('#sourceDescriptionType').val(),
+                $('#sourceDescriptionQuantity').val(),
+                $('#sourceDescriptionDescription').val(),
+                $('#sourceDescriptionDimensions').val(),
+                $('#sourceDescriptionEncapsulation').val(),
+                $('#sourceDescriptionSerial').val(),
+                $('#sourceDescriptionShipping').val(),
+                $('#sourceDescriptionReceiving').val(),
+                $('#sourceDescriptionRadiograph').val(),
+                $('#sourceDescriptionNotes').val()
+            ];
         }, function(v){
-            $('#sourceDescriptionType').val(v[0].trim());
-            $('#sourceDescriptionQuantity').val(v[1].trim());
-            $('#sourceDescriptionSerial').val(v[2].trim());
-            $('#sourceDescriptionNotes').val(v[3].trim());
+            $('#sourceDescriptionId').val(v[0].trim());
+            $('#sourceDescriptionStage').val(v[1].trim());
+            $('#sourceDescriptionType').val(v[2].trim());
+            $('#sourceDescriptionQuantity').val(v[3].trim());
+            $('#sourceDescriptionDescription').val(v[4].trim());
+            $('#sourceDescriptionDimensions').val(v[5].trim());
+            $('#sourceDescriptionEncapsulation').val(v[6].trim());
+            $('#sourceDescriptionSerial').val(v[7].trim());
+            $('#sourceDescriptionShipping').val(v[8].trim());
+            $('#sourceDescriptionReceiving').val(v[9].trim());
+            $('#sourceDescriptionRadiograph').val(v[10].trim());
+            $('#sourceDescriptionNotes').val(v[11].trim());
         }, '/source-description/' + materialId + '/' + stage, function(){
             return {
+                id: $('#sourceDescriptionId').val(),
                 sourceType: $('#sourceDescriptionType').val(),
                 quantity: $('#sourceDescriptionQuantity').val(),
+                description: $('#sourceDescriptionDescription').val(),
+                dimensions: $('#sourceDescriptionDimensions').val(),
+                encapsulationOrCladding: $('#sourceDescriptionEncapsulation').val(),
                 serialNumber: $('#sourceDescriptionSerial').val(),
+                shippingHistory: $('#sourceDescriptionShipping').val(),
+                receivingHistory: $('#sourceDescriptionReceiving').val(),
+                radiographOrPhotograph: $('#sourceDescriptionRadiograph').val(),
                 notes: $('#sourceDescriptionNotes').val()
             };
         });
