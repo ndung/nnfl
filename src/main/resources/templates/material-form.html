@@ -3,279 +3,34 @@
 <body>
 <div class="kt-container-fluid px=0">
     <div class="grid grid-cols-1 gap-5">
+
+        <div th:replace="~{cards/general-info :: generalInfoCard}"></div>
+
+        <th:block th:if="${stage == 1}">
+            <div th:replace="~{cards/geology :: geologyCard}"></div>
+        </th:block>
+
+        <th:block th:if="${stage == 1}">
+            <div th:replace="~{cards/mineralogy :: mineralogyCard}"></div>
+        </th:block>
+
         <th:block th:if="${stage == 2 or stage == 3}">
             <div th:replace="~{cards/chemical-form :: chemicalCard}"></div>
         </th:block>
 
+        <div th:replace="~{cards/element :: elementCard}"></div>
+        <div th:replace="~{cards/isotope :: isotopeCard}"></div>
+        <div th:replace="~{cards/morphology :: morphologyCard}"></div>
+        <div th:replace="~{cards/decay :: decayCard}"></div>
+        <div th:replace="~{cards/container :: containerCard}"></div>
+        <div th:replace="~{cards/irradiation :: irradiationCard}"></div>
+        <div th:replace="~{cards/isotope-activity :: isotopeActivityCard}"></div>
+        <div th:replace="~{cards/physical :: physicalCard}"></div>
+        <div th:replace="~{cards/process-info :: processInfoCard}"></div>
+        <div th:replace="~{cards/serial-number :: serialNumberCard}"></div>
+        <div th:replace="~{cards/source-activity-info :: sourceActivityInfoCard}"></div>
+        <div th:replace="~{cards/source-description :: sourceDescriptionCard}"></div>
 
-        <!-- Elements -->
-        <div class="kt-card">
-            <div class="kt-card-header flex justify-between">
-                <h3 class="kt-card-title">Element(s)</h3>
-                <button type="button" id="addElement" class="kt-btn kt-btn-light">Add</button>
-            </div>
-            <div class="kt-card-content">
-                <div class="table-responsive">
-                    <table id="elementTable" class="table w-full">
-                        <thead>
-                        <tr><th>Name</th><th>Concentration</th><th>Uncertainty</th><th>Comment(s)</th></tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- Isotopes -->
-        <div class="kt-card">
-            <div class="kt-card-header flex justify-between">
-                <h3 class="kt-card-title">Isotope(s) ratio</h3>
-                <button type="button" id="addIsotope" class="kt-btn kt-btn-light">Add</button>
-            </div>
-            <div class="kt-card-content">
-                <div class="table-responsive">
-                    <table id="isotopeTable" class="table w-full">
-                        <thead>
-                        <tr><th>Isotope Name</th><th>Ratio</th><th>Uncertainty</th><th>Comment(s)</th></tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- Morphology -->
-        <div class="kt-card">
-            <div class="kt-card-header flex justify-between">
-                <h3 class="kt-card-title">Morphology/Crystallography</h3>
-                <button type="button" id="addMorphology" class="kt-btn kt-btn-light">Add</button>
-            </div>
-            <div class="kt-card-content">
-                <div class="table-responsive">
-                    <table id="morphologyTable" class="table w-full">
-                        <thead>
-                        <tr><th>Crystal Structure</th><th>Lattice A</th><th>Lattice B</th><th>Lattice C</th><th>Comment(s)</th></tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- Uranium decays -->
-        <div class="kt-card">
-            <div class="kt-card-header flex justify-between">
-                <h3 class="kt-card-title">Uranium decays</h3>
-                <button type="button" id="addDecay" class="kt-btn kt-btn-light">Add</button>
-            </div>
-            <div class="kt-card-content">
-                <div class="table-responsive">
-                    <table id="decayTable" class="table w-full">
-                        <thead>
-                        <tr><th>Nuclide</th><th>Activity</th><th>Comment(s)</th></tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <!-- Container -->
-        <div class="kt-card">
-            <div class="kt-card-header flex justify-between">
-                <h3 class="kt-card-title">Container</h3>
-                <button type="button" id="addContainer" class="kt-btn kt-btn-light">Add</button>
-            </div>
-            <div class="kt-card-content">
-                <div class="table-responsive">
-                    <table id="containerTable" class="table w-full">
-                        <thead>
-                        <tr><th>Type</th><th>Volume</th><th>Serial Number</th><th>Notes</th><th>Actions</th></tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- General Info -->
-        <div class="kt-card">
-            <div class="kt-card-header flex justify-between">
-                <h3 class="kt-card-title">General Info</h3>
-                <button type="button" id="addGeneralInfo" class="kt-btn kt-btn-light">Add</button>
-            </div>
-            <div class="kt-card-content">
-                <div class="table-responsive">
-                    <table id="generalInfoTable" class="table w-full">
-                        <thead>
-                        <tr><th>Custodian</th><th>Analytical Lab</th><th>Country</th><th>Notes</th><th>Actions</th></tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- Geology -->
-        <div class="kt-card">
-            <div class="kt-card-header flex justify-between">
-                <h3 class="kt-card-title">Geology</h3>
-                <button type="button" id="addGeology" class="kt-btn kt-btn-light">Add</button>
-            </div>
-            <div class="kt-card-content">
-                <div class="table-responsive">
-                    <table id="geologyTable" class="table w-full">
-                        <thead>
-                        <tr><th>Mine Location</th><th>Formation</th><th>Deposit Types</th><th>Notes</th><th>Actions</th></tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- Irradiation History -->
-        <div class="kt-card">
-            <div class="kt-card-header flex justify-between">
-                <h3 class="kt-card-title">Irradiation History</h3>
-                <button type="button" id="addIrradiation" class="kt-btn kt-btn-light">Add</button>
-            </div>
-            <div class="kt-card-content">
-                <div class="table-responsive">
-                    <table id="irradiationTable" class="table w-full">
-                        <thead>
-                        <tr><th>Reactor Type</th><th>Burn Up</th><th>Load Date</th><th>Discharge Date</th><th>Notes</th><th>Actions</th></tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- Isotope Activity -->
-        <div class="kt-card">
-            <div class="kt-card-header flex justify-between">
-                <h3 class="kt-card-title">Isotope Activity</h3>
-                <button type="button" id="addIsotopeActivity" class="kt-btn kt-btn-light">Add</button>
-            </div>
-            <div class="kt-card-content">
-                <div class="table-responsive">
-                    <table id="isotopeActivityTable" class="table w-full">
-                        <thead>
-                        <tr><th>Isotope</th><th>Activity (Bq)</th><th>Reference Date</th><th>Notes</th><th>Actions</th></tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- Mineralogy -->
-        <div class="kt-card">
-            <div class="kt-card-header flex justify-between">
-                <h3 class="kt-card-title">Mineralogy</h3>
-                <button type="button" id="addMineralogy" class="kt-btn kt-btn-light">Add</button>
-            </div>
-            <div class="kt-card-content">
-                <div class="table-responsive">
-                    <table id="mineralogyTable" class="table w-full">
-                        <thead>
-                        <tr><th>Minerals Present</th><th>Volume %</th><th>Notes</th><th>Actions</th></tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- Physical -->
-        <div class="kt-card">
-            <div class="kt-card-header flex justify-between">
-                <h3 class="kt-card-title">Physical</h3>
-                <button type="button" id="addPhysical" class="kt-btn kt-btn-light">Add</button>
-            </div>
-            <div class="kt-card-content">
-                <div class="table-responsive">
-                    <table id="physicalTable" class="table w-full">
-                        <thead>
-                        <tr><th>State</th><th>Description</th><th>Mass</th><th>Notes</th><th>Actions</th></tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- Process Information -->
-        <div class="kt-card">
-            <div class="kt-card-header flex justify-between">
-                <h3 class="kt-card-title">Process Information</h3>
-                <button type="button" id="addProcessInfo" class="kt-btn kt-btn-light">Add</button>
-            </div>
-            <div class="kt-card-content">
-                <div class="table-responsive">
-                    <table id="processInfoTable" class="table w-full">
-                        <thead>
-                        <tr><th>Process Type</th><th>Location</th><th>Start Date</th><th>End Date</th><th>Notes</th><th>Actions</th></tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- Serial Number -->
-        <div class="kt-card">
-            <div class="kt-card-header flex justify-between">
-                <h3 class="kt-card-title">Serial Number</h3>
-                <button type="button" id="addSerialNumber" class="kt-btn kt-btn-light">Add</button>
-            </div>
-            <div class="kt-card-content">
-                <div class="table-responsive">
-                    <table id="serialNumberTable" class="table w-full">
-                        <thead>
-                        <tr><th>Serial Number</th><th>Notes</th><th>Actions</th></tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- Source Activity Info -->
-        <div class="kt-card">
-            <div class="kt-card-header flex justify-between">
-                <h3 class="kt-card-title">Source Activity Info</h3>
-                <button type="button" id="addSourceActivityInfo" class="kt-btn kt-btn-light">Add</button>
-            </div>
-            <div class="kt-card-content">
-                <div class="table-responsive">
-                    <table id="sourceActivityInfoTable" class="table w-full">
-                        <thead>
-                        <tr><th>Activity (Bq)</th><th>Reference Date</th><th>Neutron Intensity</th><th>Notes</th><th>Actions</th></tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- Source Description -->
-        <div class="kt-card">
-            <div class="kt-card-header flex justify-between">
-                <h3 class="kt-card-title">Source Description</h3>
-                <button type="button" id="addSourceDescription" class="kt-btn kt-btn-light">Add</button>
-            </div>
-            <div class="kt-card-content">
-                <div class="table-responsive">
-                    <table id="sourceDescriptionTable" class="table w-full">
-                        <thead>
-                        <tr><th>Source Type</th><th>Quantity</th><th>Serial Number</th><th>Notes</th><th>Actions</th></tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -306,19 +61,8 @@
         var stage = window.location.pathname.split('/')[4];
         var csrfToken = document.querySelector('meta[name="_csrf"]')?.getAttribute('content');
         var csrfHeader = document.querySelector('meta[name="_csrf_header"]')?.getAttribute('content');
-        function initDialog(dialogId, addBtnId, saveBtnId, tableId, getData){
-            $(dialogId).dialog({ autoOpen:false, modal:true, width:400 });
-            $(addBtnId).click(function(){ $(dialogId).dialog('open'); });
-            $(saveBtnId).click(function(){
-                var data = getData();
-                var row = '<tr>' + data.map(function(d){ return '<td>'+d+'</td>'; }).join('') + '</tr>';
-                $(tableId+' tbody').append(row);
-                $(dialogId).dialog('close');
-                $(dialogId + ' input').val('');
-            });
-        }
 
-        function initEditableDialog(dialogId, addBtnId, saveBtnId, tableId, getData, setData, endpoint, getJsonData){
+        function init(dialogId, addBtnId, saveBtnId, tableId, getData, setData, endpoint, getJsonData){
             var currentRow = null;
             $(dialogId).dialog({ autoOpen:false, modal:true, width:640 });
             $(addBtnId).click(function(){ currentRow=null; $(dialogId).dialog('open'); });
@@ -348,7 +92,6 @@
                         if (!res.ok) {
                             alert(res.status + ' ' + res.statusText);
                         }
-                        //window.location.reload();           // full page refresh
                     })
                     .catch(err => {
                         console.error(err);
@@ -358,20 +101,8 @@
                 $(dialogId + ' input').val('');
             });
         }
-        initDialog('#elementDialog','#addElement','#saveElement','#elementTable', function(){
-            return [$('#elementName').val(), $('#elementConcentration').val(), $('#elementUncertainty').val(), $('#elementComment').val()];
-        });
-        initDialog('#isotopeDialog','#addIsotope','#saveIsotope','#isotopeTable', function(){
-            return [$('#isotopeName').val(), $('#isotopeRatio').val(), $('#isotopeUncertainty').val(), $('#isotopeComment').val()];
-        });
-        initDialog('#morphologyDialog','#addMorphology','#saveMorphology','#morphologyTable', function(){
-            return [$('#morphCrystal').val(), $('#morphA').val(), $('#morphB').val(), $('#morphC').val(), $('#morphComment').val()];
-        });
-        initDialog('#decayDialog','#addDecay','#saveDecay','#decayTable', function(){
-            return [$('#decayNuclide').val(), $('#decayActivity').val(), $('#decayComment').val()];
-        });
 
-        initEditableDialog('#chemicalDialog','#addChemical','#saveChemical','#chemicalTable', function(){
+        init('#chemicalDialog','#addChemical','#saveChemical','#chemicalTable', function(){
             return [$('#chemicalId').val(), $('#chemicalName').val(), $('#chemicalDeviation').val(), $('#chemicalComment').val()];
         }, function(v){
             $('#chemicalId').val(v[0].trim());
@@ -386,72 +117,6 @@
                 notes: $('#chemicalComment').val()
             };
         });
-
-        initEditableDialog('#containerDialog','#addContainer','#saveContainer','#containerTable', function(){
-            return [$('#containerType').val(), $('#containerVolume').val(), $('#containerSerial').val(), $('#containerNotes').val()];
-        }, function(v){
-            $('#containerType').val(v[0]); $('#containerVolume').val(v[1]); $('#containerSerial').val(v[2]); $('#containerNotes').val(v[3]);
-        }, '/materials/containers');
-
-        initEditableDialog('#generalInfoDialog','#addGeneralInfo','#saveGeneralInfo','#generalInfoTable', function(){
-            return [$('#generalCustodian').val(), $('#generalLab').val(), $('#generalCountry').val(), $('#generalNotes').val()];
-        }, function(v){
-            $('#generalCustodian').val(v[0]); $('#generalLab').val(v[1]); $('#generalCountry').val(v[2]); $('#generalNotes').val(v[3]);
-        }, '/materials/general-info');
-
-        initEditableDialog('#geologyDialog','#addGeology','#saveGeology','#geologyTable', function(){
-            return [$('#geologyLocation').val(), $('#geologyFormation').val(), $('#geologyDeposit').val(), $('#geologyNotes').val()];
-        }, function(v){
-            $('#geologyLocation').val(v[0]); $('#geologyFormation').val(v[1]); $('#geologyDeposit').val(v[2]); $('#geologyNotes').val(v[3]);
-        }, '/materials/geology');
-
-        initEditableDialog('#irradiationDialog','#addIrradiation','#saveIrradiation','#irradiationTable', function(){
-            return [$('#irradiationReactor').val(), $('#irradiationBurnUp').val(), $('#irradiationLoadDate').val(), $('#irradiationDischargeDate').val(), $('#irradiationNotes').val()];
-        }, function(v){
-            $('#irradiationReactor').val(v[0]); $('#irradiationBurnUp').val(v[1]); $('#irradiationLoadDate').val(v[2]); $('#irradiationDischargeDate').val(v[3]); $('#irradiationNotes').val(v[4]);
-        }, '/materials/irradiation');
-
-        initEditableDialog('#isotopeActivityDialog','#addIsotopeActivity','#saveIsotopeActivity','#isotopeActivityTable', function(){
-            return [$('#isotopeActivityName').val(), $('#isotopeActivityValue').val(), $('#isotopeActivityDate').val(), $('#isotopeActivityNotes').val()];
-        }, function(v){
-            $('#isotopeActivityName').val(v[0]); $('#isotopeActivityValue').val(v[1]); $('#isotopeActivityDate').val(v[2]); $('#isotopeActivityNotes').val(v[3]);
-        }, '/materials/isotope-activity');
-
-        initEditableDialog('#mineralogyDialog','#addMineralogy','#saveMineralogy','#mineralogyTable', function(){
-            return [$('#mineralogyMinerals').val(), $('#mineralogyVolume').val(), $('#mineralogyNotes').val()];
-        }, function(v){
-            $('#mineralogyMinerals').val(v[0]); $('#mineralogyVolume').val(v[1]); $('#mineralogyNotes').val(v[2]);
-        }, '/materials/mineralogy');
-
-        initEditableDialog('#physicalDialog','#addPhysical','#savePhysical','#physicalTable', function(){
-            return [$('#physicalState').val(), $('#physicalDescription').val(), $('#physicalMass').val(), $('#physicalNotes').val()];
-        }, function(v){
-            $('#physicalState').val(v[0]); $('#physicalDescription').val(v[1]); $('#physicalMass').val(v[2]); $('#physicalNotes').val(v[3]);
-        }, '/materials/physical');
-
-        initEditableDialog('#processInfoDialog','#addProcessInfo','#saveProcessInfo','#processInfoTable', function(){
-            return [$('#processType').val(), $('#processLocation').val(), $('#processStart').val(), $('#processEnd').val(), $('#processNotes').val()];
-        }, function(v){
-            $('#processType').val(v[0]); $('#processLocation').val(v[1]); $('#processStart').val(v[2]); $('#processEnd').val(v[3]); $('#processNotes').val(v[4]);
-        }, '/materials/process-info');
-
-        initEditableDialog('#serialNumberDialog','#addSerialNumber','#saveSerialNumber','#serialNumberTable', function(){
-            return [$('#serialNumberValue').val(), $('#serialNumberNotes').val()];
-        }, function(v){
-            $('#serialNumberValue').val(v[0]); $('#serialNumberNotes').val(v[1]);
-        }, '/materials/serial-number');
-
-        initEditableDialog('#sourceActivityInfoDialog','#addSourceActivityInfo','#saveSourceActivityInfo','#sourceActivityInfoTable', function(){
-            return [$('#sourceActivityValue').val(), $('#sourceActivityDate').val(), $('#sourceActivityNeutron').val(), $('#sourceActivityNotes').val()];
-        }, function(v){
-            $('#sourceActivityValue').val(v[0]); $('#sourceActivityDate').val(v[1]); $('#sourceActivityNeutron').val(v[2]); $('#sourceActivityNotes').val(v[3]);
-        }, '/materials/source-activity-info');
-
-        initEditableDialog('#sourceDescriptionDialog','#addSourceDescription','#saveSourceDescription','#sourceDescriptionTable', function(){
-            return [$('#sourceDescriptionType').val(), $('#sourceDescriptionQuantity').val(), $('#sourceDescriptionSerial').val(), $('#sourceDescriptionNotes').val()];
-        }, function(v){
-            $('#sourceDescriptionType').val(v[0]); $('#sourceDescriptionQuantity').val(v[1]); $('#sourceDescriptionSerial').val(v[2]); $('#sourceDescriptionNotes').val(v[3]);
-        }, '/materials/source-description');
     });
 </script>
 </body>
