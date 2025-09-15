@@ -1,17 +1,17 @@
 <div th:fragment="sourceActivityInfoDialog"
      id="sourceActivityInfoDialog" title="Source activity information" style="display:none;">
     <div class="grid gap-5">
-        <div class="flex items-baseline gap-2.5">
+        <div class="flex items-baseline gap-2.5" hidden>
             <label class="kt-form-label max-w-56">ID :</label>
             <input class="kt-input" id="sourceActivityId" disabled type="text"/>
         </div>
-        <div class="flex items-baseline gap-2.5">
+        <div class="flex items-baseline gap-2.5" hidden>
             <label class="kt-form-label max-w-56">Stage :</label>
             <input class="kt-input" id="sourceActivityStage" disabled type="text"/>
         </div>
         <div class="flex items-baseline gap-2.5">
             <label class="kt-form-label max-w-56">Activity (Bq) :</label>
-            <input class="kt-input" id="sourceActivityValue" type="text"/>
+            <input class="kt-input" id="sourceActivityValue" type="number"/>
         </div>
         <div class="flex items-baseline gap-2.5">
             <label class="kt-form-label max-w-56">Reference Date :</label>
@@ -19,7 +19,7 @@
         </div>
         <div class="flex items-baseline gap-2.5">
             <label class="kt-form-label max-w-56">Neutron Intensity :</label>
-            <input class="kt-input" id="sourceActivityNeutron" type="text"/>
+            <input class="kt-input" id="sourceActivityNeutron" type="number"/>
         </div>
         <div class="flex items-baseline gap-2.5">
             <label class="kt-form-label max-w-56">Notes :</label>

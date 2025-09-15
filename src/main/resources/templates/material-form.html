@@ -67,7 +67,7 @@
         </th:block>
 
         <th:block th:if="${stage == 0 or stage == 8 or stage == 9 or stage == 10}">
-            <<div th:replace="~{cards/isotope-activity :: isotopeActivityCard}"></div>
+            <div th:replace="~{cards/isotope-activity :: isotopeActivityCard}"></div>
         </th:block>
 
         <th:block th:if="${stage == 0 or stage == 2 or stage == 3 or stage == 4 or stage == 5 or stage == 7}">
@@ -89,6 +89,7 @@
 <div th:replace="~{dialogs/uranium :: uraniumDialog}"></div>
 <div th:replace="~{dialogs/uranium-isotope :: uraniumIsotopeDialog}"></div>
 <div th:replace="~{dialogs/stable-isotope :: stableIsotopeDialog}"></div>
+<div th:replace="~{dialogs/plutonium-isotope :: plutoniumIsotopeDialog}"></div>
 <div th:replace="~{dialogs/trace-element :: traceElementDialog}"></div>
 <div th:replace="~{dialogs/element :: elementDialog}"></div>
 <div th:replace="~{dialogs/morphology :: morphologyDialog}"></div>
@@ -326,15 +327,24 @@
 
 
         init('#elementDialog','#addElement','#saveElement','#elementTable', function(){
-            return [$('#elementId').val(), $('#elementName').val(), $('#elementConcentration').val(), $('#elementUnit').val(), $('#elementUncertainty').val(), $('#elementBurnablePoison').val(), $('#elementComment').val()];
+            return [
+                $('#elementId').val(),
+                $('#elementStage').val(),
+                $('#elementName').val(),
+                $('#elementConcentration').val(),
+                $('#elementUnit').val(),
+                $('#elementUncertainty').val(),
+                $('#elementBurnablePoison').val(),
+                $('#elementComment').val()];
         }, function(v){
             $('#elementId').val(v[0].trim());
-            $('#elementName').val(v[1].trim());
-            $('#elementConcentration').val(v[2].trim());
-            $('#elementUnit').val(v[3].trim());
-            $('#elementUncertainty').val(v[4].trim());
-            $('#elementBurnablePoison').val(v[5].trim());
-            $('#elementComment').val(v[6].trim());
+            $('#elementStage').val(v[1].trim());
+            $('#elementName').val(v[2].trim());
+            $('#elementConcentration').val(v[3].trim());
+            $('#elementUnit').val(v[4].trim());
+            $('#elementUncertainty').val(v[5].trim());
+            $('#elementBurnablePoison').val(v[6].trim());
+            $('#elementComment').val(v[7].trim());
         }, '/element/' + materialId + '/' + stage, function(){
             return {
                 id: $('#elementId').val(),
@@ -448,6 +458,7 @@
         init('#generalInfoDialog','#addGeneralInfo','#saveGeneralInfo','#generalInfoTable', function(){
             return [
                 $('#generalId').val(),
+                $('#generalStage').val(),
                 $('#generalDataRecordDate').val(),
                 $('#generalCustodian').val(),
                 $('#generalLab').val(),
@@ -469,6 +480,7 @@
             ];
         }, function(v){
             $('#generalId').val(v[0].trim());
+            $('#generalStage').val(v[1].trim());
             $('#generalDataRecordDate').val(v[2].trim());
             $('#generalCustodian').val(v[3].trim());
             $('#generalLab').val(v[4].trim());

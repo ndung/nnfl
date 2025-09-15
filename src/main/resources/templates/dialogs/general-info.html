@@ -1,9 +1,13 @@
 <div th:fragment="generalInfoDialog"
      id="generalInfoDialog" title="General Info" style="display:none;">
     <div class="grid gap-5">
-        <div class="flex items-baseline gap-2.5">
+        <div class="flex items-baseline gap-2.5" hidden>
             <label class="kt-form-label max-w-56">ID :</label>
             <input class="kt-input" id="generalId" disabled type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5" hidden>
+            <label class="kt-form-label max-w-56">Stage :</label>
+            <input class="kt-input" id="generalStage" disabled type="text"/>
         </div>
         <div class="flex items-baseline gap-2.5">
             <label class="kt-form-label max-w-56">Data Record Date :</label>
