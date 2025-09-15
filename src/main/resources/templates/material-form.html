@@ -370,11 +370,15 @@
         });
 
         initEditableDialog('#chemicalDialog','#addChemical','#saveChemical','#chemicalTable', function(){
-            return [$('#chemicalName').val(), $('#chemicalDeviation').val(), $('#chemicalComment').val()];
+            return [$('#chemicalId').val(), $('#chemicalName').val(), $('#chemicalDeviation').val(), $('#chemicalComment').val()];
         }, function(v){
-            $('#chemicalName').val(v[0]); $('#chemicalDeviation').val(v[1]); $('#chemicalComment').val(v[2]);
+            $('#chemicalId').val(v[0]);
+            $('#chemicalName').val(v[2]);
+            $('#chemicalDeviation').val(v[3]);
+            $('#chemicalComment').val(v[4]);
         }, '/materials/chemical/' + materialId + '/' + stage, function(){
             return {
+                id: $('#chemicalId').val(),
                 compoundName: $('#chemicalName').val(),
                 stoichiometryDeviation: parseFloat($('#chemicalDeviation').val() || 0),
                 notes: $('#chemicalComment').val()

@@ -52,7 +52,7 @@
                             <span th:text="${chemical.notes}"></span>
                         </td>
                         <td class="flex gap-2">
-                            <button type="button" id="editChemical" class="kt-btn kt-btn-light">Edit</button>
+                            <button type="button" class="kt-btn kt-btn-light editRow">Edit</button>
                             <form th:action="@{|/materials/chemical/${material.id}/${stage}/${chemical.id}/delete|}" method="post"
                                           onsubmit="return confirm('Delete?');">
                                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
