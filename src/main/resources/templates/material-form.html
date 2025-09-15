@@ -14,6 +14,10 @@
             <div th:replace="~{cards/mineralogy :: mineralogyCard}"></div>
         </th:block>
 
+        <th:block th:if="${stage == 1}">
+            <div th:replace="~{cards/uranium :: uraniumCard}"></div>
+        </th:block>
+
         <th:block th:if="${stage == 2 or stage == 3}">
             <div th:replace="~{cards/chemical-form :: chemicalCard}"></div>
         </th:block>
@@ -35,6 +39,7 @@
 </div>
 
 <div th:replace="~{dialogs/chemical-form :: chemicalDialog}"></div>
+<div th:replace="~{dialogs/uranium :: uraniumDialog}"></div>
 <div th:replace="~{dialogs/element :: elementDialog}"></div>
 <div th:replace="~{dialogs/isotope :: isotopeDialog}"></div>
 <div th:replace="~{dialogs/morphology :: morphologyDialog}"></div>
@@ -115,6 +120,28 @@
                 compoundName: $('#chemicalName').val(),
                 stoichiometryDeviation: parseFloat($('#chemicalDeviation').val() || 0),
                 notes: $('#chemicalComment').val()
+            };
+        });
+
+        init('#uraniumDialog','#addUranium','#saveUranium','#uraniumTable', function(){
+            return [$('#elementId').val(), $('#elementName').val(), $('#elementConcentration').val(), $('#elementUnit').val(), $('#elementUncertainty').val(), $('#elementBurnablePoison').val(), $('#elementComment').val()];
+        }, function(v){
+            $('#elementId').val(v[0].trim());
+            $('#elementName').val(v[1].trim());
+            $('#elementConcentration').val(v[2].trim());
+            $('#elementUnit').val(v[3].trim());
+            $('#elementUncertainty').val(v[4].trim());
+            $('#elementBurnablePoison').val(v[5].trim());
+            $('#elementComment').val(v[6].trim());
+        }, '/uranium/' + materialId + '/' + stage, function(){
+            return {
+                id: $('#elementId').val(),
+                element: $('#elementName').val(),
+                concentration: parseFloat($('#elementConcentration').val() || 0),
+                unit: $('#elementUnit').val(),
+                uncertainty: parseFloat($('#elementUncertainty').val() || 0),
+                burnablePoison: $('#elementBurnablePoison').val(),
+                notes: $('#elementComment').val()
             };
         });
 

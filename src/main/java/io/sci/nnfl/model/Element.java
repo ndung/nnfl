@@ -13,9 +13,9 @@ import org.springframework.data.annotation.Id;
 @AllArgsConstructor
 @Builder
 public class Element {
-      @Id
-      private String id;
-      private Stage stage;
+    @Id
+    private String id;
+    private Stage stage;
     private String element;
     private BigDecimal concentration;
     private String unit;
