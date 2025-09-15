@@ -591,15 +591,27 @@
         });
 
         init('#processInfoDialog','#addProcessInfo','#saveProcessInfo','#processInfoTable', function(){
-            return [$('#processType').val(), $('#processLocation').val(), $('#processStart').val(), $('#processEnd').val(), $('#processNotes').val()];
+            return [
+                $('#processId').val(),
+                $('#processStage').val(),
+                $('#processType').val(),
+                $('#processLocation').val(),
+                $('#processStart').val(),
+                $('#processEnd').val(),
+                $('#processNotes').val()
+            ];
         }, function(v){
-            $('#processType').val(v[0].trim());
-            $('#processLocation').val(v[1].trim());
-            $('#processStart').val(v[2].trim());
-            $('#processEnd').val(v[3].trim());
-            $('#processNotes').val(v[4].trim());
+            $('#processId').val(v[0].trim());
+            $('#processStage').val(v[1].trim());
+            $('#processType').val(v[2].trim());
+            $('#processLocation').val(v[3].trim());
+            $('#processStart').val(v[4].trim());
+            $('#processEnd').val(v[5].trim());
+            $('#processNotes').val(v[6].trim());
         }, '/process-info/' + materialId + '/' + stage, function(){
             return {
+                id: $('#processId').val(),
+                stage: $('#processStage').val(),
                 processTypeOrDescription: $('#processType').val(),
                 locationOfProcessingSite: $('#processLocation').val(),
                 startDate: $('#processStart').val(),
