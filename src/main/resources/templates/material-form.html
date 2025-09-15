@@ -415,20 +415,35 @@
         });
 
         init('#containerDialog','#addContainer','#saveContainer','#containerTable', function(){
-            return [$('#containerType').val(), $('#containerVolume').val(), $('#containerSerial').val(), $('#containerNotes').val()];
+            return [
+                $('#containerId').val(),
+                $('#containerStage').val(),
+                $('#containerType').val(),
+                $('#containerVolume').val(),
+                $('#containerUnit').val(),
+                $('#containerDimensions').val(),
+                $('#containerNotes').val()
+            ];
         }, function(v){
-            $('#containerType').val(v[0].trim());
-            $('#containerVolume').val(v[1].trim());
-            $('#containerSerial').val(v[2].trim());
-            $('#containerNotes').val(v[3].trim());
+            $('#containerId').val(v[0].trim());
+            $('#containerStage').val(v[1].trim());
+            $('#containerType').val(v[2].trim());
+            $('#containerVolume').val(v[3].trim());
+            $('#containerUnit').val(v[4].trim());
+            $('#containerDimensions').val(v[5].trim());
+            $('#containerNotes').val(v[6].trim());
         }, '/container/' + materialId + '/' + stage, function(){
             return {
+                id: $('#containerId').val(),
                 type: $('#containerType').val(),
-                volume: parseFloat($('#containerVolume').val() || 0),
-                serialNumber: $('#containerSerial').val(),
+                volumeValue: parseFloat($('#containerVolume').val() || 0),
+                volumeUnit: $('#containerUnit').val(),
+                dimensions: $('#containerDimensions').val(),
                 notes: $('#containerNotes').val()
             };
         });
+
+        $('#addContainer').click(function(){ $('#containerStage').val(stage); });
 
         init('#generalInfoDialog','#addGeneralInfo','#saveGeneralInfo','#generalInfoTable', function(){
             return [
