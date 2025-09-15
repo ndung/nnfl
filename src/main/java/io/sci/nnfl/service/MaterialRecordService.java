@@ -1,8 +1,13 @@
 package io.sci.nnfl.service;
 
+import com.mongodb.BasicDBObject;
 import io.sci.nnfl.model.MaterialRecord;
 import io.sci.nnfl.model.repository.MaterialRecordRepository;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,9 +20,12 @@ import java.util.List;
 public class MaterialRecordService extends BaseService {
 
     private final MaterialRecordRepository repository;
+    private final MongoTemplate template;
 
-    public MaterialRecordService(MaterialRecordRepository repository) {
+    public MaterialRecordService(MaterialRecordRepository repository,
+                                 MongoTemplate template) {
         this.repository = repository;
+        this.template = template;
     }
 
     @Transactional(readOnly = true)
@@ -39,5 +47,14 @@ public class MaterialRecordService extends BaseService {
     @Transactional
     public void delete(String id) {
         repository.deleteById(id);
+    }
+
+    public long removeChemicalForm(String materialId, String chemicalFormId) {
+        Query q = new Query(Criteria.where("_id").is(materialId)
+                .and("chemicalForms._id").is(chemicalFormId));
+        Update u = new Update().pull("chemicalForms",
+                new BasicDBObject("_id", chemicalFormId));
+        return template.updateFirst(q, u, MaterialRecord.class)
+                .getModifiedCount();
     }
 }

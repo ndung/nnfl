@@ -1,6 +1,7 @@
 package io.sci.nnfl.model;
 
 public enum Stage {
+    UNKNOWN,
     GEOLOGICAL_DEPOSITION,
     MINING_MILLING_EXTRACTION,
     CONVERSION_ENRICHMENT_FUEL_PRODUCTION,
@@ -11,5 +12,4 @@ public enum Stage {
     WASTE_PROCESSING,
     SEALED_SOURCE,
     UNSEALED_SOURCE,
-    UNKNOWN
 }

@@ -3,9 +3,9 @@
 <body>
 <div class="kt-container-fluid px=0">
     <div class="grid grid-cols-1 gap-5">
-
-        <div th:replace="~{cards/chemical :: chemicalCard}"></div>
-
+        <th:block th:if="${stage == 2 or stage == 3}">
+            <div th:replace="~{cards/chemical :: chemicalCard}"></div>
+        </th:block>
         <!-- Elements -->
         <div class="kt-card">
             <div class="kt-card-header flex justify-between">
@@ -300,6 +300,10 @@
 <script th:src="@{https://code.jquery.com/ui/1.13.2/jquery-ui.js}"></script>
 <script>
     $(function(){
+        var materialId = window.location.pathname.split('/')[3];
+        var stage = window.location.pathname.split('/')[4];
+        var csrfToken = document.querySelector('meta[name="_csrf"]')?.getAttribute('content');
+        var csrfHeader = document.querySelector('meta[name="_csrf_header"]')?.getAttribute('content');
         function initDialog(dialogId, addBtnId, saveBtnId, tableId, getData){
             $(dialogId).dialog({ autoOpen:false, modal:true, width:400 });
             $(addBtnId).click(function(){ $(dialogId).dialog('open'); });
@@ -312,7 +316,7 @@
             });
         }
 
-        function initEditableDialog(dialogId, addBtnId, saveBtnId, tableId, getData, setData, endpoint){
+        function initEditableDialog(dialogId, addBtnId, saveBtnId, tableId, getData, setData, endpoint, getJsonData){
             var currentRow = null;
             $(dialogId).dialog({ autoOpen:false, modal:true, width:400 });
             $(addBtnId).click(function(){ currentRow=null; $(dialogId).dialog('open'); });
@@ -324,16 +328,32 @@
             });
             $(saveBtnId).click(function(){
                 var data = getData();
-                var row = data.map(function(d){ return '<td>'+d+'</td>'; }).join('') + '<td><button type="button" class="editRow">Edit</button></td>';
-                if(currentRow){
-                    currentRow.html(row);
-                } else {
-                    $(tableId+' tbody').append('<tr>'+row+'</tr>');
+                var payload = getJsonData ? getJsonData() : data;
+                var headers = {'Content-Type':'application/json'};
+                if (csrfToken) {
+                    headers[csrfHeader || 'X-CSRF-TOKEN'] = csrfToken;
                 }
-                fetch(endpoint, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data)});
+                fetch(endpoint, {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify(payload),
+                    credentials: 'same-origin'
+                })
+                    .then(res => {
+                        if (res.ok) {               // server sent 3xx (e.g., 303 See Other)
+                            window.location.reload();
+                        }
+                        if (!res.ok) {
+                            alert(res.status + ' ' + res.statusText);
+                        }
+                        //window.location.reload();           // full page refresh
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        alert('Save failed: ' + err.message);
+                    });
                 $(dialogId).dialog('close');
                 $(dialogId + ' input').val('');
-                currentRow=null;
             });
         }
         initDialog('#elementDialog','#addElement','#saveElement','#elementTable', function(){
@@ -350,10 +370,16 @@
         });
 
         initEditableDialog('#chemicalDialog','#addChemical','#saveChemical','#chemicalTable', function(){
-            return [$('#containerType').val(), $('#containerVolume').val(), $('#containerSerial').val(), $('#containerNotes').val()];
+            return [$('#chemicalName').val(), $('#chemicalDeviation').val(), $('#chemicalComment').val()];
         }, function(v){
-            $('#containerType').val(v[0]); $('#containerVolume').val(v[1]); $('#containerSerial').val(v[2]); $('#containerNotes').val(v[3]);
-        }, '/materials/chemical');
+            $('#chemicalName').val(v[0]); $('#chemicalDeviation').val(v[1]); $('#chemicalComment').val(v[2]);
+        }, '/materials/chemical/' + materialId + '/' + stage, function(){
+            return {
+                compoundName: $('#chemicalName').val(),
+                stoichiometryDeviation: parseFloat($('#chemicalDeviation').val() || 0),
+                notes: $('#chemicalComment').val()
+            };
+        });
 
         initEditableDialog('#containerDialog','#addContainer','#saveContainer','#containerTable', function(){
             return [$('#containerType').val(), $('#containerVolume').val(), $('#containerSerial').val(), $('#containerNotes').val()];

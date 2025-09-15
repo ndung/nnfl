@@ -2,12 +2,16 @@
      id="chemicalDialog" title="Edit Chemical" style="display:none;">
     <div class="grid gap-5">
         <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">ID :</label>
+            <input class="kt-input" id="chemicalId" disabled type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
             <label class="kt-form-label max-w-56">Compound Name :</label>
             <input class="kt-input" id="chemicalName" type="text"/>
         </div>
         <div class="flex items-baseline gap-2.5">
             <label class="kt-form-label max-w-56">Stoichiometry Deviation :</label>
-            <input class="kt-input" id="chemicalDeviation" type="text"/>
+            <input class="kt-input" id="chemicalDeviation" type="number"/>
         </div>
         <div class="flex items-baseline gap-2.5">
             <label class="kt-form-label max-w-56">Comment(s) :</label>

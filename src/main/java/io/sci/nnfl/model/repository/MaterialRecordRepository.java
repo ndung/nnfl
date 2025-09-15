@@ -7,5 +7,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * Repository for {@link MaterialRecord} documents.
  */
 public interface MaterialRecordRepository extends MongoRepository<MaterialRecord, String> {
+
 }
 

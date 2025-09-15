@@ -1,44 +1,40 @@
 package io.sci.nnfl.web;
 
+import com.google.gson.internal.LinkedTreeMap;
+import io.sci.nnfl.model.ChemicalForm;
 import io.sci.nnfl.model.MaterialRecord;
 import io.sci.nnfl.model.Stage;
-import io.sci.nnfl.model.repository.MaterialRecordRepository;
 import io.sci.nnfl.service.MaterialRecordService;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 @Controller
 @RequestMapping("/materials")
 public class MaterialRecordController {
 
     private final MaterialRecordService service;
-    private final MaterialRecordRepository materialRecordRepository;
 
     @Getter @Setter
     private String type;
 
     private Map<String,String> typeOptions() {
-        Map<String,String> map = new TreeMap<>();
+        Map<String,String> map = new LinkedTreeMap<>();
         for (int i=0;i<Stage.values().length;i++) {
-            map.put(Stage.values()[i].name(),Stage.values()[i].name());
+            map.put(String.valueOf(i),Stage.values()[i].name());
         }
         return map;
     }
 
-    public MaterialRecordController(MaterialRecordService service, MaterialRecordRepository materialRecordRepository) {
+    public MaterialRecordController(MaterialRecordService service) {
         this.service = service;
-        this.materialRecordRepository = materialRecordRepository;
     }
 
     @GetMapping
@@ -48,13 +44,13 @@ public class MaterialRecordController {
         return "materials";
     }
 
-    @GetMapping("/new/{id}/{stage}")
-    public String createForm(Model model, @PathVariable("id") String id, @PathVariable("stage") String stage) {
+    @GetMapping("/new/{materialId}/{stage}")
+    public String createForm(Model model, @PathVariable("materialId") String materialId,
+                             @PathVariable("stage") String stage) {
         model.addAttribute("material", new MaterialRecord());
-        materialRecordRepository.findById(id).ifPresent(materialRecord -> {
-            model.addAttribute("material", materialRecord);
-        });
-        model.addAttribute("stage", stage);
+        MaterialRecord material = service.getById(materialId);
+        model.addAttribute("material", material);
+        model.addAttribute("stage", Integer.parseInt(stage));
         return "material-form";
     }
 
@@ -85,5 +81,36 @@ public class MaterialRecordController {
         service.save(material);
         ra.addFlashAttribute("materialSaved", true);
         return "redirect:/materials";
+    }
+
+    @PostMapping("/chemical/{materialId}/{stage}")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> addChemical(@PathVariable("materialId") String materialId,
+                                                           @PathVariable("stage") Integer stage,
+                                                           @RequestBody ChemicalForm chemicalForm) {
+        MaterialRecord record = service.getById(materialId);
+        if (record.getChemicalForms() == null) {
+            record.setChemicalForms(new ArrayList<>());
+        }
+        if (chemicalForm.getId() == null || chemicalForm.getId().isEmpty()) {
+            chemicalForm.setId(UUID.randomUUID().toString());
+        }
+        if (stage==null || stage < 0 || stage>10){
+            return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
+        }
+        chemicalForm.setStage(Stage.values()[stage]);
+        record.getChemicalForms().add(chemicalForm);
+        service.save(record);
+        String redirect =  "/materials/new/"+materialId+"/"+stage;
+        return ResponseEntity.ok(Map.of("ok", true, "redirectUrl", redirect));
+    }
+
+
+    @PostMapping("/chemical/{materialId}/{stage}/{id}/delete")
+    public String removeChemicalForm(@PathVariable("materialId") String materialId,
+                                     @PathVariable("stage") Integer stage,
+                                     @PathVariable("id") String id) {
+        service.removeChemicalForm(materialId, id);
+        return "redirect:/materials/new/"+materialId+"/"+stage;
     }
 }
