@@ -117,6 +117,242 @@
                 notes: $('#chemicalComment').val()
             };
         });
+
+        init('#elementDialog','#addElement','#saveElement','#elementTable', function(){
+            return [$('#elementName').val(), $('#elementConcentration').val(), $('#elementUncertainty').val(), $('#elementComment').val()];
+        }, function(v){
+            $('#elementName').val(v[0].trim());
+            $('#elementConcentration').val(v[1].trim());
+            $('#elementUncertainty').val(v[2].trim());
+            $('#elementComment').val(v[3].trim());
+        }, '/element/' + materialId + '/' + stage, function(){
+            return {
+                element: $('#elementName').val(),
+                concentration: parseFloat($('#elementConcentration').val() || 0),
+                uncertainty: parseFloat($('#elementUncertainty').val() || 0),
+                notes: $('#elementComment').val()
+            };
+        });
+
+        init('#isotopeDialog','#addIsotope','#saveIsotope','#isotopeTable', function(){
+            return [$('#isotopeName').val(), $('#isotopeRatio').val(), $('#isotopeUncertainty').val(), $('#isotopeComment').val()];
+        }, function(v){
+            $('#isotopeName').val(v[0].trim());
+            $('#isotopeRatio').val(v[1].trim());
+            $('#isotopeUncertainty').val(v[2].trim());
+            $('#isotopeComment').val(v[3].trim());
+        }, '/isotope/' + materialId + '/' + stage, function(){
+            return {
+                name: $('#isotopeName').val(),
+                value: parseFloat($('#isotopeRatio').val() || 0),
+                uncertainty: parseFloat($('#isotopeUncertainty').val() || 0),
+                notes: $('#isotopeComment').val()
+            };
+        });
+
+        init('#morphologyDialog','#addMorphology','#saveMorphology','#morphologyTable', function(){
+            return [$('#morphCrystal').val(), $('#morphA').val(), $('#morphB').val(), $('#morphComment').val()];
+        }, function(v){
+            $('#morphCrystal').val(v[0].trim());
+            $('#morphA').val(v[1].trim());
+            $('#morphB').val(v[2].trim());
+            $('#morphComment').val(v[3].trim());
+        }, '/morphology/' + materialId + '/' + stage, function(){
+            return {
+                latticeStructure: $('#morphCrystal').val(),
+                aspectRatio: parseFloat($('#morphA').val() || 0),
+                porosity: parseFloat($('#morphB').val() || 0),
+                notes: $('#morphComment').val()
+            };
+        });
+
+        init('#decayDialog','#addDecay','#saveDecay','#decayTable', function(){
+            return [$('#decayNuclide').val(), $('#decayActivity').val(), $('#decayComment').val()];
+        }, function(v){
+            $('#decayNuclide').val(v[0].trim());
+            $('#decayActivity').val(v[1].trim());
+            $('#decayComment').val(v[2].trim());
+        }, '/decay/' + materialId + '/' + stage, function(){
+            return {
+                isotopeName: $('#decayNuclide').val(),
+                activityBq: parseFloat($('#decayActivity').val() || 0),
+                notes: $('#decayComment').val()
+            };
+        });
+
+        init('#containerDialog','#addContainer','#saveContainer','#containerTable', function(){
+            return [$('#containerType').val(), $('#containerVolume').val(), $('#containerSerial').val(), $('#containerNotes').val()];
+        }, function(v){
+            $('#containerType').val(v[0].trim());
+            $('#containerVolume').val(v[1].trim());
+            $('#containerSerial').val(v[2].trim());
+            $('#containerNotes').val(v[3].trim());
+        }, '/container/' + materialId + '/' + stage, function(){
+            return {
+                type: $('#containerType').val(),
+                volume: parseFloat($('#containerVolume').val() || 0),
+                serialNumber: $('#containerSerial').val(),
+                notes: $('#containerNotes').val()
+            };
+        });
+
+        init('#generalInfoDialog','#addGeneralInfo','#saveGeneralInfo','#generalInfoTable', function(){
+            return [$('#generalCustodian').val(), $('#generalLab').val(), $('#generalCountry').val(), $('#generalNotes').val()];
+        }, function(v){
+            $('#generalCustodian').val(v[0].trim());
+            $('#generalLab').val(v[1].trim());
+            $('#generalCountry').val(v[2].trim());
+            $('#generalNotes').val(v[3].trim());
+        }, '/general-info/' + materialId + '/' + stage, function(){
+            return {
+                custodian: $('#generalCustodian').val(),
+                analyticalLab: $('#generalLab').val(),
+                countryOfOrigin: $('#generalCountry').val(),
+                notes: $('#generalNotes').val()
+            };
+        });
+
+        init('#geologyDialog','#addGeology','#saveGeology','#geologyTable', function(){
+            return [$('#geologyLocation').val(), $('#geologyFormation').val(), $('#geologyDeposit').val(), $('#geologyNotes').val()];
+        }, function(v){
+            $('#geologyLocation').val(v[0].trim());
+            $('#geologyFormation').val(v[1].trim());
+            $('#geologyDeposit').val(v[2].trim());
+            $('#geologyNotes').val(v[3].trim());
+        }, '/geology/' + materialId + '/' + stage, function(){
+            return {
+                mineLocation: $('#geologyLocation').val(),
+                geologicalFormation: $('#geologyFormation').val(),
+                depositTypes: $('#geologyDeposit').val(),
+                notes: $('#geologyNotes').val()
+            };
+        });
+
+        init('#irradiationDialog','#addIrradiation','#saveIrradiation','#irradiationTable', function(){
+            return [$('#irradiationReactor').val(), $('#irradiationBurnUp').val(), $('#irradiationLoadDate').val(), $('#irradiationDischargeDate').val(), $('#irradiationNotes').val()];
+        }, function(v){
+            $('#irradiationReactor').val(v[0].trim());
+            $('#irradiationBurnUp').val(v[1].trim());
+            $('#irradiationLoadDate').val(v[2].trim());
+            $('#irradiationDischargeDate').val(v[3].trim());
+            $('#irradiationNotes').val(v[4].trim());
+        }, '/irradiation/' + materialId + '/' + stage, function(){
+            return {
+                reactorType: $('#irradiationReactor').val(),
+                burnUp: $('#irradiationBurnUp').val(),
+                loadDate: $('#irradiationLoadDate').val(),
+                dischargeDate: $('#irradiationDischargeDate').val(),
+                notes: $('#irradiationNotes').val()
+            };
+        });
+
+        init('#isotopeActivityDialog','#addIsotopeActivity','#saveIsotopeActivity','#isotopeActivityTable', function(){
+            return [$('#isotopeActivityName').val(), $('#isotopeActivityValue').val(), $('#isotopeActivityDate').val(), $('#isotopeActivityNotes').val()];
+        }, function(v){
+            $('#isotopeActivityName').val(v[0].trim());
+            $('#isotopeActivityValue').val(v[1].trim());
+            $('#isotopeActivityDate').val(v[2].trim());
+            $('#isotopeActivityNotes').val(v[3].trim());
+        }, '/isotope-activity/' + materialId + '/' + stage, function(){
+            return {
+                isotopeName: $('#isotopeActivityName').val(),
+                activityBq: parseFloat($('#isotopeActivityValue').val() || 0),
+                referenceDate: $('#isotopeActivityDate').val(),
+                notes: $('#isotopeActivityNotes').val()
+            };
+        });
+
+        init('#mineralogyDialog','#addMineralogy','#saveMineralogy','#mineralogyTable', function(){
+            return [$('#mineralogyMinerals').val(), $('#mineralogyVolume').val(), $('#mineralogyNotes').val()];
+        }, function(v){
+            $('#mineralogyMinerals').val(v[0].trim());
+            $('#mineralogyVolume').val(v[1].trim());
+            $('#mineralogyNotes').val(v[2].trim());
+        }, '/mineralogy/' + materialId + '/' + stage, function(){
+            return {
+                mineralsPresent: $('#mineralogyMinerals').val(),
+                volumePercentages: parseFloat($('#mineralogyVolume').val() || 0),
+                notes: $('#mineralogyNotes').val()
+            };
+        });
+
+        init('#physicalDialog','#addPhysical','#savePhysical','#physicalTable', function(){
+            return [$('#physicalState').val(), $('#physicalDescription').val(), $('#physicalMass').val(), $('#physicalNotes').val()];
+        }, function(v){
+            $('#physicalState').val(v[0].trim());
+            $('#physicalDescription').val(v[1].trim());
+            $('#physicalMass').val(v[2].trim());
+            $('#physicalNotes').val(v[3].trim());
+        }, '/physical/' + materialId + '/' + stage, function(){
+            return {
+                stateOfMatter: $('#physicalState').val(),
+                description: $('#physicalDescription').val(),
+                mass: parseFloat($('#physicalMass').val() || 0),
+                notes: $('#physicalNotes').val()
+            };
+        });
+
+        init('#processInfoDialog','#addProcessInfo','#saveProcessInfo','#processInfoTable', function(){
+            return [$('#processType').val(), $('#processLocation').val(), $('#processStart').val(), $('#processEnd').val(), $('#processNotes').val()];
+        }, function(v){
+            $('#processType').val(v[0].trim());
+            $('#processLocation').val(v[1].trim());
+            $('#processStart').val(v[2].trim());
+            $('#processEnd').val(v[3].trim());
+            $('#processNotes').val(v[4].trim());
+        }, '/process-info/' + materialId + '/' + stage, function(){
+            return {
+                processTypeOrDescription: $('#processType').val(),
+                locationOfProcessingSite: $('#processLocation').val(),
+                startDate: $('#processStart').val(),
+                endDate: $('#processEnd').val(),
+                notes: $('#processNotes').val()
+            };
+        });
+
+        init('#serialNumberDialog','#addSerialNumber','#saveSerialNumber','#serialNumberTable', function(){
+            return [$('#serialNumberValue').val(), $('#serialNumberNotes').val()];
+        }, function(v){
+            $('#serialNumberValue').val(v[0].trim());
+            $('#serialNumberNotes').val(v[1].trim());
+        }, '/serial-number/' + materialId + '/' + stage, function(){
+            return {
+                serialNumber: $('#serialNumberValue').val(),
+                notes: $('#serialNumberNotes').val()
+            };
+        });
+
+        init('#sourceActivityInfoDialog','#addSourceActivityInfo','#saveSourceActivityInfo','#sourceActivityInfoTable', function(){
+            return [$('#sourceActivityValue').val(), $('#sourceActivityDate').val(), $('#sourceActivityNeutron').val(), $('#sourceActivityNotes').val()];
+        }, function(v){
+            $('#sourceActivityValue').val(v[0].trim());
+            $('#sourceActivityDate').val(v[1].trim());
+            $('#sourceActivityNeutron').val(v[2].trim());
+            $('#sourceActivityNotes').val(v[3].trim());
+        }, '/source-activity-info/' + materialId + '/' + stage, function(){
+            return {
+                activityBq: parseFloat($('#sourceActivityValue').val() || 0),
+                referenceDate: $('#sourceActivityDate').val(),
+                neutronIntensityPerSec: $('#sourceActivityNeutron').val(),
+                notes: $('#sourceActivityNotes').val()
+            };
+        });
+
+        init('#sourceDescriptionDialog','#addSourceDescription','#saveSourceDescription','#sourceDescriptionTable', function(){
+            return [$('#sourceDescriptionType').val(), $('#sourceDescriptionQuantity').val(), $('#sourceDescriptionSerial').val(), $('#sourceDescriptionNotes').val()];
+        }, function(v){
+            $('#sourceDescriptionType').val(v[0].trim());
+            $('#sourceDescriptionQuantity').val(v[1].trim());
+            $('#sourceDescriptionSerial').val(v[2].trim());
+            $('#sourceDescriptionNotes').val(v[3].trim());
+        }, '/source-description/' + materialId + '/' + stage, function(){
+            return {
+                sourceType: $('#sourceDescriptionType').val(),
+                quantity: $('#sourceDescriptionQuantity').val(),
+                serialNumber: $('#sourceDescriptionSerial').val(),
+                notes: $('#sourceDescriptionNotes').val()
+            };
+        });
     });
 </script>
 </body>
