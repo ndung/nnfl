@@ -2,24 +2,48 @@
      id="morphologyDialog" title="Edit Morphology" style="display:none;">
     <div class="grid gap-5">
         <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Crystal Structure :</label>
-            <input class="kt-input" id="morphCrystal" type="text"/>
+            <label class="kt-form-label max-w-56">ID :</label>
+            <input class="kt-input" id="morphId" disabled type="text"/>
         </div>
         <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Lattice A :</label>
-            <input class="kt-input" id="morphA" type="text"/>
+            <label class="kt-form-label max-w-56">Stage :</label>
+            <input class="kt-input" id="morphStage" disabled type="text"/>
         </div>
         <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Lattice B :</label>
-            <input class="kt-input" id="morphB" type="text"/>
+            <label class="kt-form-label max-w-56">Lattice Structure :</label>
+            <input class="kt-input" id="morphLatticeStructure" type="text"/>
         </div>
         <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Lattice C :</label>
-            <input class="kt-input" id="morphC" type="text"/>
+            <label class="kt-form-label max-w-56">Aspect Ratio :</label>
+            <input class="kt-input" id="morphAspectRatio" type="text"/>
         </div>
         <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Comment(s) :</label>
-            <input class="kt-input" id="morphComment" type="text"/>
+            <label class="kt-form-label max-w-56">Porosity :</label>
+            <input class="kt-input" id="morphPorosity" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Colour :</label>
+            <input class="kt-input" id="morphColour" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Particle Size & Distribution :</label>
+            <input class="kt-input" id="morphParticle" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Shape :</label>
+            <input class="kt-input" id="morphShape" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Surface Features :</label>
+            <input class="kt-input" id="morphSurfaceFeatures" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Plutonium Homogeneity :</label>
+            <input class="kt-input" id="morphPlutonium" type="text"/>
+        </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Notes :</label>
+            <input class="kt-input" id="morphNotes" type="text"/>
         </div>
         <div class="flex justify-end gap-2">
             <button type="button" id="saveMorphology" class="kt-btn kt-btn-primary">Save</button>
@@ -27,3 +51,4 @@
         </div>
     </div>
 </div>
+

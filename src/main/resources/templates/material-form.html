@@ -296,18 +296,43 @@
         });
 
         init('#morphologyDialog','#addMorphology','#saveMorphology','#morphologyTable', function(){
-            return [$('#morphCrystal').val(), $('#morphA').val(), $('#morphB').val(), $('#morphComment').val()];
+            return [
+                $('#morphId').val(),
+                $('#morphStage').val(),
+                $('#morphLatticeStructure').val(),
+                $('#morphAspectRatio').val(),
+                $('#morphPorosity').val(),
+                $('#morphColour').val(),
+                $('#morphParticle').val(),
+                $('#morphShape').val(),
+                $('#morphSurfaceFeatures').val(),
+                $('#morphPlutonium').val(),
+                $('#morphNotes').val()
+            ];
         }, function(v){
-            $('#morphCrystal').val(v[0].trim());
-            $('#morphA').val(v[1].trim());
-            $('#morphB').val(v[2].trim());
-            $('#morphComment').val(v[3].trim());
+            $('#morphId').val(v[0].trim());
+            $('#morphStage').val(v[1].trim());
+            $('#morphLatticeStructure').val(v[2].trim());
+            $('#morphAspectRatio').val(v[3].trim());
+            $('#morphPorosity').val(v[4].trim());
+            $('#morphColour').val(v[5].trim());
+            $('#morphParticle').val(v[6].trim());
+            $('#morphShape').val(v[7].trim());
+            $('#morphSurfaceFeatures').val(v[8].trim());
+            $('#morphPlutonium').val(v[9].trim());
+            $('#morphNotes').val(v[10].trim());
         }, '/morphology/' + materialId + '/' + stage, function(){
             return {
-                latticeStructure: $('#morphCrystal').val(),
-                aspectRatio: parseFloat($('#morphA').val() || 0),
-                porosity: parseFloat($('#morphB').val() || 0),
-                notes: $('#morphComment').val()
+                id: $('#morphId').val(),
+                latticeStructure: $('#morphLatticeStructure').val(),
+                aspectRatio: $('#morphAspectRatio').val(),
+                porosity: $('#morphPorosity').val(),
+                colour: $('#morphColour').val(),
+                particleSizeAndDistribution: $('#morphParticle').val(),
+                shape: $('#morphShape').val(),
+                surfaceFeatures: $('#morphSurfaceFeatures').val(),
+                plutoniumHomogeneity: $('#morphPlutonium').val(),
+                notes: $('#morphNotes').val()
             };
         });
 
