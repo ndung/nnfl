@@ -9,18 +9,22 @@
                 <table id="isotopeTable" class="kt-table kt-table-border table-fixed" data-kt-datatable-table="true">
                     <thead>
                     <tr>
+                        <th style="width:0%"><span class="kt-table-col"><span class="kt-table-col-label" hidden>ID</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Isotope Name</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Ratio</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Uncertainty</span></span></th>
+                        <th><span class="kt-table-col"><span class="kt-table-col-label">Unit</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Notes</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Action</span></span></th>
                     </tr>
                     </thead>
                     <tbody th:each="iso : ${material.uraniumIsotopes}">
                     <tr>
+                        <td><span th:text="${iso.id}" hidden></span></td>
                         <td><span th:text="${iso.name}"></span></td>
                         <td><span th:text="${iso.value}"></span></td>
                         <td><span th:text="${iso.uncertainty}"></span></td>
+                        <td><span th:text="${iso.unit}"></span></td>
                         <td><span th:text="${iso.notes}"></span></td>
                         <td class="flex gap-2">
                             <button class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost editRow">
