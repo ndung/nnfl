@@ -18,15 +18,16 @@ public class Physical {
     private Stage stage;
     private BigDecimal densityValue;
     private String densityUnit;
-    private String stateOfMatter;           // solid/liquid/gas
-    private String mechanicalProperties;    // e.g., hardness, strength
-    private String description;             // pellet/rod/plate description
-    private String dimension;
+    private String stateOfMatter;
+    private String mechanicalProperties;
+    private String description;
+    private String dimensions;
     private String claddingInfo;
     private String coatingInfo;
     private String assemblyStructure;
     private String surfaceOxideThickness;
     private BigDecimal massValue;
     private BigDecimal massUnit;
+    private String serialNumbers;
     private String notes;
 }

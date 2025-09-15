@@ -1,18 +1,18 @@
 <div th:fragment="processInfoCard" class="kt-card kt-card-grid h-full min-w-full">
     <div class="kt-card-header flex justify-between">
-        <h3 class="kt-card-title">Process Information</h3>
-        <button type="button" id="addProcessInfo" class="kt-btn kt-btn-light">Add</button>
+        <h3 class="kt-card-title">Process information</h3>
+        <button type="button" id="addProcessInfo" class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost"><i class="ki-filled ki-additem"></i></button>
     </div>
     <div class="kt-card-table">
-        <div class="grid" data-kt-datatable="true" data-kt-datatable-page-size="5">
+        <div class="grid">
             <div class="kt-scrollable-x-auto">
-                <table id="processInfoTable" class="kt-table kt-table-border table-fixed" data-kt-datatable-table="true">
+                <table id="processInfoTable" class="kt-table kt-table-border table-fixed text-xs" data-kt-datatable-table="true">
                     <thead>
                     <tr>
                         <th style="width:0%"><span class="kt-table-col"><span class="kt-table-col-label" hidden>ID</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Stage</span></span></th>
-                        <th><span class="kt-table-col"><span class="kt-table-col-label">Process Type</span></span></th>
-                        <th><span class="kt-table-col"><span class="kt-table-col-label">Location</span></span></th>
+                        <th><span class="kt-table-col"><span class="kt-table-col-label">Process Type (Mining and Milling)</span></span></th>
+                        <th><span class="kt-table-col"><span class="kt-table-col-label">Location of Processing Site</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Start Date</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">End Date</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Notes</span></span></th>

@@ -6,57 +6,81 @@
 
         <div th:replace="~{cards/general-info :: generalInfoCard}"></div>
 
-        <th:block th:if="${stage == 1}">
+        <th:block th:if="${stage == 0 or stage == 1}">
             <div th:replace="~{cards/geology :: geologyCard}"></div>
         </th:block>
 
-        <th:block th:if="${stage == 2 or stage == 3}">
+        <th:block th:if="${stage == 0 or stage == 9 or stage == 10}">
+            <div th:replace="~{cards/source-description :: sourceDescriptionCard}"></div>
+        </th:block>
+
+        <th:block th:if="${stage == 0 or stage == 9 or stage == 10}">
+            <div th:replace="~{cards/source-activity-info :: sourceActivityInfoCard}"></div>
+        </th:block>
+
+        <th:block th:if="${stage == 0 or stage == 2 or stage == 3 or stage == 4 or stage == 5 or stage == 6 or stage == 7 or stage == 9 or stage == 10}">
             <div th:replace="~{cards/chemical-form :: chemicalCard}"></div>
         </th:block>
 
-        <th:block th:if="${stage == 1}">
+        <th:block th:if="${stage == 0 or stage == 1}">
             <div th:replace="~{cards/mineralogy :: mineralogyCard}"></div>
         </th:block>
 
-        <th:block th:if="${stage == 2 or stage == 3}">
+        <th:block th:if="${stage == 0 or stage == 2 or stage == 3 or stage == 4 or stage == 5 or stage == 6 or stage == 7 or stage == 8}">
             <div th:replace="~{cards/physical :: physicalCard}"></div>
         </th:block>
 
-        <th:block th:if="${stage == 2 or stage == 3}">
+        <th:block th:if="${stage == 0 or stage == 4 or stage == 5 or stage == 6 or stage == 8}">
+            <div th:replace="~{cards/serial-number :: serialNumberCard}"></div>
+        </th:block>
+
+        <th:block th:if="${stage == 0 or stage == 2 or stage == 3 or stage == 4}">
             <div th:replace="~{cards/morphology :: morphologyCard}"></div>
         </th:block>
 
-        <th:block th:if="${stage == 1 or stage == 2}">
+        <th:block th:if="${stage == 0 or stage == 4 or stage == 5 or stage == 6 or stage == 7 or stage == 8 or stage == 9 or stage == 10}">
+            <div th:replace="~{cards/element :: elementCard}"></div>
+        </th:block>
+
+        <th:block th:if="${stage == 0 or stage == 1 or stage == 2 or stage == 3}">
             <div th:replace="~{cards/uranium :: uraniumCard}"></div>
         </th:block>
 
-        <th:block th:if="${stage == 1 or stage == 2}">
+        <th:block th:if="${stage == 0 or stage == 1 or stage == 2 or stage == 3 or stage == 4 or stage == 5 or stage == 6 or stage == 7}">
             <div th:replace="~{cards/uranium-isotope :: uraniumIsotopeCard}"></div>
         </th:block>
 
-        <th:block th:if="${stage == 2}">
+        <th:block th:if="${stage == 0 or stage == 2}">
             <div th:replace="~{cards/decay :: uraniumDecayCard}"></div>
         </th:block>
 
-        <th:block th:if="${stage == 1 or stage == 2}">
+        <th:block th:if="${stage == 0 or stage == 1 or stage == 2}">
             <div th:replace="~{cards/stable-isotope :: stableIsotopeCard}"></div>
         </th:block>
 
-        <th:block th:if="${stage == 1 or stage == 2}">
+        <th:block th:if="${stage == 0 or stage == 4 or stage == 5 or stage == 6 or stage == 7}">
+            <div th:replace="~{cards/plutonium-isotope :: plutoniumIsotopeCard}"></div>
+        </th:block>
+
+        <th:block th:if="${stage == 0 or stage == 1 or stage == 2 or stage == 3 or stage == 4 or stage == 5 or stage == 6 or stage == 7}">
             <div th:replace="~{cards/trace-element :: traceElementCard}"></div>
         </th:block>
 
-        <th:block th:if="${stage == 2}">
+        <th:block th:if="${stage == 0 or stage == 8 or stage == 9 or stage == 10}">
+            <<div th:replace="~{cards/isotope-activity :: isotopeActivityCard}"></div>
+        </th:block>
+
+        <th:block th:if="${stage == 0 or stage == 2 or stage == 3 or stage == 4 or stage == 5 or stage == 7}">
             <div th:replace="~{cards/process-info :: processInfoCard}"></div>
         </th:block>
 
-        <div th:replace="~{cards/element :: elementCard}"></div>
-        <div th:replace="~{cards/container :: containerCard}"></div>
-        <div th:replace="~{cards/irradiation :: irradiationCard}"></div>
-        <div th:replace="~{cards/isotope-activity :: isotopeActivityCard}"></div>
-        <div th:replace="~{cards/serial-number :: serialNumberCard}"></div>
-        <div th:replace="~{cards/source-activity-info :: sourceActivityInfoCard}"></div>
-        <div th:replace="~{cards/source-description :: sourceDescriptionCard}"></div>
+        <th:block th:if="${stage == 0 or stage == 3}">
+            <div th:replace="~{cards/container :: containerCard}"></div>
+        </th:block>
+
+        <th:block th:if="${stage == 0 or stage == 6}">
+            <div th:replace="~{cards/irradiation :: irradiationCard}"></div>
+        </th:block>
 
     </div>
 </div>
@@ -238,6 +262,34 @@
                 uncertainty: parseFloat($('#stableIsotopeUncertainty').val() || 0),
                 unit: $('#stableIsotopeUnit').val(),
                 notes: $('#stableIsotopeComment').val()
+            };
+        });
+
+        init('#plutoniumIsotopeDialog','#addPlutoniumIsotope','#savePlutoniumIsotope','#plutoniumIsotopeTable', function(){
+            return [
+                $('#plutoniumIsotopeId').val(),
+                $('#plutoniumIsotopeStage').val(),
+                $('#plutoniumIsotopeName').val(),
+                $('#plutoniumIsotopeRatio').val(),
+                $('#plutoniumIsotopeUncertainty').val(),
+                $('#plutoniumIsotopeUnit').val(),
+                $('#plutoniumIsotopeComment').val()];
+        }, function(v){
+            $('#plutoniumIsotopeId').val(v[0].trim());
+            $('#plutoniumIsotopeStage').val(v[1].trim());
+            $('#plutoniumIsotopeName').val(v[2].trim());
+            $('#plutoniumIsotopeRatio').val(v[3].trim());
+            $('#plutoniumIsotopeUncertainty').val(v[4].trim());
+            $('#plutoniumIsotopeUnit').val(v[5].trim());
+            $('#plutoniumIsotopeComment').val(v[6].trim());
+        }, '/plutonium-isotope/' + materialId + '/' + stage, function(){
+            return {
+                id: $('#plutoniumIsotopeId').val(),
+                name: $('#plutoniumIsotopeName').val(),
+                value: parseFloat($('#plutoniumIsotopeRatio').val() || 0),
+                uncertainty: parseFloat($('#plutoniumIsotopeUncertainty').val() || 0),
+                unit: $('#plutoniumIsotopeUnit').val(),
+                notes: $('#plutoniumIsotopeComment').val()
             };
         });
 
@@ -611,7 +663,6 @@
         }, '/process-info/' + materialId + '/' + stage, function(){
             return {
                 id: $('#processId').val(),
-                stage: $('#processStage').val(),
                 processTypeOrDescription: $('#processType').val(),
                 locationOfProcessingSite: $('#processLocation').val(),
                 startDate: $('#processStart').val(),
