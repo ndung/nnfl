@@ -93,17 +93,24 @@ public class MenuService {
         menu2.setId("2");
         menu2.setOrderIndex(2);
         menu2.setEnabled(true);
-        menu2.setTitle("User");
-        menu2.setHref("/admin/users");
+        menu2.setTitle("Search");
+        menu2.setHref("/search");
 
         Menu menu3 = new Menu();
         menu3.setId("3");
         menu3.setOrderIndex(3);
         menu3.setEnabled(true);
-        menu3.setTitle("Profile");
-        menu3.setHref("/profile");
+        menu3.setTitle("User");
+        menu3.setHref("/admin/users");
 
-        return List.of(menu1, menu2, menu3);
+        Menu menu4 = new Menu();
+        menu4.setId("4");
+        menu4.setOrderIndex(4);
+        menu4.setEnabled(true);
+        menu4.setTitle("Profile");
+        menu4.setHref("/profile");
+
+        return List.of(menu1, menu2, menu3, menu4);
     }
 
     /** Normalize roles: trim, uppercase, strip ROLE_ prefix; null-safe. */

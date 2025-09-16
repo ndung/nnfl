@@ -72,21 +72,6 @@ public class MaterialVectorSearchService {
         }
     }
 
-    public void deleteMaterial(String materialId) {
-        if (!StringUtils.hasText(materialId)) {
-            return;
-        }
-        try {
-            DeleteResult result = mongoTemplate.remove(Query.query(Criteria.where("_id").is(materialId)),
-                    properties.getCollectionName());
-            if (result.wasAcknowledged() && result.getDeletedCount() > 0) {
-                log.debug("Removed embedding for material {}", materialId);
-            }
-        } catch (Exception ex) {
-            log.error("Failed to delete embedding for material {}", materialId, ex);
-        }
-    }
-
     public List<MaterialSearchResult> search(String query) {
         if (!StringUtils.hasText(query)) {
             return Collections.emptyList();
@@ -128,6 +113,22 @@ public class MaterialVectorSearchService {
         } catch (Exception ex) {
             log.error("Material search failed", ex);
             return Collections.emptyList();
+        }
+    }
+
+
+    public void deleteMaterial(String materialId) {
+        if (!StringUtils.hasText(materialId)) {
+            return;
+        }
+        try {
+            DeleteResult result = mongoTemplate.remove(Query.query(Criteria.where("_id").is(materialId)),
+                    properties.getCollectionName());
+            if (result.wasAcknowledged() && result.getDeletedCount() > 0) {
+                log.debug("Removed embedding for material {}", materialId);
+            }
+        } catch (Exception ex) {
+            log.error("Failed to delete embedding for material {}", materialId, ex);
         }
     }
 
