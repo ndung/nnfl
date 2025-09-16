@@ -10,6 +10,7 @@ import dev.langchain4j.store.embedding.EmbeddingSearchRequest;
 import dev.langchain4j.store.embedding.EmbeddingSearchResult;
 import io.sci.nnfl.config.MaterialSearchProperties;
 import io.sci.nnfl.model.MaterialRecord;
+import io.sci.nnfl.model.dto.MaterialSearchResult;
 import io.sci.nnfl.model.repository.MaterialRecordRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +20,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
@@ -30,7 +30,6 @@ import dev.langchain4j.exception.UnsupportedFeatureException;
 public class MaterialVectorSearchService {
 
     private static final Logger log = LoggerFactory.getLogger(MaterialVectorSearchService.class);
-    private static final int DEFAULT_SNIPPET_LENGTH = 200;
 
     private final MaterialRecordRepository repository;
     private final MaterialSearchProperties properties;
@@ -118,13 +117,7 @@ public class MaterialVectorSearchService {
                 String materialId = match.embeddingId();
                 double score = match.score() != null ? match.score() : 0.0;
                 MaterialRecord material = materialId != null ? materialsById.get(materialId) : null;
-                TextSegment segment = match.embedded();
-                results.add(new MaterialSearchResult(
-                        materialId,
-                        score,
-                        buildTitle(materialId, material, segment),
-                        buildSnippet(material, segment)
-                ));
+                results.add(new MaterialSearchResult(material, score));
             }
             return results;
         } catch (Exception ex) {
@@ -139,94 +132,10 @@ public class MaterialVectorSearchService {
             return null;
         }
         Metadata metadata = Metadata.from("materialId", record.getId());
-        if (StringUtils.hasText(record.getState())) {
-            metadata.put("state", record.getState());
-        }
         if (record.getCreationDateTime() != null) {
             metadata.put("createdAt", DateTimeFormatter.ISO_INSTANT.format(record.getCreationDateTime().toInstant()));
-        }
-        if (StringUtils.hasText(record.getNotes())) {
-            metadata.put("notes", abbreviate(record.getNotes(), DEFAULT_SNIPPET_LENGTH));
         }
         return TextSegment.from(content, metadata);
     }
 
-    private String buildTitle(String materialId, MaterialRecord material, TextSegment segment) {
-        if (material != null && StringUtils.hasText(material.getState())) {
-            return material.getState() + " — " + materialId;
-        }
-        if (segment != null && segment.metadata() != null) {
-            String state = segment.metadata().getString("state");
-            if (StringUtils.hasText(state) && StringUtils.hasText(materialId)) {
-                return state + " — " + materialId;
-            }
-        }
-        if (StringUtils.hasText(materialId)) {
-            return "Material " + materialId;
-        }
-        return "Material";
-    }
-
-    private String buildSnippet(MaterialRecord material, TextSegment segment) {
-        String snippet = null;
-        if (segment != null && segment.metadata() != null) {
-            snippet = segment.metadata().getString("notes");
-        }
-        if (!StringUtils.hasText(snippet) && material != null && StringUtils.hasText(material.getNotes())) {
-            snippet = material.getNotes();
-        }
-        if (!StringUtils.hasText(snippet) && segment != null) {
-            snippet = segment.text();
-        }
-        return abbreviate(snippet, DEFAULT_SNIPPET_LENGTH);
-    }
-
-    private String abbreviate(String value, int maxLength) {
-        if (!StringUtils.hasText(value)) {
-            return "";
-        }
-        String normalized = value.replaceAll("\\s+", " ").trim();
-        if (normalized.length() <= maxLength) {
-            return normalized;
-        }
-        return normalized.substring(0, Math.max(0, maxLength - 3)) + "...";
-    }
-
-    public static final class MaterialSearchResult {
-        private final String materialId;
-        private final double score;
-        private final String title;
-        private final String snippet;
-
-        public MaterialSearchResult(String materialId, double score, String title, String snippet) {
-            this.materialId = materialId;
-            this.score = score;
-            this.title = title;
-            this.snippet = snippet;
-        }
-
-        public String getMaterialId() {
-            return materialId;
-        }
-
-        public double getScore() {
-            return score;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public String getSnippet() {
-            return snippet;
-        }
-
-        public String getScoreDisplay() {
-            return String.format(Locale.US, "%.3f", score);
-        }
-
-        public boolean hasSnippet() {
-            return snippet != null && !snippet.isBlank();
-        }
-    }
 }

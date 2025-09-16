@@ -83,25 +83,14 @@ User request:
                 .build();
     }
 
-    /**
-     * Indicates whether the converter can reach the OpenAI service.
-     */
     public boolean isConfigured() {
         return openAiClient != null && properties.hasApiKey();
     }
 
-    /**
-     * Converts a natural language query into a MongoDB {@link Query} if possible.
-     */
-    public Optional<Query> toQuery(String naturalLanguageQuery) {
-        return toJsonFilter(naturalLanguageQuery)
-                .flatMap(this::parseDocument)
-                .map(BasicQuery::new);
+    public Optional<Query> toQuery(Optional<String> query) {
+        return query.flatMap(this::parseDocument).map(BasicQuery::new);
     }
 
-    /**
-     * Converts a natural language query into a JSON representation of an MQL filter.
-     */
     public Optional<String> toJsonFilter(String naturalLanguageQuery) {
         if (!StringUtils.hasText(naturalLanguageQuery)) {
             return Optional.empty();

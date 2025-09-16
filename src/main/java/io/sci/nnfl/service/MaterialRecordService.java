@@ -3,6 +3,7 @@ package io.sci.nnfl.service;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.result.UpdateResult;
 import io.sci.nnfl.model.MaterialRecord;
+import io.sci.nnfl.model.dto.MaterialSearchResult;
 import io.sci.nnfl.model.repository.MaterialRecordRepository;
 import org.bson.Document;
 import org.slf4j.Logger;
@@ -14,14 +15,14 @@ import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class MaterialRecordService extends BaseService {
@@ -81,29 +82,40 @@ public class MaterialRecordService extends BaseService {
     }
 
     @Transactional(readOnly = true)
-    public List<MaterialRecord> search(String mqlFilter) {
+    public List<MaterialSearchResult> search(String mqlFilter) {
         if (!StringUtils.hasText(mqlFilter)) {
             return Collections.emptyList();
         }
-
+        List<MaterialRecord> list = Collections.emptyList();
         try {
             Document filter = Document.parse(mqlFilter);
-            return template.find(new BasicQuery(filter), MaterialRecord.class);
+            list = template.find(new BasicQuery(filter), MaterialRecord.class);
         } catch (RuntimeException searchError) {
             LOGGER.warn("Failed to execute MaterialRecord search with provided filter: {}", mqlFilter, searchError);
-            return Collections.emptyList();
         }
+        return buildSearchResult(list);
     }
 
     @Transactional(readOnly = true)
-    public List<MaterialRecord> searchByNaturalLanguage(String request) {
+    public Pair<Optional<String>,List<MaterialSearchResult>> searchByNaturalLanguage(String request) {
         if (!StringUtils.hasText(request) || !mqlConverter.isConfigured()) {
-            return Collections.emptyList();
+            return Pair.of(Optional.empty(), Collections.emptyList());
         }
+        Optional<String> q = mqlConverter.toJsonFilter(request);
 
-        return mqlConverter.toQuery(request)
+        List<MaterialRecord> list = mqlConverter.toQuery(q)
                 .map(query -> template.find(query, MaterialRecord.class))
                 .orElse(Collections.emptyList());
+        List<MaterialSearchResult> materialSearchResults = buildSearchResult(list);
+        return Pair.of(q, materialSearchResults);
+    }
+
+    private List<MaterialSearchResult> buildSearchResult(List<MaterialRecord> list) {
+        List<MaterialSearchResult> result = new ArrayList<>();
+        for (MaterialRecord record : list) {
+            result.add(new MaterialSearchResult(record, 0.0));
+        }
+        return result;
     }
 
     public boolean isNaturalLanguageSearchEnabled() {
