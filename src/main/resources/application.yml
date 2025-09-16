@@ -36,9 +36,10 @@ spring:
   web:
     resources:
       static-locations: classpath:/static/
-
 openai:
   api-key: ${OPENAI_API_KEY:}
+  model: ${OPENAI_MODEL:gpt-4.1-mini}
+  max-output-tokens: ${OPENAI_MAX_OUTPUT_TOKENS:512}
   base-url: ${OPENAI_BASE_URL:https://api.openai.com/v1}
   organization-id: ${OPENAI_ORGANIZATION_ID:}
   embedding-model: ${OPENAI_EMBEDDING_MODEL:text-embedding-3-small}
