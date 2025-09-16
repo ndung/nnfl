@@ -7,6 +7,8 @@ import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.store.embedding.EmbeddingMatch;
 import dev.langchain4j.store.embedding.EmbeddingStore;
+import dev.langchain4j.store.embedding.EmbeddingSearchRequest;
+import dev.langchain4j.store.embedding.EmbeddingSearchResult;
 import io.sci.nnfl.config.MaterialSearchProperties;
 import io.sci.nnfl.model.MaterialRecord;
 import io.sci.nnfl.model.repository.MaterialRecordRepository;
@@ -26,6 +28,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import dev.langchain4j.exception.UnsupportedFeatureException;
 
 public class MaterialVectorSearchService {
 
@@ -66,9 +70,23 @@ public class MaterialVectorSearchService {
                 return;
             }
             deleteMaterial(record.getId());
+            embeddingStore.addAll(List.of(record.getId()), List.of(embedding), List.of(segment));
             embeddingStore.add(record.getId(), embedding, segment);
         } catch (Exception ex) {
             log.error("Failed to index material {}", record.getId(), ex);
+        }
+    }
+
+    public void deleteMaterial(String materialId) {
+        if (!StringUtils.hasText(materialId)) {
+            return;
+        }
+        try {
+            embeddingStore.remove(materialId);
+        } catch (UnsupportedFeatureException ex) {
+            log.warn("Embedding store does not support removal; embeddings for material {} may persist", materialId);
+        } catch (Exception ex) {
+            log.error("Failed to delete embedding for material {}", materialId, ex);
         }
     }
 
@@ -81,6 +99,22 @@ public class MaterialVectorSearchService {
             if (queryEmbedding == null) {
                 return Collections.emptyList();
             }
+            double minScore = Math.max(properties.getMinScore(), 0.0);
+            if (minScore > 1.0) {
+                minScore = 1.0;
+            }
+            EmbeddingSearchRequest request = EmbeddingSearchRequest.builder()
+                    .queryEmbedding(queryEmbedding)
+                    .maxResults(Math.max(properties.getMaxResults(), 1))
+                    .minScore(minScore)
+                    .build();
+            EmbeddingSearchResult<TextSegment> searchResult = embeddingStore.search(request);
+            if (searchResult == null || searchResult.matches() == null || searchResult.matches().isEmpty()) {
+                return Collections.emptyList();
+            }
+            List<EmbeddingMatch<TextSegment>> matches = searchResult.matches();
+            List<String> materialIds = matches.stream()
+                    .map(EmbeddingMatch::embeddingId)
             List<EmbeddingMatch<TextSegment>> matches = embeddingStore.findRelevant(
                     queryEmbedding,
                     Math.max(properties.getMaxResults(), 1),
@@ -98,6 +132,7 @@ public class MaterialVectorSearchService {
 
             List<MaterialSearchResult> results = new ArrayList<>();
             for (EmbeddingMatch<TextSegment> match : matches) {
+                String materialId = match.embeddingId();
                 String materialId = match.id();
                 double score = match.score() != null ? match.score() : 0.0;
                 MaterialRecord material = materialId != null ? materialsById.get(materialId) : null;
@@ -115,7 +150,6 @@ public class MaterialVectorSearchService {
             return Collections.emptyList();
         }
     }
-
 
     public void deleteMaterial(String materialId) {
         if (!StringUtils.hasText(materialId)) {

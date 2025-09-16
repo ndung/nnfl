@@ -93,6 +93,7 @@ public class LangchainConfiguration {
             @Qualifier("materialEmbeddingStore") EmbeddingStore<TextSegment> embeddingStore) {
 
         log.info("Material vector search service enabled using model '{}'", embeddingModel.getClass().getSimpleName());
+        return new MaterialVectorSearchService(repository, properties, embeddingModel, embeddingStore);
         return new MaterialVectorSearchService(repository, mongoTemplate, properties, embeddingModel, embeddingStore);
     }
 }
