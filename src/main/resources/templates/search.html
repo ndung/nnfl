@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body}, 'index')}">
+<body>
+<div class="kt-container-fluid">
+    <div class="grid gap-5 lg:gap-7.5 xl:w-[45rem] mx-auto">
+        <div class="kt-card">
+            <div class="kt-card-header">
+                <h3 class="kt-card-title">Search</h3>
+            </div>
+            <div class="kt-card-content grid gap-5">
+                <form class="flex flex-col lg:flex-row gap-3 lg:gap-4 items-stretch"
+                      th:action="@{/search}" method="get">
+                    <label class="sr-only" for="searchQuery">Search prompt</label>
+                    <input id="searchQuery"
+                           type="text"
+                           name="q"
+                           class="kt-input grow"
+                           placeholder="Enter a prompt to search"
+                           th:value="${query}"/>
+                    <button class="kt-btn kt-btn-primary lg:w-auto" type="submit">
+                        Search
+                    </button>
+                </form>
+                <div id="searchResults" class="grid gap-4">
+                    <div th:if="${!hasQuery}">
+                        <p class="text-sm text-muted-foreground">
+                            Enter a prompt above and click <strong>Search</strong> to see the results here.
+                        </p>
+                    </div>
+                    <div th:if="${hasQuery}" class="grid gap-3">
+                        <p class="text-sm text-muted-foreground" th:if="${#lists.isEmpty(results)}">
+                            No results found for
+                            <span class="font-medium" th:text="${query}">your query</span>.
+                        </p>
+                        <ul th:if="${!#lists.isEmpty(results)}" class="grid gap-3">
+                            <li class="kt-card kt-card-bordered p-4" th:each="result : ${results}">
+                                <span class="text-sm" th:text="${result}">Search result</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
