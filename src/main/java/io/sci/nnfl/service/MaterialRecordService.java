@@ -3,29 +3,39 @@ package io.sci.nnfl.service;
 import com.mongodb.BasicDBObject;
 import io.sci.nnfl.model.MaterialRecord;
 import io.sci.nnfl.model.repository.MaterialRecordRepository;
+import org.bson.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 @Service
 public class MaterialRecordService extends BaseService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(MaterialRecordService.class);
+
     private final MaterialRecordRepository repository;
     private final MongoTemplate template;
+    private final MaterialRecordMqlConverter mqlConverter;
 
     public MaterialRecordService(MaterialRecordRepository repository,
-                                 MongoTemplate template) {
+                                 MongoTemplate template,
+                                 MaterialRecordMqlConverter mqlConverter) {
         this.repository = repository;
         this.template = template;
+        this.mqlConverter = mqlConverter;
     }
 
     @Transactional(readOnly = true)
@@ -56,5 +66,35 @@ public class MaterialRecordService extends BaseService {
         Update u = new Update().pull(propertyName,
                 new BasicDBObject("_id", propertyId));
         template.updateFirst(q, u, MaterialRecord.class).getModifiedCount();
+    }
+
+    @Transactional(readOnly = true)
+    public List<MaterialRecord> search(String mqlFilter) {
+        if (!StringUtils.hasText(mqlFilter)) {
+            return Collections.emptyList();
+        }
+
+        try {
+            Document filter = Document.parse(mqlFilter);
+            return template.find(new BasicQuery(filter), MaterialRecord.class);
+        } catch (RuntimeException searchError) {
+            LOGGER.warn("Failed to execute MaterialRecord search with provided filter: {}", mqlFilter, searchError);
+            return Collections.emptyList();
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public List<MaterialRecord> searchByNaturalLanguage(String request) {
+        if (!StringUtils.hasText(request) || !mqlConverter.isConfigured()) {
+            return Collections.emptyList();
+        }
+
+        return mqlConverter.toQuery(request)
+                .map(query -> template.find(query, MaterialRecord.class))
+                .orElse(Collections.emptyList());
+    }
+
+    public boolean isNaturalLanguageSearchEnabled() {
+        return mqlConverter.isConfigured();
     }
 }

@@ -18,6 +18,18 @@
                            class="kt-input grow"
                            placeholder="Enter a prompt to search"
                            th:value="${query}"/>
+                    <label class="sr-only" for="searchVersion">Search version</label>
+                    <select id="searchVersion"
+                            name="version"
+                            class="kt-input lg:w-44"
+                            aria-label="Search version">
+                        <option value="1" th:selected="${version == '1'}">Version 1 (MQL)</option>
+                        <option value="2"
+                                th:selected="${version == '2'}"
+                                th:disabled="${!searchEnabled}">
+                            Version 2 (Natural language)
+                        </option>
+                    </select>
                     <button class="kt-btn kt-btn-primary lg:w-auto" type="submit">
                         Search
                     </button>
@@ -29,11 +41,14 @@
                         </p>
                     </div>
                     <div th:if="${hasQuery}" class="grid gap-3">
-                        <p class="text-sm text-muted-foreground" th:if="${#lists.isEmpty(results)}">
+                        <p class="text-sm text-muted-foreground" th:if="${usingNaturalLanguage and !searchEnabled}">
+                            Natural language search is currently unavailable because the OpenAI client is not configured.
+                        </p>
+                        <p class="text-sm text-muted-foreground" th:if="${searchAttempted and #lists.isEmpty(results)}">
                             No results found for
                             <span class="font-medium" th:text="${query}">your query</span>.
                         </p>
-                        <ul th:if="${!#lists.isEmpty(results)}" class="grid gap-3">
+                        <ul th:if="${searchAttempted and !#lists.isEmpty(results)}" class="grid gap-3">
                             <li class="kt-card kt-card-bordered p-4" th:each="result : ${results}">
                                 <span class="text-sm" th:text="${result}">Search result</span>
                             </li>
