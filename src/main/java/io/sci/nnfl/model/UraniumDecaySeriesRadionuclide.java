@@ -1,5 +1,6 @@
 package io.sci.nnfl.model;
 
+import com.google.gson.annotations.Expose;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -10,8 +11,12 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 public class UraniumDecaySeriesRadionuclide extends Property {
-    private String isotopeName;          // 230Th, 231Pa, 226Ra, ...
+    @Expose
+    private String isotopeName;
+    @Expose
     private BigDecimal activityBq;
+    @Expose
     private BigDecimal activityUncertaintyBq;
+    @Expose
     private String notes;
 }

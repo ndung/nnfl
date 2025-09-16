@@ -1,5 +1,6 @@
 package io.sci.nnfl.model;
 
+import com.google.gson.annotations.Expose;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -10,9 +11,14 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 public class Container extends Property{
-    private String type;     // e.g., UF6 cylinder type
-    private BigDecimal volumeValue;        // SI if used
+    @Expose
+    private String type;
+    @Expose
+    private BigDecimal volumeValue;
+    @Expose
     private String volumeUnit;
+    @Expose
     private String dimensions;
+    @Expose
     private String notes;
 }

@@ -1,5 +1,6 @@
 package io.sci.nnfl.model;
 
+import com.google.gson.annotations.Expose;
 import lombok.*;
 
 @EqualsAndHashCode(callSuper = true)
@@ -8,13 +9,22 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class Morphology extends Property {
+    @Expose
     private String latticeStructure;
+    @Expose
     private String aspectRatio;
+    @Expose
     private String porosity;
+    @Expose
     private String colour;
+    @Expose
     private String particleSizeAndDistribution;
+    @Expose
     private String shape;
-    private String surfaceFeatures;         // e.g., striations
-    private String plutoniumHomogeneity;    // for MOX; optional
+    @Expose
+    private String surfaceFeatures;
+    @Expose
+    private String plutoniumHomogeneity;
+    @Expose
     private String notes;
 }

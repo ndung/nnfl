@@ -1,5 +1,6 @@
 package io.sci.nnfl.model;
 
+import com.google.gson.annotations.Expose;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -11,10 +12,16 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class IsotopeActivity extends Property {
-    private String isotopeName;             // major or minor
+    @Expose
+    private String isotopeName;
+    @Expose
     private BigDecimal activityBq;
+    @Expose
     private BigDecimal activityUncertaintyBq;
+    @Expose
     private Date referenceDate;
-    private Boolean major;                  // true = major, false = minor
+    @Expose
+    private Boolean major;
+    @Expose
     private String notes;
 }

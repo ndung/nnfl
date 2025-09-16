@@ -1,5 +1,6 @@
 package io.sci.nnfl.model;
 
+import com.google.gson.annotations.Expose;
 import lombok.*;
 
 @EqualsAndHashCode(callSuper = true)
@@ -8,8 +9,12 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class Mineralogy extends Property {
-    private String mineralsPresent;      // free text or CSV
-    private String mineralChemistry;     // composition notes
-    private String volumePercentages;    // "Quartz 40%, Feldspar 20%..."
+    @Expose
+    private String mineralsPresent;
+    @Expose
+    private String mineralChemistry;
+    @Expose
+    private String volumePercentages;
+    @Expose
     private String notes;
 }

@@ -1,5 +1,6 @@
 package io.sci.nnfl.model;
 
+import com.google.gson.annotations.Expose;
 import lombok.*;
 
 @EqualsAndHashCode(callSuper = true)
@@ -8,10 +9,16 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class Geology extends Property {
+    @Expose
     private String mineLocation;
+    @Expose
     private String geologicalFormation;
-    private String depositTypes;         // e.g., vein, roll-front
+    @Expose
+    private String depositTypes;
+    @Expose
     private String miningTechnique;
+    @Expose
     private String colour;
+    @Expose
     private String notes;
 }

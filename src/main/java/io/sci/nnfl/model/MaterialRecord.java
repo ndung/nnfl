@@ -2,6 +2,8 @@ package io.sci.nnfl.model;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.internal.LinkedTreeMap;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,7 +28,6 @@ import java.util.Map;
 public class MaterialRecord {
     @Id
     private String id;
-    private String state;
     private List<GeneralInfo> generalInfo;
     //use in stage 1
     private List<Geology> geology;
@@ -93,14 +94,10 @@ public class MaterialRecord {
         extract(map, "isotopeActivities",isotopeActivities);
         extract(map, "sourceDescriptions",sourceDescriptions);
         extract(map, "sourceActivityInfo",sourceActivityInfo);
-        ObjectMapper mapper = new ObjectMapper();
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        mapper.setDateFormat(df);
-        try {
-            return mapper.writeValueAsString(map);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd")
+                .excludeFieldsWithoutExposeAnnotation().create();
+        return gson.toJson(map);
+
     }
 
     private <T extends Property> void extract(Map<Stage,Map<String,List<Property>>> map, String name, List<T> list){

@@ -6,47 +6,41 @@
     <div class="grid gap-5 lg:gap-7.5 xl:w-[45rem] mx-auto">
         <div class="kt-card">
             <div class="kt-card-header">
-                <h3 class="kt-card-title">Search</h3>
+                <h3 class="kt-card-title">Match</h3>
             </div>
             <div class="kt-card-content grid gap-5">
-                <form id="searchForm"
+                <form id="matchForm"
                       class="flex flex-col lg:flex-row gap-3 lg:gap-4 items-stretch"
-                      th:action="@{/search}" method="post">
+                      th:action="@{/match}" method="post">
                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                    <label class="sr-only" for="searchQuery">Search prompt</label>
-                    <input id="searchQuery"
+                    <label class="sr-only" for="matchQuery">Match prompt</label>
+                    <input id="matchQuery"
                            type="text"
                            name="q"
                            class="kt-input grow"
-                           placeholder="Enter a prompt to search"
+                           placeholder="Enter a material id to match"
                            th:value="${query}"/>
-                    <label class="sr-only" for="searchVersion">Search version</label>
-                    <select id="searchVersion"
-                            name="v"
-                            class="kt-input flex-none shrink-0 w-24"
-                            aria-label="Search version">
-                        <option value="1" th:selected="${version == '1'}">NL v1</option>
-                        <option value="2" th:selected="${version == '2'}">NL v2</option>
-                        <option value="3" th:selected="${version == '3'}">MQL</option>
-                    </select>
-                    <button id="searchSubmit" class="kt-btn kt-btn-primary lg:w-auto" type="submit">
-                        Search
+                    <button id="matchSubmit" class="kt-btn kt-btn-primary lg:w-auto" type="submit">
+                        Match
                     </button>
                 </form>
-                <div id="searchLoading" class="hidden items-center gap-2 text-sm text-muted-foreground" role="status" aria-live="polite">
+                <div id="matchLoading" class="hidden items-center gap-2 text-sm text-muted-foreground" role="status" aria-live="polite">
                     <span class="h-4 w-4 rounded-full border-2 border-muted-foreground border-t-transparent animate-spin"></span>
-                    <span>Searching…</span>
+                    <span>Matching…</span>
                 </div>
-                <div id="searchResults" class="grid gap-4">
+                <div id="matchResults" class="grid gap-4">
                     <div th:if="${!hasQuery}">
                         <p class="text-sm text-muted-foreground">
-                            Enter a prompt above and click <strong>Search</strong> to see the results here.
+                            Enter a material id above and click <strong>Match</strong> to see the results here.
                         </p>
                     </div>
-                    <span th:if="${version=='2'}" class="text-xs font-medium text-muted-foreground" th:text="${mql}">mql</span>
                     <div th:if="${hasQuery}" class="grid gap-3">
+                        <p class="text-sm text-muted-foreground" th:if="${!hasRecord}">
+                            No record found for
+                            <span class="font-medium" th:text="${query}">your query</span>.
+                        </p>
                         <p class="text-sm text-muted-foreground" th:if="${#lists.isEmpty(results)}">
-                            No results found for
+                            No matching results found for
                             <span class="font-medium" th:text="${query}">your query</span>.
                         </p>
                         <ul th:if="${!#lists.isEmpty(results)}" class="grid gap-3">
@@ -54,7 +48,7 @@
                                 <div class="flex flex-col gap-2">
                                     <div class="flex items-start justify-between gap-3">
                                         <span class="font-medium" th:text="${result.record.id}">Material title</span>
-                                        <span th:if="${version=='1'}" class="text-xs font-medium text-muted-foreground" th:text="${result.scoreDisplay}">0.000</span>
+                                        <span class="text-xs font-medium text-muted-foreground" th:text="${result.scoreDisplay}">0.000</span>
                                     </div>
                                     <p class="text-sm text-muted-foreground" th:text="${result.record.data}">Summary</p>
                                 </div>
@@ -68,9 +62,9 @@
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const form = document.getElementById('searchForm');
-        const spinner = document.getElementById('searchLoading');
-        const submitButton = document.getElementById('searchSubmit');
+        const form = document.getElementById('matchForm');
+        const spinner = document.getElementById('matchLoading');
+        const submitButton = document.getElementById('matchSubmit');
 
         if (!form || !spinner) {
             return;

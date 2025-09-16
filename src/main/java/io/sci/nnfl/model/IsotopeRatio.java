@@ -1,5 +1,6 @@
 package io.sci.nnfl.model;
 
+import com.google.gson.annotations.Expose;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -10,9 +11,14 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 public class IsotopeRatio extends Property {
+    @Expose
     private String name;
+    @Expose
     private BigDecimal value;
+    @Expose
     private BigDecimal uncertainty;
-    private String unit;            // per mil (‰), ratio, epsilon, etc.
+    @Expose
+    private String unit;
+    @Expose
     private String notes;
 }

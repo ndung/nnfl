@@ -39,7 +39,6 @@ public class MaterialRecordMqlConverter {
 You are an assistant that translates natural-language search requirements into MongoDB query filter documents
 for the `materials` collection that stores `MaterialRecord` documents.
 Each MaterialRecord document contains these relevant top-level fields:
-- state (string)
 - generalInfo[] sub-documents with keys such as dataRecordDate, countryOfOrigin, producer, supplier, analyticalLab, batchId and notes
 - geology[] sub-documents describing depositType, hostRock, country, region, latitude and longitude
 - mineralogy[], uranium[], uraniumIsotopes[], stableIsotopes[] and traceElements[] which contain measurement objects with name, value, unit and stage information

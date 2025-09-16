@@ -1,5 +1,6 @@
 package io.sci.nnfl.model;
 
+import com.google.gson.annotations.Expose;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -10,7 +11,10 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 public class ChemicalForm extends Property{
-    private String compoundName;          // U3O8, UF6, (NH4)2U2O7, etc.
+    @Expose
+    private String compoundName;
+    @Expose
     private BigDecimal stoichiometryDeviation;
+    @Expose
     private String notes;
 }
