@@ -1,19 +1,13 @@
 package io.sci.nnfl.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
+import lombok.*;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SourceDescription {
-    @Id
-    private String id;
-    private Stage stage;                 // SEALED_SOURCE / UNSEALED_SOURCE
+public class SourceDescription extends Property {
     private String sourceType;           // emission type / intended use
     private String quantity;             // textual or calculated
     private String description;          // description and dimensions

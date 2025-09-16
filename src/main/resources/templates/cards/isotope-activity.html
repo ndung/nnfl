@@ -27,7 +27,7 @@
                         <td><span th:text="${act.isotopeName}"></span></td>
                         <td><span th:text="${act.activityBq}"></span></td>
                         <td><span th:text="${act.activityUncertaintyBq}"></span></td>
-                        <td><span th:text="${act.referenceDate}"></span></td>
+                        <td><span th:text="${#dates.format(act.referenceDate, 'yyyy-MM-dd')}"></span></td>
                         <td><span th:text="${act.major}"></span></td>
                         <td><span th:text="${act.notes}"></span></td>
                         <td class="flex gap-2">

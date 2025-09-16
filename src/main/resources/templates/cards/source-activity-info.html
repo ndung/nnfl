@@ -23,7 +23,7 @@
                         <td><span th:text="${sai.id}" hidden></span></td>
                         <td><span th:text="${sai.stage}"></span></td>
                         <td><span th:text="${sai.activityBq}"></span></td>
-                        <td><span th:text="${sai.referenceDate}"></span></td>
+                        <td><span th:text="${#dates.format(sai.referenceDate, 'yyyy-MM-dd')}"></span></td>
                         <td><span th:text="${sai.neutronIntensityPerSec}"></span></td>
                         <td><span th:text="${sai.notes}"></span></td>
                         <td class="flex gap-2">

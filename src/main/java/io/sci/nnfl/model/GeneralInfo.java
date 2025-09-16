@@ -1,36 +1,31 @@
 package io.sci.nnfl.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.time.LocalDate;
-import org.springframework.data.annotation.Id;
+import java.util.Date;
+
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class GeneralInfo {
-    @Id
-    private String id;
-    private Stage stage;
-    private LocalDate dataRecordDate;
+public class GeneralInfo extends Property {
+    private Date dataRecordDate;
     private String custodian;
     private String analyticalLab;
-    private LocalDate analysisDate;
+    private Date analysisDate;
     private String countryOfOrigin;
     private String producer;
     private String supplier;
     private String batchId;
-    private LocalDate batchProcessDate;
+    private Date batchProcessDate;
     private String shipperCarrier;
     private String receiverInfo;
-    private LocalDate shippingDate;
-    private LocalDate receivingDate;
+    private Date shippingDate;
+    private Date receivingDate;
     private String dataEvaluationInfo;     // quality/pedigree/completeness
     private String variationRangeNotes;    // technical spec/variation info
-    private LocalDate informationAcquisitionDate;
+    private Date informationAcquisitionDate;
     private Boolean usedArchivedInformation;
     private String notes;
 }

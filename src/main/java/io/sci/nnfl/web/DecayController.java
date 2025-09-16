@@ -40,7 +40,7 @@ public class DecayController extends BaseController {
         record.getUraniumDecaySeriesRadionuclides().removeIf(d -> d.getId().equals(decay.getId()));
         record.getUraniumDecaySeriesRadionuclides().add(decay);
         service.save(record);
-        String redirect = "/materials/new/" + materialId + "/" + stage;
+        String redirect = "/materials/" + materialId + "/" + stage;
         return ResponseEntity.ok(Map.of("ok", true, "redirectUrl", redirect));
     }
 
@@ -49,7 +49,7 @@ public class DecayController extends BaseController {
                          @PathVariable Integer stage,
                          @PathVariable String id) {
         service.removeProperty(materialId, "uraniumDecaySeriesRadionuclides", id);
-        return "redirect:/materials/new/" + materialId + "/" + stage;
+        return "redirect:/materials/" + materialId + "/" + stage;
     }
 }
 

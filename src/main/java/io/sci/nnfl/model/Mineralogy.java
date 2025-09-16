@@ -1,19 +1,13 @@
 package io.sci.nnfl.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
+import lombok.*;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Mineralogy {
-    @Id
-    private String id;
-    private Stage stage;
+public class Mineralogy extends Property {
     private String mineralsPresent;      // free text or CSV
     private String mineralChemistry;     // composition notes
     private String volumePercentages;    // "Quartz 40%, Feldspar 20%..."

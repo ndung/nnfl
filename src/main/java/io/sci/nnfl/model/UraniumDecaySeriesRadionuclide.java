@@ -1,21 +1,15 @@
 package io.sci.nnfl.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
-import org.springframework.data.annotation.Id;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UraniumDecaySeriesRadionuclide {
-    @Id
-    private String id;
-    private Stage stage;
+public class UraniumDecaySeriesRadionuclide extends Property {
     private String isotopeName;          // 230Th, 231Pa, 226Ra, ...
     private BigDecimal activityBq;
     private BigDecimal activityUncertaintyBq;

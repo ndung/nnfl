@@ -40,7 +40,7 @@ public class StableIsotopeController extends BaseController {
         record.getStableIsotopes().removeIf(i -> i.getId().equals(isotope.getId()));
         record.getStableIsotopes().add(isotope);
         service.save(record);
-        String redirect = "/materials/new/" + materialId + "/" + stage;
+        String redirect = "/materials/" + materialId + "/" + stage;
         return ResponseEntity.ok(Map.of("ok", true, "redirectUrl", redirect));
     }
 
@@ -49,7 +49,7 @@ public class StableIsotopeController extends BaseController {
                          @PathVariable Integer stage,
                          @PathVariable String id) {
         service.removeProperty(materialId, "stableIsotopes", id);
-        return "redirect:/materials/new/" + materialId + "/" + stage;
+        return "redirect:/materials/" + materialId + "/" + stage;
     }
 }
 

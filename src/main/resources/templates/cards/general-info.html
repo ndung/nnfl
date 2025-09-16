@@ -1,6 +1,6 @@
 <div th:fragment="generalInfoCard" class="kt-card kt-card-grid h-full min-w-full">
     <div class="kt-card-header flex justify-between">
-        <h3 class="kt-card-title">General Info</h3>
+        <h3 class="kt-card-title">General information</h3>
         <button type="button" id="addGeneralInfo" class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost"><i class="ki-filled ki-additem"></i></button>
     </div>
     <div class="kt-card-table">
@@ -36,22 +36,22 @@
                     <tr>
                         <td><span th:text="${info.id}" hidden></span></td>
                         <td><span th:text="${info.stage}"></span></td>
-                        <td><span th:text="${info.dataRecordDate}"></span></td>
+                        <td><span th:text="${#dates.format(info.dataRecordDate, 'yyyy-MM-dd')}"></span></td>
                         <td><span th:text="${info.custodian}"></span></td>
                         <td><span th:text="${info.analyticalLab}"></span></td>
-                        <td><span th:text="${info.analysisDate}"></span></td>
+                        <td><span th:text="${#dates.format(info.analysisDate, 'yyyy-MM-dd')}"></span></td>
                         <td><span th:text="${info.countryOfOrigin}"></span></td>
                         <td><span th:text="${info.producer}"></span></td>
                         <td><span th:text="${info.supplier}"></span></td>
                         <td><span th:text="${info.batchId}"></span></td>
-                        <td><span th:text="${info.batchProcessDate}"></span></td>
+                        <td><span th:text="${#dates.format(info.batchProcessDate, 'yyyy-MM-dd')}"></span></td>
                         <td><span th:text="${info.shipperCarrier}"></span></td>
                         <td><span th:text="${info.receiverInfo}"></span></td>
-                        <td><span th:text="${info.shippingDate}"></span></td>
-                        <td><span th:text="${info.receivingDate}"></span></td>
+                        <td><span th:text="${#dates.format(info.shippingDate, 'yyyy-MM-dd')}"></span></td>
+                        <td><span th:text="${#dates.format(info.receivingDate, 'yyyy-MM-dd')}"></span></td>
                         <td><span th:text="${info.dataEvaluationInfo}"></span></td>
                         <td><span th:text="${info.variationRangeNotes}"></span></td>
-                        <td><span th:text="${info.informationAcquisitionDate}"></span></td>
+                        <td><span th:text="${#dates.format(info.informationAcquisitionDate, 'yyyy-MM-dd')}"></span></td>
                         <td><span th:text="${info.usedArchivedInformation}"></span></td>
                         <td><span th:text="${info.notes}"></span></td>
                         <td class="flex gap-2">

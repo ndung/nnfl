@@ -40,7 +40,7 @@ public class PhysicalController extends BaseController {
         record.getPhysicals().removeIf(p -> p.getId().equals(physical.getId()));
         record.getPhysicals().add(physical);
         service.save(record);
-        String redirect = "/materials/new/" + materialId + "/" + stage;
+        String redirect = "/materials/" + materialId + "/" + stage;
         return ResponseEntity.ok(Map.of("ok", true, "redirectUrl", redirect));
     }
 
@@ -49,7 +49,7 @@ public class PhysicalController extends BaseController {
                          @PathVariable Integer stage,
                          @PathVariable String id) {
         service.removeProperty(materialId, "physicals", id);
-        return "redirect:/materials/new/" + materialId + "/" + stage;
+        return "redirect:/materials/" + materialId + "/" + stage;
     }
 }
 

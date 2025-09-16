@@ -40,7 +40,7 @@ public class SourceDescriptionController extends BaseController {
         record.getSourceDescriptions().removeIf(s -> s.getId().equals(description.getId()));
         record.getSourceDescriptions().add(description);
         service.save(record);
-        String redirect = "/materials/new/" + materialId + "/" + stage;
+        String redirect = "/materials/" + materialId + "/" + stage;
         return ResponseEntity.ok(Map.of("ok", true, "redirectUrl", redirect));
     }
 
@@ -49,7 +49,7 @@ public class SourceDescriptionController extends BaseController {
                          @PathVariable Integer stage,
                          @PathVariable String id) {
         service.removeProperty(materialId, "sourceDescriptions", id);
-        return "redirect:/materials/new/" + materialId + "/" + stage;
+        return "redirect:/materials/" + materialId + "/" + stage;
     }
 }
 

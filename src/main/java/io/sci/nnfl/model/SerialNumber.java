@@ -1,19 +1,14 @@
 package io.sci.nnfl.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SerialNumber {
-    @Id
-    private String id;
-    private Stage stage;
+public class SerialNumber extends Property {
     private String serialNumber;
     private String notes;
 }

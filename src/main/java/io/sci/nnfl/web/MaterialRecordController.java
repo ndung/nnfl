@@ -1,19 +1,16 @@
 package io.sci.nnfl.web;
 
 import com.google.gson.internal.LinkedTreeMap;
-import io.sci.nnfl.model.ChemicalForm;
 import io.sci.nnfl.model.MaterialRecord;
 import io.sci.nnfl.model.Stage;
 import io.sci.nnfl.service.MaterialRecordService;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Controller
@@ -44,7 +41,7 @@ public class MaterialRecordController {
         return "materials";
     }
 
-    @GetMapping("/new/{materialId}/{stage}")
+    @GetMapping("/{materialId}/{stage}")
     public String createForm(Model model, @PathVariable("materialId") String materialId,
                              @PathVariable("stage") String stage) {
         model.addAttribute("material", new MaterialRecord());
@@ -52,15 +49,6 @@ public class MaterialRecordController {
         model.addAttribute("material", material);
         model.addAttribute("stage", Integer.parseInt(stage));
         return "material-form";
-    }
-
-    @PostMapping("/new")
-    public String create(Model model) {
-        MaterialRecord record = new MaterialRecord();
-        record.setCreator(service.getUser());
-        record.setCreationDateTime(LocalDateTime.now());
-        service.save(record);
-        return "redirect:/materials";
     }
 
     @PostMapping("/{id}/delete")
@@ -78,10 +66,11 @@ public class MaterialRecordController {
     @PostMapping
     public String create(@ModelAttribute MaterialRecord material,
                          RedirectAttributes ra) {
+        material.setCreator(service.getUser());
+        material.setCreationDateTime(new Date());
         service.save(material);
         ra.addFlashAttribute("materialSaved", true);
         return "redirect:/materials";
     }
-
 
 }

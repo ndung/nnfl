@@ -53,7 +53,7 @@ public class ChemicalFormController extends BaseController{
             }
         }
         service.save(record);
-        String redirect =  "/materials/new/"+materialId+"/"+stage;
+        String redirect =  "/materials/"+materialId+"/"+stage;
         return ResponseEntity.ok(Map.of("ok", true, "redirectUrl", redirect));
     }
 
@@ -63,6 +63,6 @@ public class ChemicalFormController extends BaseController{
                                      @PathVariable("stage") Integer stage,
                                      @PathVariable("id") String id) {
         service.removeProperty(materialId, "chemicalForms", id);
-        return "redirect:/materials/new/"+materialId+"/"+stage;
+        return "redirect:/materials/"+materialId+"/"+stage;
     }
 }

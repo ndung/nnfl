@@ -1,15 +1,22 @@
 package io.sci.nnfl.model;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.internal.LinkedTreeMap;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @NoArgsConstructor
@@ -17,7 +24,6 @@ import java.util.List;
 @Builder
 @Document(collection = "materials")
 public class MaterialRecord {
-
     @Id
     private String id;
     private String state;
@@ -62,5 +68,53 @@ public class MaterialRecord {
     private List<SourceActivityInfo> sourceActivityInfo;
     private String notes;
     private User creator;
-    private LocalDateTime creationDateTime;
+    private Date creationDateTime;
+
+    @Transient
+    public String getData(){
+        Map<Stage,Map<String,List<Property>>> map = new LinkedTreeMap<>();
+        extract(map, "generalInfo",generalInfo);
+        extract(map, "geology",geology);
+        extract(map, "mineralogy",mineralogy);
+        extract(map, "uranium",uranium);
+        extract(map, "uraniumIsotopes",uraniumIsotopes);
+        extract(map, "stableIsotopes",stableIsotopes);
+        extract(map, "traceElements",traceElements);
+        extract(map, "chemicalForms",chemicalForms);
+        extract(map, "physicals",physicals);
+        extract(map, "morphologies",morphologies);
+        extract(map, "uraniumDecaySeriesRadionuclides",uraniumDecaySeriesRadionuclides);
+        extract(map, "processInformation",processInformation);
+        extract(map, "elemental",elemental);
+        extract(map, "containers",containers);
+        extract(map, "serialNumbers",serialNumbers);
+        extract(map, "plutoniumIsotopes",plutoniumIsotopes);
+        extract(map, "irradiationHistories",irradiationHistories);
+        extract(map, "isotopeActivities",isotopeActivities);
+        extract(map, "sourceDescriptions",sourceDescriptions);
+        extract(map, "sourceActivityInfo",sourceActivityInfo);
+        ObjectMapper mapper = new ObjectMapper();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        mapper.setDateFormat(df);
+        try {
+            return mapper.writeValueAsString(map);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private <T extends Property> void extract(Map<Stage,Map<String,List<Property>>> map, String name, List<T> list){
+        if (list == null) return;
+        for (Property property : list){
+            if (!map.containsKey(property.getStage())){
+                map.put(property.getStage(), new LinkedTreeMap<>());
+            }
+            Map<String,List<Property>> map1 = map.get(property.getStage());
+            if (!map1.containsKey(name)){
+                map1.put(name, new ArrayList<>());
+            }
+            map1.get(name).add(property);
+            map.put(property.getStage(), map1);
+        }
+    }
 }

@@ -1,21 +1,15 @@
 package io.sci.nnfl.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
-import org.springframework.data.annotation.Id;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class IsotopeRatio {
-    @Id
-    private String id;
-    private Stage stage;
+public class IsotopeRatio extends Property {
     private String name;
     private BigDecimal value;
     private BigDecimal uncertainty;

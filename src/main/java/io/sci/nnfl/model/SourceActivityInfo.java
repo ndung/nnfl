@@ -1,24 +1,18 @@
 package io.sci.nnfl.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import org.springframework.data.annotation.Id;
+import java.util.Date;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SourceActivityInfo {
-    @Id
-    private String id;
-    private Stage stage;
+public class SourceActivityInfo extends Property {
     private BigDecimal activityBq;
-    private LocalDate referenceDate;
+    private Date referenceDate;
     private BigDecimal neutronIntensityPerSec; // for neutron sources
     private String notes;
 }

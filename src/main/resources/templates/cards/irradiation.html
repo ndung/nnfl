@@ -1,6 +1,6 @@
 <div th:fragment="irradiationCard" class="kt-card kt-card-grid h-full min-w-full">
     <div class="kt-card-header flex justify-between">
-        <h3 class="kt-card-title">Irradiation history</h3>
+        <h3 class="kt-card-title">Irradiation histories</h3>
         <button type="button" id="addIrradiation" class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost"><i class="ki-filled ki-additem"></i></button>
     </div>
     <div class="kt-card-table">
@@ -30,8 +30,8 @@
                         <td><span th:text="${irr.burnUp}"></span></td>
                         <td><span th:text="${irr.assemblyPowerHistory}"></span></td>
                         <td><span th:text="${irr.operatingRecordsRef}"></span></td>
-                        <td><span th:text="${irr.loadDate}"></span></td>
-                        <td><span th:text="${irr.dischargeDate}"></span></td>
+                        <td><span th:text="${#dates.format(irr.loadDate, 'yyyy-MM-dd')}"></span></td>
+                        <td><span th:text="${#dates.format(irr.dischargeDate, 'yyyy-MM-dd')}"></span></td>
                         <td><span th:text="${irr.radiationLevel}"></span></td>
                         <td><span th:text="${irr.notes}"></span></td>
                         <td class="flex gap-2">
