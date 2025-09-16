@@ -1,6 +1,5 @@
 package io.sci.nnfl.service;
 
-import com.mongodb.client.result.DeleteResult;
 import dev.langchain4j.data.document.Metadata;
 import dev.langchain4j.data.embedding.Embedding;
 import dev.langchain4j.data.segment.TextSegment;
@@ -14,9 +13,6 @@ import io.sci.nnfl.model.MaterialRecord;
 import io.sci.nnfl.model.repository.MaterialRecordRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.util.StringUtils;
 
 import java.time.format.DateTimeFormatter;
@@ -37,18 +33,15 @@ public class MaterialVectorSearchService {
     private static final int DEFAULT_SNIPPET_LENGTH = 200;
 
     private final MaterialRecordRepository repository;
-    private final MongoTemplate mongoTemplate;
     private final MaterialSearchProperties properties;
     private final EmbeddingModel embeddingModel;
     private final EmbeddingStore<TextSegment> embeddingStore;
 
     public MaterialVectorSearchService(MaterialRecordRepository repository,
-                                       MongoTemplate mongoTemplate,
                                        MaterialSearchProperties properties,
                                        EmbeddingModel embeddingModel,
                                        EmbeddingStore<TextSegment> embeddingStore) {
         this.repository = repository;
-        this.mongoTemplate = mongoTemplate;
         this.properties = properties;
         this.embeddingModel = embeddingModel;
         this.embeddingStore = embeddingStore;
@@ -71,7 +64,6 @@ public class MaterialVectorSearchService {
             }
             deleteMaterial(record.getId());
             embeddingStore.addAll(List.of(record.getId()), List.of(embedding), List.of(segment));
-            embeddingStore.add(record.getId(), embedding, segment);
         } catch (Exception ex) {
             log.error("Failed to index material {}", record.getId(), ex);
         }
@@ -115,15 +107,6 @@ public class MaterialVectorSearchService {
             List<EmbeddingMatch<TextSegment>> matches = searchResult.matches();
             List<String> materialIds = matches.stream()
                     .map(EmbeddingMatch::embeddingId)
-            List<EmbeddingMatch<TextSegment>> matches = embeddingStore.findRelevant(
-                    queryEmbedding,
-                    Math.max(properties.getMaxResults(), 1),
-                    Math.max(properties.getMinScore(), 0.0));
-            if (matches == null || matches.isEmpty()) {
-                return Collections.emptyList();
-            }
-            List<String> materialIds = matches.stream()
-                    .map(EmbeddingMatch::id)
                     .filter(StringUtils::hasText)
                     .toList();
             Map<String, MaterialRecord> materialsById = repository.findAllById(materialIds).stream()
@@ -133,7 +116,6 @@ public class MaterialVectorSearchService {
             List<MaterialSearchResult> results = new ArrayList<>();
             for (EmbeddingMatch<TextSegment> match : matches) {
                 String materialId = match.embeddingId();
-                String materialId = match.id();
                 double score = match.score() != null ? match.score() : 0.0;
                 MaterialRecord material = materialId != null ? materialsById.get(materialId) : null;
                 TextSegment segment = match.embedded();
@@ -148,21 +130,6 @@ public class MaterialVectorSearchService {
         } catch (Exception ex) {
             log.error("Material search failed", ex);
             return Collections.emptyList();
-        }
-    }
-
-    public void deleteMaterial(String materialId) {
-        if (!StringUtils.hasText(materialId)) {
-            return;
-        }
-        try {
-            DeleteResult result = mongoTemplate.remove(Query.query(Criteria.where("_id").is(materialId)),
-                    properties.getCollectionName());
-            if (result.wasAcknowledged() && result.getDeletedCount() > 0) {
-                log.debug("Removed embedding for material {}", materialId);
-            }
-        } catch (Exception ex) {
-            log.error("Failed to delete embedding for material {}", materialId, ex);
         }
     }
 

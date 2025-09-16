@@ -62,7 +62,7 @@ public class LangchainConfiguration {
             MaterialSearchProperties properties,
             @Qualifier("materialEmbeddingModel") EmbeddingModel embeddingModel) {
 
-        IndexMapping.IndexMappingBuilder mappingBuilder = IndexMapping.builder()
+        IndexMapping.Builder mappingBuilder = IndexMapping.builder()
                 .dimension(embeddingModel.dimension());
 
         if (properties.getMetadataFields() != null && !properties.getMetadataFields().isEmpty()) {
@@ -87,13 +87,11 @@ public class LangchainConfiguration {
     @ConditionalOnProperty(prefix = "material-search", name = "enabled", havingValue = "true", matchIfMissing = true)
     public MaterialVectorSearchService materialVectorSearchService(
             MaterialRecordRepository repository,
-            MongoTemplate mongoTemplate,
             MaterialSearchProperties properties,
             @Qualifier("materialEmbeddingModel") EmbeddingModel embeddingModel,
             @Qualifier("materialEmbeddingStore") EmbeddingStore<TextSegment> embeddingStore) {
 
         log.info("Material vector search service enabled using model '{}'", embeddingModel.getClass().getSimpleName());
         return new MaterialVectorSearchService(repository, properties, embeddingModel, embeddingStore);
-        return new MaterialVectorSearchService(repository, mongoTemplate, properties, embeddingModel, embeddingStore);
     }
 }
