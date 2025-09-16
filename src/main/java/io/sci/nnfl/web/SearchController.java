@@ -2,6 +2,9 @@ package io.sci.nnfl.web;
 
 import io.sci.nnfl.model.MaterialRecord;
 import io.sci.nnfl.service.MaterialRecordService;
+import io.sci.nnfl.service.MaterialVectorSearchService;
+import io.sci.nnfl.service.MaterialVectorSearchService.MaterialSearchResult;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -15,9 +18,11 @@ import java.util.List;
 public class SearchController {
 
     private final MaterialRecordService materialRecordService;
+    private final ObjectProvider<MaterialVectorSearchService> searchServiceProvider;
 
-    public SearchController(MaterialRecordService materialRecordService) {
+    public SearchController(MMaterialRecordService, MaterialRecordService materialRecordService) {
         this.materialRecordService = materialRecordService;
+        this.searchServiceProvider = searchServiceProvider;
     }
 
     @GetMapping("/search")
@@ -37,6 +42,13 @@ public class SearchController {
             results = naturalLanguageRequested
                     ? materialRecordService.searchByNaturalLanguage(sanitizedQuery)
                     : materialRecordService.search(sanitizedQuery);
+        boolean hasQuery = StringUtils.hasText(sanitizedQuery);
+        MaterialVectorSearchService searchService = searchServiceProvider.getIfAvailable();
+        boolean searchConfigured = searchService != null;
+
+        List<MaterialSearchResult> results = Collections.emptyList();
+        if (hasQuery && searchConfigured) {
+            results = searchService.search(sanitizedQuery);
         }
 
         model.addAttribute("query", sanitizedQuery);
@@ -46,6 +58,9 @@ public class SearchController {
         model.addAttribute("searchAttempted", searchAttempted);
         model.addAttribute("usingNaturalLanguage", naturalLanguageRequested);
         model.addAttribute("version", selectedVersion);
+        model.addAttribute("searchConfigured", searchConfigured);
+        model.addAttribute("showConfigWarning", hasQuery && !searchConfigured);
+        model.addAttribute("results", results);
 
         return "search";
     }
