@@ -16,9 +16,8 @@
     <groupId>io.sci</groupId>
     <artifactId>nnfl</artifactId>
     <version>0.0.1</version>
-    <packaging>war</packaging>
     <name>nnfl</name>
-    <description>National Nuclear Forensics Libraries</description>
+    <description>National Nuclear Forensics Library Management System</description>
 
     <properties>
         <java.version>17</java.version>
@@ -48,11 +47,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -131,6 +125,12 @@
             <artifactId>langchain4j-open-ai</artifactId>
             <version>1.4.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>13.0</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -153,10 +153,6 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>3.4.0</version>
             </plugin>
         </plugins>
     </build>

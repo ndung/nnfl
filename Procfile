@@ -1,1 +1,1 @@
-web: java -jar target/citizen-0.0.1.jar
+web: java -jar target/nnfl-0.0.1.jar
