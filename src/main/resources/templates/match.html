@@ -36,21 +36,21 @@
                     </div>
                     <div th:if="${hasQuery}" class="grid gap-3">
                         <p class="text-sm text-muted-foreground" th:if="${!hasRecord}">
-                            No record found for
+                            No material record found for
                             <span class="font-medium" th:text="${query}">your query</span>.
                         </p>
-                        <p class="text-sm text-muted-foreground" th:if="${#lists.isEmpty(results)}">
+                        <p class="text-sm text-muted-foreground" th:if="${hasRecord and #lists.isEmpty(results)}">
                             No matching results found for
                             <span class="font-medium" th:text="${query}">your query</span>.
                         </p>
-                        <ul th:if="${!#lists.isEmpty(results)}" class="grid gap-3">
+                        <ul th:if="${!#lists.isEmpty(results)}" class="grid gap-3 text-xs">
                             <li class="kt-card kt-card-bordered p-4" th:each="result : ${results}">
                                 <div class="flex flex-col gap-2">
                                     <div class="flex items-start justify-between gap-3">
                                         <span class="font-medium" th:text="${result.record.id}">Material title</span>
                                         <span class="text-xs font-medium text-muted-foreground" th:text="${result.scoreDisplay}">0.000</span>
                                     </div>
-                                    <p class="text-sm text-muted-foreground" th:text="${result.record.data}">Summary</p>
+                                    <p class="text-xs text-muted-foreground" th:text="${result.record.data}">Summary</p>
                                 </div>
                             </li>
                         </ul>
