@@ -66,10 +66,15 @@ public class MaterialRecordController {
     @PostMapping
     public String create(@ModelAttribute MaterialRecord material,
                          RedirectAttributes ra) {
-        material.setCreator(service.getUser());
-        material.setCreationDateTime(new Date());
-        service.save(material);
-        ra.addFlashAttribute("materialSaved", true);
+        MaterialRecord record = service.getById(material.getId());
+        if (record == null) {
+            material.setCreator(service.getUser());
+            material.setCreationDateTime(new Date());
+            service.save(material);
+            ra.addFlashAttribute("materialSaved", true);
+        }else{
+            ra.addFlashAttribute("materialExist", true);
+        }
         return "redirect:/materials";
     }
 

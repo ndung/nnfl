@@ -13,6 +13,12 @@
                         class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost"><i class="ki-filled ki-additem"></i></button>
             </form>
         </div>
+        <!-- Alerts -->
+        <div class="kt-badge kt-badge-sm kt-badge-success kt-badge-outline" th:if="${materialSaved}">
+            Material record saved successfully.
+        </div>
+        <div th:if="${materialExist}" class="kt-badge kt-badge-sm kt-badge-warning kt-badge-outline">Material record has been created.</div>
+
         <div class="kt-card-content">
             <link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css}" />
             <link rel="stylesheet" th:href="@{https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css}" />
