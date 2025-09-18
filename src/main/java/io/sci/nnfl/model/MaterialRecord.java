@@ -24,6 +24,7 @@ import java.util.Map;
 public class MaterialRecord {
     @Id
     private String id;
+    private String name;
     private List<GeneralInfo> generalInfo;
     //use in stage 1
     private List<Geology> geology;

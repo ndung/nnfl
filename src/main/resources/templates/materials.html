@@ -9,6 +9,7 @@
                 <input type="hidden" th:if="${_csrf != null}"
                        th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                 <input type="hidden" name="id" id="newMaterialId" />
+                <input type="hidden" name="name" id="newMaterialName" />
                 <button type="button" id="openCreateMaterialDialog"
                         class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost"><i class="ki-filled ki-additem"></i></button>
             </form>
@@ -27,6 +28,7 @@
                     <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Name</th>
                         <th>Creator</th>
                         <th>Creation Date</th>
                         <th>Data</th>
@@ -37,6 +39,7 @@
                     <tbody>
                     <tr th:each="m : ${materials}">
                         <td th:text="${m.id}">1</td>
+                        <td th:text="${m.name}"></td>
                         <td th:text="${m.creator != null ? m.creator.username : ''}">alice</td>
                         <td th:text="${#dates.format(m.creationDateTime, 'yyyy-MM-dd HH:mm:ss')}">2023-01-01</td>
                         <td th:text="${m.data.length()<200 ? m.data : m.data.substring(0,200)+'...'}">1</td>
@@ -66,6 +69,11 @@
                     <input type="text" id="materialIdInput" class="kt-input" placeholder="Enter material ID" />
                 </label>
                 <div id="materialIdError" class="text-xs" style="display:none;color:#dc2626;">Please enter a material ID.</div>
+                <label class="grid gap-1">
+                    <span class="font-semibold">Material Name</span>
+                    <input type="text" id="materialNameInput" class="kt-input" placeholder="Enter material name" />
+                </label>
+                <div id="materialNameError" class="text-xs" style="display:none;color:#dc2626;">Please enter a material name.</div>
                 <div class="flex justify-end gap-2">
                     <button type="button" id="materialIdSubmitBtn" class="kt-btn kt-btn-primary">Create</button>
                     <button type="button" id="materialIdCancelBtn" class="kt-btn">Cancel</button>
@@ -97,8 +105,11 @@
 
                 var createMaterialForm = $('#createMaterialForm');
                 var newMaterialIdField = $('#newMaterialId');
+                var newMaterialNameField = $('#newMaterialName');
                 var materialIdInput = $('#materialIdInput');
+                var materialNameInput = $('#materialNameInput');
                 var materialIdError = $('#materialIdError');
+                var materialNameError = $('#materialNameError');
                 var materialIdDialog = $('#materialIdDialog').dialog({
                     autoOpen: false,
                     modal: true,
@@ -106,7 +117,10 @@
                     open: function(){
                         materialIdInput.val('');
                         newMaterialIdField.val('');
+                        materialNameInput.val('');
+                        newMaterialNameField.val('');
                         materialIdError.hide();
+                        materialNameError.hide();
                         setTimeout(function(){ materialIdInput.trigger('focus'); }, 0);
                     }
                 });
@@ -129,18 +143,34 @@
 
                 $('#materialIdSubmitBtn').on('click', function(){
                     var enteredId = $.trim(materialIdInput.val());
+                    var enteredName = $.trim(materialNameInput.val());
                     if(!enteredId){
                         materialIdError.show();
                         materialIdInput.trigger('focus');
                         return;
                     }
                     materialIdError.hide();
+                    if(!enteredName){
+                        materialNameError.show();
+                        materialNameInput.trigger('focus');
+                        return;
+                    }
+                    materialNameError.hide();
+                    materialIdError.hide();
                     newMaterialIdField.val(enteredId);
+                    newMaterialNameField.val(enteredName);
                     materialIdDialog.dialog('close');
                     createMaterialForm.trigger('submit');
                 });
 
                 materialIdInput.on('keypress', function(e){
+                    if(e.which === 13){
+                        e.preventDefault();
+                        $('#materialIdSubmitBtn').click();
+                    }
+                });
+
+                materialNameInput.on('keypress', function(e){
                     if(e.which === 13){
                         e.preventDefault();
                         $('#materialIdSubmitBtn').click();
