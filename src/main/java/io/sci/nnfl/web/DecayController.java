@@ -33,9 +33,9 @@ public class DecayController extends BaseController {
         if (stage == null || stage < 0 || stage >= Stage.values().length) {
             return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
         }
-        decay.setStage(Stage.values()[stage]);
         if (decay.getId() == null || decay.getId().isEmpty()) {
             decay.setId(UUID.randomUUID().toString());
+            decay.setStage(Stage.values()[stage]);
         }
         record.getUraniumDecaySeriesRadionuclides().removeIf(d -> d.getId().equals(decay.getId()));
         record.getUraniumDecaySeriesRadionuclides().add(decay);

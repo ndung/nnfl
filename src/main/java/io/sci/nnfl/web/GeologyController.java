@@ -33,9 +33,9 @@ public class GeologyController extends BaseController {
         if (stage == null || stage < 0 || stage >= Stage.values().length) {
             return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
         }
-        geology.setStage(Stage.values()[stage]);
         if (geology.getId() == null || geology.getId().isEmpty()) {
             geology.setId(UUID.randomUUID().toString());
+            geology.setStage(Stage.values()[stage]);
         }
         record.getGeology().removeIf(g -> g.getId().equals(geology.getId()));
         record.getGeology().add(geology);

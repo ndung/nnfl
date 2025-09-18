@@ -97,7 +97,8 @@ public class MaterialRecord {
 
     }
 
-    private <T extends Property> void extract(Map<Stage,Map<String,List<Property>>> map, String name, List<T> list){
+    private <T extends Property> void extract(Map<Stage,Map<String,List<Property>>> map,
+                                              String name, List<T> list){
         if (list == null) return;
         for (Property property : list){
             if (!map.containsKey(property.getStage())){

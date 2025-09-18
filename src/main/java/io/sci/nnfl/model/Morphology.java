@@ -9,22 +9,13 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class Morphology extends Property {
-    @Expose
-    private String latticeStructure;
-    @Expose
-    private String aspectRatio;
-    @Expose
-    private String porosity;
-    @Expose
-    private String colour;
-    @Expose
-    private String particleSizeAndDistribution;
-    @Expose
-    private String shape;
-    @Expose
-    private String surfaceFeatures;
-    @Expose
-    private String plutoniumHomogeneity;
-    @Expose
-    private String notes;
+    @Expose private String latticeStructure;
+    @Expose private String aspectRatio;
+    @Expose private String porosity;
+    @Expose private String colour;
+    @Expose private String particleSizeAndDistribution;
+    @Expose private String shape;
+    @Expose private String surfaceFeatures;
+    @Expose private String plutoniumHomogeneity;
+    @Expose private String notes;
 }

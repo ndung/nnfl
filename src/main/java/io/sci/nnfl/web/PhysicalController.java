@@ -33,9 +33,9 @@ public class PhysicalController extends BaseController {
         if (stage == null || stage < 0 || stage >= Stage.values().length) {
             return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
         }
-        physical.setStage(Stage.values()[stage]);
         if (physical.getId() == null || physical.getId().isEmpty()) {
             physical.setId(UUID.randomUUID().toString());
+            physical.setStage(Stage.values()[stage]);
         }
         record.getPhysicals().removeIf(p -> p.getId().equals(physical.getId()));
         record.getPhysicals().add(physical);

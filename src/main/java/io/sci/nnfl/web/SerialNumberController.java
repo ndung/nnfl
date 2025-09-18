@@ -33,9 +33,9 @@ public class SerialNumberController extends BaseController {
         if (stage == null || stage < 0 || stage >= Stage.values().length) {
             return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
         }
-        serial.setStage(Stage.values()[stage]);
         if (serial.getId() == null || serial.getId().isEmpty()) {
             serial.setId(UUID.randomUUID().toString());
+            serial.setStage(Stage.values()[stage]);
         }
         record.getSerialNumbers().removeIf(s -> s.getId().equals(serial.getId()));
         record.getSerialNumbers().add(serial);

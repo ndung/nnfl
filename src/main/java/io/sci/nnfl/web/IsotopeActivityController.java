@@ -33,9 +33,9 @@ public class IsotopeActivityController extends BaseController {
         if (stage == null || stage < 0 || stage >= Stage.values().length) {
             return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
         }
-        activity.setStage(Stage.values()[stage]);
         if (activity.getId() == null || activity.getId().isEmpty()) {
             activity.setId(UUID.randomUUID().toString());
+            activity.setStage(Stage.values()[stage]);
         }
         record.getIsotopeActivities().removeIf(a -> a.getId().equals(activity.getId()));
         record.getIsotopeActivities().add(activity);

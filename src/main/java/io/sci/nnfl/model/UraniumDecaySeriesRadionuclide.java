@@ -11,12 +11,8 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 public class UraniumDecaySeriesRadionuclide extends Property {
-    @Expose
-    private String isotopeName;
-    @Expose
-    private BigDecimal activityBq;
-    @Expose
-    private BigDecimal activityUncertaintyBq;
-    @Expose
-    private String notes;
+    @Expose private String isotopeName;
+    @Expose private BigDecimal activityBq;
+    @Expose private BigDecimal activityUncertaintyBq;
+    @Expose private String notes;
 }

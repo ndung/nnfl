@@ -33,9 +33,9 @@ public class PlutoniumIsotopeController extends BaseController {
         if (stage == null || stage < 0 || stage >= Stage.values().length) {
             return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
         }
-        isotope.setStage(Stage.values()[stage]);
         if (isotope.getId() == null || isotope.getId().isEmpty()) {
             isotope.setId(UUID.randomUUID().toString());
+            isotope.setStage(Stage.values()[stage]);
         }
         record.getPlutoniumIsotopes().removeIf(i -> i.getId().equals(isotope.getId()));
         record.getPlutoniumIsotopes().add(isotope);

@@ -10,8 +10,6 @@ import org.springframework.data.annotation.Id;
 @AllArgsConstructor
 @Builder
 public class SerialNumber extends Property {
-    @Expose
-    private String serialNumber;
-    @Expose
-    private String notes;
+    @Expose private String serialNumber;
+    @Expose private String notes;
 }

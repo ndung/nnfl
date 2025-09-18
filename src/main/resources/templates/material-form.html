@@ -159,7 +159,7 @@
         init('#chemicalDialog','#addChemical','#saveChemical','#chemicalTable', function(){
             return [
                 $('#chemicalId').val(),
-                $('#chemicalStage').val(),
+                $('#chemicalStage').val() || stage,
                 $('#chemicalName').val(),
                 $('#chemicalDeviation').val(),
                 $('#chemicalComment').val()];
@@ -172,6 +172,7 @@
         }, '/chemical-form/' + materialId + '/' + stage, function(){
             return {
                 id: $('#chemicalId').val(),
+                stage: $('#chemicalStage').val() || stage,
                 compoundName: $('#chemicalName').val(),
                 stoichiometryDeviation: parseFloat($('#chemicalDeviation').val() || 0),
                 notes: $('#chemicalComment').val()
@@ -181,7 +182,7 @@
         init('#uraniumDialog','#addUranium','#saveUranium','#uraniumTable', function(){
             return [
                 $('#uraniumId').val(),
-                $('#uraniumStage').val(),
+                $('#uraniumStage').val() || stage,
                 $('#uraniumName').val(),
                 $('#uraniumConcentration').val(),
                 $('#uraniumUnit').val(),
@@ -200,6 +201,7 @@
         }, '/uranium/' + materialId + '/' + stage, function(){
             return {
                 id: $('#uraniumId').val(),
+                stage: $('#uraniumStage').val() || stage,
                 element: $('#uraniumName').val(),
                 concentration: parseFloat($('#uraniumConcentration').val() || 0),
                 unit: $('#uraniumUnit').val(),
@@ -212,7 +214,7 @@
         init('#uraniumIsotopeDialog','#addUraniumIsotope','#saveUraniumIsotope','#uraniumIsotopeTable', function(){
             return [
                 $('#uraniumIsotopeId').val(),
-                $('#uraniumIsotopeStage').val(),
+                $('#uraniumIsotopeStage').val() || stage,
                 $('#uraniumIsotopeName').val(),
                 $('#uraniumIsotopeRatio').val(),
                 $('#uraniumIsotopeUncertainty').val(),
@@ -229,6 +231,7 @@
         }, '/uranium-isotope/' + materialId + '/' + stage, function(){
             return {
                 id: $('#uraniumIsotopeId').val(),
+                stage: $('#uraniumIsotopeStage').val() || stage,
                 name: $('#uraniumIsotopeName').val(),
                 value: parseFloat($('#uraniumIsotopeRatio').val() || 0),
                 uncertainty: parseFloat($('#uraniumIsotopeUncertainty').val() || 0),
@@ -240,7 +243,7 @@
         init('#stableIsotopeDialog','#addStableIsotope','#saveStableIsotope','#stableIsotopeTable', function(){
             return [
                 $('#stableIsotopeId').val(),
-                $('#stableIsotopeStage').val(),
+                $('#stableIsotopeStage').val() || stage,
                 $('#stableIsotopeName').val(),
                 $('#stableIsotopeRatio').val(),
                 $('#stableIsotopeUncertainty').val(),
@@ -257,6 +260,7 @@
         }, '/stable-isotope/' + materialId + '/' + stage, function(){
             return {
                 id: $('#stableIsotopeId').val(),
+                stage: $('#stableIsotopeStage').val() || stage,
                 name: $('#stableIsotopeName').val(),
                 value: parseFloat($('#stableIsotopeRatio').val() || 0),
                 uncertainty: parseFloat($('#stableIsotopeUncertainty').val() || 0),
@@ -268,7 +272,7 @@
         init('#plutoniumIsotopeDialog','#addPlutoniumIsotope','#savePlutoniumIsotope','#plutoniumIsotopeTable', function(){
             return [
                 $('#plutoniumIsotopeId').val(),
-                $('#plutoniumIsotopeStage').val(),
+                $('#plutoniumIsotopeStage').val() || stage,
                 $('#plutoniumIsotopeName').val(),
                 $('#plutoniumIsotopeRatio').val(),
                 $('#plutoniumIsotopeUncertainty').val(),
@@ -285,6 +289,7 @@
         }, '/plutonium-isotope/' + materialId + '/' + stage, function(){
             return {
                 id: $('#plutoniumIsotopeId').val(),
+                stage: $('#plutoniumIsotopeStage').val() || stage,
                 name: $('#plutoniumIsotopeName').val(),
                 value: parseFloat($('#plutoniumIsotopeRatio').val() || 0),
                 uncertainty: parseFloat($('#plutoniumIsotopeUncertainty').val() || 0),
@@ -296,7 +301,7 @@
         init('#traceElementDialog','#addTraceElement','#saveTraceElement','#traceElementTable', function(){
             return [
                 $('#traceElementId').val(),
-                $('#traceElementStage').val(),
+                $('#traceElementStage').val() || stage,
                 $('#traceElementName').val(),
                 $('#traceElementConcentration').val(),
                 $('#traceElementUnit').val(),
@@ -315,6 +320,7 @@
         }, '/trace-element/' + materialId + '/' + stage, function(){
             return {
                 id: $('#traceElementId').val(),
+                stage: $('#traceElementStage').val() || stage,
                 element: $('#traceElementName').val(),
                 concentration: parseFloat($('#traceElementConcentration').val() || 0),
                 unit: $('#traceElementUnit').val(),
@@ -328,7 +334,7 @@
         init('#elementDialog','#addElement','#saveElement','#elementTable', function(){
             return [
                 $('#elementId').val(),
-                $('#elementStage').val(),
+                $('#elementStage').val() || stage,
                 $('#elementName').val(),
                 $('#elementConcentration').val(),
                 $('#elementUnit').val(),
@@ -347,6 +353,7 @@
         }, '/element/' + materialId + '/' + stage, function(){
             return {
                 id: $('#elementId').val(),
+                stage: $('#elementStage').val() || stage,
                 element: $('#elementName').val(),
                 concentration: parseFloat($('#elementConcentration').val() || 0),
                 unit: $('#elementUnit').val(),
@@ -359,7 +366,7 @@
         init('#morphologyDialog','#addMorphology','#saveMorphology','#morphologyTable', function(){
             return [
                 $('#morphId').val(),
-                $('#morphStage').val(),
+                $('#morphStage').val() || stage,
                 $('#morphLatticeStructure').val(),
                 $('#morphAspectRatio').val(),
                 $('#morphPorosity').val(),
@@ -385,6 +392,7 @@
         }, '/morphology/' + materialId + '/' + stage, function(){
             return {
                 id: $('#morphId').val(),
+                stage: $('#morphStage').val() || stage,
                 latticeStructure: $('#morphLatticeStructure').val(),
                 aspectRatio: $('#morphAspectRatio').val(),
                 porosity: $('#morphPorosity').val(),
@@ -400,7 +408,7 @@
         init('#uraniumDecayDialog','#addUraniumDecay','#saveUraniumDecay','#uraniumDecayTable', function(){
             return [
                 $('#uraniumDecayId').val(),
-                $('#uraniumDecayStage').val(),
+                $('#uraniumDecayStage').val() || stage,
                 $('#uraniumDecayNuclide').val(),
                 $('#uraniumDecayActivity').val(),
                 $('#uraniumDecayUncertainty').val(),
@@ -416,6 +424,7 @@
         }, '/decay/' + materialId + '/' + stage, function(){
             return {
                 id: $('#uraniumDecayId').val(),
+                stage: $('#uraniumDecayStage').val() || stage,
                 isotopeName: $('#uraniumDecayNuclide').val(),
                 activityBq: parseFloat($('#uraniumDecayActivity').val() || 0),
                 activityUncertaintyBq: parseFloat($('#uraniumDecayUncertainty').val() || 0),
@@ -426,7 +435,7 @@
         init('#containerDialog','#addContainer','#saveContainer','#containerTable', function(){
             return [
                 $('#containerId').val(),
-                $('#containerStage').val(),
+                $('#containerStage').val() || stage,
                 $('#containerType').val(),
                 $('#containerVolume').val(),
                 $('#containerUnit').val(),
@@ -444,6 +453,7 @@
         }, '/container/' + materialId + '/' + stage, function(){
             return {
                 id: $('#containerId').val(),
+                stage: $('#containerStage').val() || stage,
                 type: $('#containerType').val(),
                 volumeValue: parseFloat($('#containerVolume').val() || 0),
                 volumeUnit: $('#containerUnit').val(),
@@ -457,7 +467,7 @@
         init('#generalInfoDialog','#addGeneralInfo','#saveGeneralInfo','#generalInfoTable', function(){
             return [
                 $('#generalId').val(),
-                $('#generalStage').val(),
+                $('#generalStage').val() || stage,
                 $('#generalDataRecordDate').val(),
                 $('#generalCustodian').val(),
                 $('#generalLab').val(),
@@ -501,6 +511,7 @@
         }, '/general-info/' + materialId + '/' + stage, function(){
             return {
                 id: $('#generalId').val(),
+                stage: $('#generalStage').val() || stage,
                 dataRecordDate: $('#generalDataRecordDate').val(),
                 custodian: $('#generalCustodian').val(),
                 analyticalLab: $('#generalLab').val(),
@@ -525,7 +536,7 @@
         init('#geologyDialog','#addGeology','#saveGeology','#geologyTable', function(){
             return [
                 $('#geologyId').val(),
-                $('#geologyStage').val(),
+                $('#geologyStage').val() || stage,
                 $('#geologyLocation').val(),
                 $('#geologyFormation').val(),
                 $('#geologyDeposit').val(),
@@ -545,6 +556,7 @@
         }, '/geology/' + materialId + '/' + stage, function(){
             return {
                 id: $('#geologyId').val(),
+                stage: $('#geologyStage').val() || stage,
                 mineLocation: $('#geologyLocation').val(),
                 geologicalFormation: $('#geologyFormation').val(),
                 depositTypes: $('#geologyDeposit').val(),
@@ -557,7 +569,7 @@
         init('#irradiationDialog','#addIrradiation','#saveIrradiation','#irradiationTable', function(){
             return [
                 $('#irradiationId').val(),
-                $('#irradiationStage').val(),
+                $('#irradiationStage').val() || stage,
                 $('#irradiationReactor').val(),
                 $('#irradiationBurnUp').val(),
                 $('#irradiationAssemblyPowerHistory').val(),
@@ -580,6 +592,7 @@
         }, '/irradiation/' + materialId + '/' + stage, function(){
             return {
                 id: $('#irradiationId').val(),
+                stage: $('#irradiationStage').val() || stage,
                 reactorType: $('#irradiationReactor').val(),
                 burnUp: $('#irradiationBurnUp').val(),
                 assemblyPowerHistory: $('#irradiationAssemblyPowerHistory').val(),
@@ -594,7 +607,7 @@
         init('#isotopeActivityDialog','#addIsotopeActivity','#saveIsotopeActivity','#isotopeActivityTable', function(){
             return [
                 $('#isotopeActivityId').val(),
-                $('#isotopeActivityStage').val(),
+                $('#isotopeActivityStage').val() || stage,
                 $('#isotopeActivityName').val(),
                 $('#isotopeActivityValue').val(),
                 $('#isotopeActivityUncertainty').val(),
@@ -614,6 +627,7 @@
         }, '/isotope-activity/' + materialId + '/' + stage, function(){
             return {
                 id: $('#isotopeActivityId').val(),
+                stage: $('#isotopeActivityStage').val() || stage,
                 isotopeName: $('#isotopeActivityName').val(),
                 activityBq: parseFloat($('#isotopeActivityValue').val() || 0),
                 activityUncertaintyBq: parseFloat($('#isotopeActivityUncertainty').val() || 0),
@@ -626,7 +640,7 @@
         init('#mineralogyDialog','#addMineralogy','#saveMineralogy','#mineralogyTable', function(){
             return [
                 $('#mineralogyId').val(),
-                $('#mineralogyStage').val(),
+                $('#mineralogyStage').val() || stage,
                 $('#mineralogyMinerals').val(),
                 $('#mineralogyChemistry').val(),
                 $('#mineralogyVolume').val(),
@@ -641,6 +655,7 @@
         }, '/mineralogy/' + materialId + '/' + stage, function(){
             return {
                 id: $('#mineralogyId').val(),
+                stage: $('#mineralogyStage').val() || stage,
                 mineralsPresent: $('#mineralogyMinerals').val(),
                 mineralChemistry: $('#mineralogyChemistry').val(),
                 volumePercentages: parseFloat($('#mineralogyVolume').val() || 0),
@@ -651,7 +666,7 @@
         init('#physicalDialog','#addPhysical','#savePhysical','#physicalTable', function(){
             return [
                 $('#physicalId').val(),
-                $('#physicalStage').val(),
+                $('#physicalStage').val() || stage,
                 $('#physicalState').val(),
                 $('#physicalDescription').val(),
                 $('#physicalDensityValue').val(),
@@ -687,6 +702,7 @@
         }, '/physical/' + materialId + '/' + stage, function(){
             return {
                 id: $('#physicalId').val(),
+                stage: $('#physicalStage').val() || stage,
                 densityValue: parseFloat($('#physicalDensityValue').val() || 0),
                 densityUnit: $('#physicalDensityUnit').val(),
                 stateOfMatter: $('#physicalState').val(),
@@ -707,7 +723,7 @@
         init('#processInfoDialog','#addProcessInfo','#saveProcessInfo','#processInfoTable', function(){
             return [
                 $('#processId').val(),
-                $('#processStage').val(),
+                $('#processStage').val() || stage,
                 $('#processType').val(),
                 $('#processLocation').val(),
                 $('#processStart').val(),
@@ -725,6 +741,7 @@
         }, '/process-info/' + materialId + '/' + stage, function(){
             return {
                 id: $('#processId').val(),
+                stage: $('#processStage').val() || stage,
                 processTypeOrDescription: $('#processType').val(),
                 locationOfProcessingSite: $('#processLocation').val(),
                 startDate: $('#processStart').val(),
@@ -759,7 +776,7 @@
         init('#sourceActivityInfoDialog','#addSourceActivityInfo','#saveSourceActivityInfo','#sourceActivityInfoTable', function(){
             return [
                 $('#sourceActivityId').val(),
-                $('#sourceActivityStage').val(),
+                $('#sourceActivityStage').val() || stage,
                 $('#sourceActivityValue').val(),
                 $('#sourceActivityDate').val(),
                 $('#sourceActivityNeutron').val(),
@@ -775,6 +792,7 @@
         }, '/source-activity-info/' + materialId + '/' + stage, function(){
             return {
                 id: $('#sourceActivityId').val(),
+                stage: $('#sourceActivityStage').val() || stage,
                 activityBq: parseFloat($('#sourceActivityValue').val() || 0),
                 referenceDate: $('#sourceActivityDate').val(),
                 neutronIntensityPerSec: parseFloat($('#sourceActivityNeutron').val() || 0),
@@ -785,7 +803,7 @@
         init('#sourceDescriptionDialog','#addSourceDescription','#saveSourceDescription','#sourceDescriptionTable', function(){
             return [
                 $('#sourceDescriptionId').val(),
-                $('#sourceDescriptionStage').val(),
+                $('#sourceDescriptionStage').val() || stage,
                 $('#sourceDescriptionType').val(),
                 $('#sourceDescriptionQuantity').val(),
                 $('#sourceDescriptionDescription').val(),
@@ -813,6 +831,7 @@
         }, '/source-description/' + materialId + '/' + stage, function(){
             return {
                 id: $('#sourceDescriptionId').val(),
+                stage: $('#sourceDescriptionStage').val() || stage,
                 sourceType: $('#sourceDescriptionType').val(),
                 quantity: $('#sourceDescriptionQuantity').val(),
                 description: $('#sourceDescriptionDescription').val(),

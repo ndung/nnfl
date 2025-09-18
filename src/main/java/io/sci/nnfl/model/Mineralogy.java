@@ -9,12 +9,8 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class Mineralogy extends Property {
-    @Expose
-    private String mineralsPresent;
-    @Expose
-    private String mineralChemistry;
-    @Expose
-    private String volumePercentages;
-    @Expose
-    private String notes;
+    @Expose private String mineralsPresent;
+    @Expose private String mineralChemistry;
+    @Expose private String volumePercentages;
+    @Expose private String notes;
 }

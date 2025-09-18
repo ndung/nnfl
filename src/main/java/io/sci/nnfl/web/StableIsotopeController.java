@@ -33,9 +33,9 @@ public class StableIsotopeController extends BaseController {
         if (stage == null || stage < 0 || stage >= Stage.values().length) {
             return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
         }
-        isotope.setStage(Stage.values()[stage]);
         if (isotope.getId() == null || isotope.getId().isEmpty()) {
             isotope.setId(UUID.randomUUID().toString());
+            isotope.setStage(Stage.values()[stage]);
         }
         record.getStableIsotopes().removeIf(i -> i.getId().equals(isotope.getId()));
         record.getStableIsotopes().add(isotope);

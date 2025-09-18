@@ -33,9 +33,9 @@ public class MineralogyController extends BaseController {
         if (stage == null || stage < 0 || stage >= Stage.values().length) {
             return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
         }
-        mineralogy.setStage(Stage.values()[stage]);
         if (mineralogy.getId() == null || mineralogy.getId().isEmpty()) {
             mineralogy.setId(UUID.randomUUID().toString());
+            mineralogy.setStage(Stage.values()[stage]);
         }
         record.getMineralogy().removeIf(m -> m.getId().equals(mineralogy.getId()));
         record.getMineralogy().add(mineralogy);

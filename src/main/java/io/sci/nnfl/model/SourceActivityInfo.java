@@ -12,12 +12,8 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class SourceActivityInfo extends Property {
-    @Expose
-    private BigDecimal activityBq;
-    @Expose
-    private Date referenceDate;
-    @Expose
-    private BigDecimal neutronIntensityPerSec; // for neutron sources
-    @Expose
-    private String notes;
+    @Expose private BigDecimal activityBq;
+    @Expose private Date referenceDate;
+    @Expose private BigDecimal neutronIntensityPerSec;
+    @Expose private String notes;
 }

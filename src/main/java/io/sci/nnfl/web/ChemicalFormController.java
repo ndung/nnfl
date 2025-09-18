@@ -34,9 +34,9 @@ public class ChemicalFormController extends BaseController{
         if (stage==null || stage < 0 || stage>10){
             return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
         }
-        chemicalForm.setStage(Stage.values()[stage]);
         if (chemicalForm.getId() == null || chemicalForm.getId().isEmpty()) {
             chemicalForm.setId(UUID.randomUUID().toString());
+            chemicalForm.setStage(Stage.values()[stage]);
             record.getChemicalForms().add(chemicalForm);
         } else {
             Optional<ChemicalForm> existing = record.getChemicalForms().stream()

@@ -33,9 +33,9 @@ public class IrradiationController extends BaseController {
         if (stage == null || stage < 0 || stage >= Stage.values().length) {
             return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
         }
-        irradiation.setStage(Stage.values()[stage]);
         if (irradiation.getId() == null || irradiation.getId().isEmpty()) {
             irradiation.setId(UUID.randomUUID().toString());
+            irradiation.setStage(Stage.values()[stage]);
         }
         record.getIrradiationHistories().removeIf(i -> i.getId().equals(irradiation.getId()));
         record.getIrradiationHistories().add(irradiation);

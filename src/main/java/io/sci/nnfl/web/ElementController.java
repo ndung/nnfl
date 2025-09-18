@@ -33,9 +33,9 @@ public class ElementController extends BaseController {
         if (stage == null || stage < 0 || stage >= Stage.values().length) {
             return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
         }
-        element.setStage(Stage.values()[stage]);
         if (element.getId() == null || element.getId().isEmpty()) {
             element.setId(UUID.randomUUID().toString());
+            element.setStage(Stage.values()[stage]);
         }
         record.getElemental().removeIf(e -> e.getId().equals(element.getId()));
         record.getElemental().add(element);

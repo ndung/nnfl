@@ -33,9 +33,9 @@ public class MorphologyController extends BaseController {
         if (stage == null || stage < 0 || stage >= Stage.values().length) {
             return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
         }
-        morphology.setStage(Stage.values()[stage]);
         if (morphology.getId() == null || morphology.getId().isEmpty()) {
             morphology.setId(UUID.randomUUID().toString());
+            morphology.setStage(Stage.values()[stage]);
         }
         record.getMorphologies().removeIf(m -> m.getId().equals(morphology.getId()));
         record.getMorphologies().add(morphology);

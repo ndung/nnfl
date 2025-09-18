@@ -9,16 +9,10 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class Geology extends Property {
-    @Expose
-    private String mineLocation;
-    @Expose
-    private String geologicalFormation;
-    @Expose
-    private String depositTypes;
-    @Expose
-    private String miningTechnique;
-    @Expose
-    private String colour;
-    @Expose
-    private String notes;
+    @Expose private String mineLocation;
+    @Expose private String geologicalFormation;
+    @Expose private String depositTypes;
+    @Expose private String miningTechnique;
+    @Expose private String colour;
+    @Expose private String notes;
 }

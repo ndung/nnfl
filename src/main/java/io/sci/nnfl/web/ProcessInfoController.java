@@ -33,9 +33,9 @@ public class ProcessInfoController extends BaseController {
         if (stage == null || stage < 0 || stage >= Stage.values().length) {
             return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
         }
-        info.setStage(Stage.values()[stage]);
         if (info.getId() == null || info.getId().isEmpty()) {
             info.setId(UUID.randomUUID().toString());
+            info.setStage(Stage.values()[stage]);
         }
         record.getProcessInformation().removeIf(p -> p.getId().equals(info.getId()));
         record.getProcessInformation().add(info);

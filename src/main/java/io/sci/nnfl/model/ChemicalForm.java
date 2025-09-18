@@ -11,10 +11,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 public class ChemicalForm extends Property{
-    @Expose
-    private String compoundName;
-    @Expose
-    private BigDecimal stoichiometryDeviation;
-    @Expose
-    private String notes;
+    @Expose private String compoundName;
+    @Expose private BigDecimal stoichiometryDeviation;
+    @Expose private String notes;
 }

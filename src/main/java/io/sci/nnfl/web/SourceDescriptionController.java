@@ -33,9 +33,9 @@ public class SourceDescriptionController extends BaseController {
         if (stage == null || stage < 0 || stage >= Stage.values().length) {
             return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
         }
-        description.setStage(Stage.values()[stage]);
         if (description.getId() == null || description.getId().isEmpty()) {
             description.setId(UUID.randomUUID().toString());
+            description.setStage(Stage.values()[stage]);
         }
         record.getSourceDescriptions().removeIf(s -> s.getId().equals(description.getId()));
         record.getSourceDescriptions().add(description);

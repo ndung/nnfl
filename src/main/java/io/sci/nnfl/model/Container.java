@@ -11,14 +11,9 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 public class Container extends Property{
-    @Expose
-    private String type;
-    @Expose
-    private BigDecimal volumeValue;
-    @Expose
-    private String volumeUnit;
-    @Expose
-    private String dimensions;
-    @Expose
-    private String notes;
+    @Expose private String type;
+    @Expose private BigDecimal volumeValue;
+    @Expose private String volumeUnit;
+    @Expose private String dimensions;
+    @Expose private String notes;
 }

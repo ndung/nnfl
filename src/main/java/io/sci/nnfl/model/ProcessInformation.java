@@ -11,14 +11,9 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class ProcessInformation extends Property {
-    @Expose
-    private String processTypeOrDescription;
-    @Expose
-    private String locationOfProcessingSite;
-    @Expose
-    private Date startDate;
-    @Expose
-    private Date endDate;
-    @Expose
-    private String notes;
+    @Expose private String processTypeOrDescription;
+    @Expose private String locationOfProcessingSite;
+    @Expose private Date startDate;
+    @Expose private Date endDate;
+    @Expose private String notes;
 }

@@ -33,9 +33,9 @@ public class ContainerController extends BaseController {
         if (stage == null || stage < 0 || stage >= Stage.values().length) {
             return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
         }
-        container.setStage(Stage.values()[stage]);
         if (container.getId() == null || container.getId().isEmpty()) {
             container.setId(UUID.randomUUID().toString());
+            container.setStage(Stage.values()[stage]);
         }
         record.getContainers().removeIf(c -> c.getId().equals(container.getId()));
         record.getContainers().add(container);
