@@ -85,6 +85,7 @@ public class SourceDescriptionController extends BaseController {
             return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
         }
         Stage stage = resolvedStage.get();
+        sanitizeSourceDescription(description);
         if (description.getId() == null || description.getId().isEmpty()) {
             description.setId(UUID.randomUUID().toString());
             description.setStage(stage);
@@ -125,6 +126,20 @@ public class SourceDescriptionController extends BaseController {
                 section,
                 entityId,
                 extension);
+    }
+
+    private void sanitizeSourceDescription(SourceDescription description) {
+        description.setSourceType(trimToNull(description.getSourceType()));
+        description.setQuantity(trimToNull(description.getQuantity()));
+        description.setDescription(trimToNull(description.getDescription()));
+        description.setDimensions(trimToNull(description.getDimensions()));
+        description.setEncapsulationOrCladding(trimToNull(description.getEncapsulationOrCladding()));
+        description.setSerialNumber(trimToNull(description.getSerialNumber()));
+        description.setShippingHistory(trimToNull(description.getShippingHistory()));
+        description.setReceivingHistory(trimToNull(description.getReceivingHistory()));
+        description.setRadiographOrPhotograph(trimToNull(description.getRadiographOrPhotograph()));
+        description.setImageFile(trimToNull(description.getImageFile()));
+        description.setNotes(trimToNull(description.getNotes()));
     }
 }
 

@@ -85,6 +85,7 @@ public class GeneralInfoController extends BaseController {
             return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
         }
         Stage stage = resolvedStage.get();
+        sanitizeGeneralInfo(info);
         if (info.getId() == null || info.getId().isEmpty()) {
             info.setId(UUID.randomUUID().toString());
             info.setStage(stage);
@@ -125,6 +126,21 @@ public class GeneralInfoController extends BaseController {
                 section,
                 entityId,
                 extension);
+    }
+
+    private void sanitizeGeneralInfo(GeneralInfo info) {
+        info.setCustodian(trimToNull(info.getCustodian()));
+        info.setAnalyticalLab(trimToNull(info.getAnalyticalLab()));
+        info.setCountryOfOrigin(trimToNull(info.getCountryOfOrigin()));
+        info.setProducer(trimToNull(info.getProducer()));
+        info.setSupplier(trimToNull(info.getSupplier()));
+        info.setBatchId(trimToNull(info.getBatchId()));
+        info.setShipperCarrier(trimToNull(info.getShipperCarrier()));
+        info.setReceiverInfo(trimToNull(info.getReceiverInfo()));
+        info.setDataEvaluationInfo(trimToNull(info.getDataEvaluationInfo()));
+        info.setVariationRangeNotes(trimToNull(info.getVariationRangeNotes()));
+        info.setNotes(trimToNull(info.getNotes()));
+        info.setImageFile(trimToNull(info.getImageFile()));
     }
 }
 

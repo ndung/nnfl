@@ -33,6 +33,7 @@ public class IrradiationController extends BaseController {
         if (stage == null || stage < 0 || stage >= Stage.values().length) {
             return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
         }
+        sanitizeIrradiation(irradiation);
         if (irradiation.getId() == null || irradiation.getId().isEmpty()) {
             irradiation.setId(UUID.randomUUID().toString());
             irradiation.setStage(Stage.values()[stage]);
@@ -50,6 +51,15 @@ public class IrradiationController extends BaseController {
                          @PathVariable String id) {
         service.removeProperty(materialId, "irradiationHistories", id);
         return "redirect:/materials/" + materialId + "/" + stage;
+    }
+
+    private void sanitizeIrradiation(IrradiationHistory irradiation) {
+        irradiation.setReactorType(trimToNull(irradiation.getReactorType()));
+        irradiation.setBurnUp(trimToNull(irradiation.getBurnUp()));
+        irradiation.setAssemblyPowerHistory(trimToNull(irradiation.getAssemblyPowerHistory()));
+        irradiation.setOperatingRecordsRef(trimToNull(irradiation.getOperatingRecordsRef()));
+        irradiation.setRadiationLevel(trimToNull(irradiation.getRadiationLevel()));
+        irradiation.setNotes(trimToNull(irradiation.getNotes()));
     }
 }
 

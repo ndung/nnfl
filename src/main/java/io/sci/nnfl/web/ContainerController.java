@@ -33,6 +33,7 @@ public class ContainerController extends BaseController {
         if (stage == null || stage < 0 || stage >= Stage.values().length) {
             return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
         }
+        sanitizeContainer(container);
         if (container.getId() == null || container.getId().isEmpty()) {
             container.setId(UUID.randomUUID().toString());
             container.setStage(Stage.values()[stage]);
@@ -50,6 +51,13 @@ public class ContainerController extends BaseController {
                          @PathVariable String id) {
         service.removeProperty(materialId, "containers", id);
         return "redirect:/materials/" + materialId + "/" + stage;
+    }
+
+    private void sanitizeContainer(Container container) {
+        container.setType(trimToNull(container.getType()));
+        container.setVolumeUnit(trimToNull(container.getVolumeUnit()));
+        container.setDimensions(trimToNull(container.getDimensions()));
+        container.setNotes(trimToNull(container.getNotes()));
     }
 }
 

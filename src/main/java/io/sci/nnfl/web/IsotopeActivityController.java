@@ -33,6 +33,7 @@ public class IsotopeActivityController extends BaseController {
         if (stage == null || stage < 0 || stage >= Stage.values().length) {
             return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
         }
+        sanitizeIsotopeActivity(activity);
         if (activity.getId() == null || activity.getId().isEmpty()) {
             activity.setId(UUID.randomUUID().toString());
             activity.setStage(Stage.values()[stage]);
@@ -50,6 +51,11 @@ public class IsotopeActivityController extends BaseController {
                          @PathVariable String id) {
         service.removeProperty(materialId, "isotopeActivities", id);
         return "redirect:/materials/" + materialId + "/" + stage;
+    }
+
+    private void sanitizeIsotopeActivity(IsotopeActivity activity) {
+        activity.setIsotopeName(trimToNull(activity.getIsotopeName()));
+        activity.setNotes(trimToNull(activity.getNotes()));
     }
 }
 

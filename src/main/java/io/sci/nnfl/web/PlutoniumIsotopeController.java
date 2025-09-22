@@ -33,6 +33,7 @@ public class PlutoniumIsotopeController extends BaseController {
         if (stage == null || stage < 0 || stage >= Stage.values().length) {
             return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
         }
+        sanitizeIsotopeRatio(isotope);
         if (isotope.getId() == null || isotope.getId().isEmpty()) {
             isotope.setId(UUID.randomUUID().toString());
             isotope.setStage(Stage.values()[stage]);
@@ -50,6 +51,12 @@ public class PlutoniumIsotopeController extends BaseController {
                          @PathVariable String id) {
         service.removeProperty(materialId, "plutoniumIsotopes", id);
         return "redirect:/materials/" + materialId + "/" + stage;
+    }
+
+    private void sanitizeIsotopeRatio(IsotopeRatio isotope) {
+        isotope.setName(trimToNull(isotope.getName()));
+        isotope.setUnit(trimToNull(isotope.getUnit()));
+        isotope.setNotes(trimToNull(isotope.getNotes()));
     }
 }
 

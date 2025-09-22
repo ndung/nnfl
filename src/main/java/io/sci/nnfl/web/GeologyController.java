@@ -33,6 +33,7 @@ public class GeologyController extends BaseController {
         if (stage == null || stage < 0 || stage >= Stage.values().length) {
             return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
         }
+        sanitizeGeology(geology);
         if (geology.getId() == null || geology.getId().isEmpty()) {
             geology.setId(UUID.randomUUID().toString());
             geology.setStage(Stage.values()[stage]);
@@ -50,6 +51,15 @@ public class GeologyController extends BaseController {
                          @PathVariable String id) {
         service.removeProperty(materialId, "geology", id);
         return "redirect:/materials/" + materialId + "/" + stage;
+    }
+
+    private void sanitizeGeology(Geology geology) {
+        geology.setMineLocation(trimToNull(geology.getMineLocation()));
+        geology.setGeologicalFormation(trimToNull(geology.getGeologicalFormation()));
+        geology.setDepositTypes(trimToNull(geology.getDepositTypes()));
+        geology.setMiningTechnique(trimToNull(geology.getMiningTechnique()));
+        geology.setColour(trimToNull(geology.getColour()));
+        geology.setNotes(trimToNull(geology.getNotes()));
     }
 }
 

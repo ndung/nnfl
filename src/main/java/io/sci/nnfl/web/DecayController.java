@@ -33,6 +33,7 @@ public class DecayController extends BaseController {
         if (stage == null || stage < 0 || stage >= Stage.values().length) {
             return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
         }
+        sanitizeDecay(decay);
         if (decay.getId() == null || decay.getId().isEmpty()) {
             decay.setId(UUID.randomUUID().toString());
             decay.setStage(Stage.values()[stage]);
@@ -50,6 +51,11 @@ public class DecayController extends BaseController {
                          @PathVariable String id) {
         service.removeProperty(materialId, "uraniumDecaySeriesRadionuclides", id);
         return "redirect:/materials/" + materialId + "/" + stage;
+    }
+
+    private void sanitizeDecay(UraniumDecaySeriesRadionuclide decay) {
+        decay.setIsotopeName(trimToNull(decay.getIsotopeName()));
+        decay.setNotes(trimToNull(decay.getNotes()));
     }
 }
 

@@ -33,6 +33,7 @@ public class SourceActivityInfoController extends BaseController {
         if (stage == null || stage < 0 || stage >= Stage.values().length) {
             return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
         }
+        sanitizeSourceActivityInfo(info);
         if (info.getId() == null || info.getId().isEmpty()) {
             info.setId(UUID.randomUUID().toString());
             info.setStage(Stage.values()[stage]);
@@ -50,6 +51,10 @@ public class SourceActivityInfoController extends BaseController {
                          @PathVariable String id) {
         service.removeProperty(materialId, "sourceActivityInfo", id);
         return "redirect:/materials/" + materialId + "/" + stage;
+    }
+
+    private void sanitizeSourceActivityInfo(SourceActivityInfo info) {
+        info.setNotes(trimToNull(info.getNotes()));
     }
 }
 
