@@ -4,12 +4,15 @@ import com.google.gson.annotations.Expose;
 import lombok.*;
 import org.springframework.data.annotation.Transient;
 
+import java.math.BigDecimal;
+
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Morphology extends Property {
+    @Expose private BigDecimal magnification;
     @Expose private String latticeStructure;
     @Expose private String aspectRatio;
     @Expose private String porosity;

@@ -116,6 +116,18 @@
         var csrfToken = document.querySelector('meta[name="_csrf"]')?.getAttribute('content');
         var csrfHeader = document.querySelector('meta[name="_csrf_header"]')?.getAttribute('content');
 
+        function parseDecimalOrNull(value) {
+            if (value === undefined || value === null) {
+                return null;
+            }
+            var trimmed = ('' + value).trim();
+            if (trimmed === '') {
+                return null;
+            }
+            var parsed = parseFloat(trimmed);
+            return isNaN(parsed) ? null : parsed;
+        }
+
         function init(dialogId, addBtnId, saveBtnId, tableId, getData, setData, endpoint, getJsonData, options){
             options = options || {};
             var currentRow = null;
@@ -454,6 +466,7 @@
             return [
                 $('#morphId').val(),
                 $('#morphStage').val() || stage,
+                $('#morphMagnification').val(),
                 $('#morphLatticeStructure').val(),
                 $('#morphAspectRatio').val(),
                 $('#morphPorosity').val(),
@@ -468,22 +481,24 @@
         }, function(v){
             $('#morphId').val(v[0].trim());
             $('#morphStage').val(v[1].trim());
-            $('#morphLatticeStructure').val(v[2].trim());
-            $('#morphAspectRatio').val(v[3].trim());
-            $('#morphPorosity').val(v[4].trim());
-            $('#morphColour').val(v[5].trim());
-            $('#morphParticle').val(v[6].trim());
-            $('#morphShape').val(v[7].trim());
-            $('#morphSurfaceFeatures').val(v[8].trim());
-            $('#morphPlutonium').val(v[9].trim());
-            $('#morphNotes').val(v[10].trim());
-            $('#morphImageFile').val((v[11] || '').trim());
+            $('#morphMagnification').val(v[2].trim());
+            $('#morphLatticeStructure').val(v[3].trim());
+            $('#morphAspectRatio').val(v[4].trim());
+            $('#morphPorosity').val(v[5].trim());
+            $('#morphColour').val(v[6].trim());
+            $('#morphParticle').val(v[7].trim());
+            $('#morphShape').val(v[8].trim());
+            $('#morphSurfaceFeatures').val(v[9].trim());
+            $('#morphPlutonium').val(v[10].trim());
+            $('#morphNotes').val(v[11].trim());
+            $('#morphImageFile').val((v[12] || '').trim());
             morphologyFileField.clearInput();
             morphologyFileField.refresh();
         }, '/morphology/' + materialId + '/' + stage, function(){
             return {
                 id: $('#morphId').val(),
                 stage: $('#morphStage').val() || stage,
+                magnification: parseDecimalOrNull($('#morphMagnification').val()),
                 latticeStructure: $('#morphLatticeStructure').val(),
                 aspectRatio: $('#morphAspectRatio').val(),
                 porosity: $('#morphPorosity').val(),
