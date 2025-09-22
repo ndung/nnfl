@@ -10,6 +10,7 @@ import io.sci.nnfl.service.MaterialRecordService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -89,6 +90,7 @@ public class MorphologyController extends BaseController {
             morphology.setId(UUID.randomUUID().toString());
             morphology.setStage(stage);
         }
+        sanitizeMorphology(morphology);
         if (file != null && !file.isEmpty()) {
             try {
                 var stored = storage.store(buildStorageKey(materialId, stage, "crystallography", morphology.getId(), file), file);
@@ -125,6 +127,26 @@ public class MorphologyController extends BaseController {
                 section,
                 entityId,
                 extension);
+    }
+
+    private void sanitizeMorphology(Morphology morphology) {
+        morphology.setLatticeStructure(trimToNull(morphology.getLatticeStructure()));
+        morphology.setAspectRatio(trimToNull(morphology.getAspectRatio()));
+        morphology.setPorosity(trimToNull(morphology.getPorosity()));
+        morphology.setColour(trimToNull(morphology.getColour()));
+        morphology.setParticleSizeAndDistribution(trimToNull(morphology.getParticleSizeAndDistribution()));
+        morphology.setShape(trimToNull(morphology.getShape()));
+        morphology.setSurfaceFeatures(trimToNull(morphology.getSurfaceFeatures()));
+        morphology.setPlutoniumHomogeneity(trimToNull(morphology.getPlutoniumHomogeneity()));
+        morphology.setNotes(trimToNull(morphology.getNotes()));
+        morphology.setImageFile(trimToNull(morphology.getImageFile()));
+    }
+
+    private String trimToNull(String value) {
+        if (!StringUtils.hasText(value)) {
+            return null;
+        }
+        return value.trim();
     }
 }
 
