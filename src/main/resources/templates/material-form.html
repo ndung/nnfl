@@ -156,6 +156,63 @@
             });
         }
 
+        function createFileField(fileInputSelector, hiddenInputSelector, previewSelector, clearSelector) {
+            var $fileInput = $(fileInputSelector);
+            var $hiddenInput = $(hiddenInputSelector);
+            var $previewLink = $(previewSelector);
+            var $clearButton = clearSelector ? $(clearSelector) : null;
+            var defaultText = $previewLink.text() || 'View file';
+
+            function updateControls(fileName) {
+                var value = $hiddenInput.val();
+                if (value) {
+                    $previewLink.attr('href', value)
+                        .text(fileName || defaultText)
+                        .show();
+                    if ($clearButton) {
+                        $clearButton.show();
+                    }
+                } else {
+                    $previewLink.removeAttr('href')
+                        .text(defaultText)
+                        .hide();
+                    if ($clearButton) {
+                        $clearButton.hide();
+                    }
+                }
+            }
+
+            $previewLink.hide();
+
+            if ($clearButton) {
+                $clearButton.hide().on('click', function(){
+                    $hiddenInput.val('');
+                    $fileInput.val('');
+                    updateControls();
+                });
+            }
+
+            $fileInput.on('change', function(){
+                var file = this.files && this.files[0];
+                if (!file) {
+                    return;
+                }
+                var reader = new FileReader();
+                reader.onload = function(event){
+                    $hiddenInput.val(event.target.result);
+                    updateControls(file.name);
+                };
+                reader.readAsDataURL(file);
+            });
+
+            updateControls();
+
+            return {
+                refresh: updateControls,
+                clearInput: function(){ $fileInput.val(''); }
+            };
+        }
+
         init('#chemicalDialog','#addChemical','#saveChemical','#chemicalTable', function(){
             return [
                 $('#chemicalId').val(),
@@ -363,6 +420,18 @@
             };
         });
 
+        var morphologyFileField = createFileField('#morphImageFileInput', '#morphImageFile', '#morphImageFilePreview', '#morphImageFileClear');
+        $('#morphologyDialog').on('dialogopen', function(){
+            if (!$('#morphId').val()) {
+                $('#morphImageFile').val('');
+            }
+            morphologyFileField.clearInput();
+            morphologyFileField.refresh();
+        }).on('dialogclose', function(){
+            morphologyFileField.clearInput();
+            morphologyFileField.refresh();
+        });
+
         init('#morphologyDialog','#addMorphology','#saveMorphology','#morphologyTable', function(){
             return [
                 $('#morphId').val(),
@@ -375,7 +444,8 @@
                 $('#morphShape').val(),
                 $('#morphSurfaceFeatures').val(),
                 $('#morphPlutonium').val(),
-                $('#morphNotes').val()
+                $('#morphNotes').val(),
+                $('#morphImageFile').val()
             ];
         }, function(v){
             $('#morphId').val(v[0].trim());
@@ -389,6 +459,9 @@
             $('#morphSurfaceFeatures').val(v[8].trim());
             $('#morphPlutonium').val(v[9].trim());
             $('#morphNotes').val(v[10].trim());
+            $('#morphImageFile').val((v[11] || '').trim());
+            morphologyFileField.clearInput();
+            morphologyFileField.refresh();
         }, '/morphology/' + materialId + '/' + stage, function(){
             return {
                 id: $('#morphId').val(),
@@ -401,7 +474,8 @@
                 shape: $('#morphShape').val(),
                 surfaceFeatures: $('#morphSurfaceFeatures').val(),
                 plutoniumHomogeneity: $('#morphPlutonium').val(),
-                notes: $('#morphNotes').val()
+                notes: $('#morphNotes').val(),
+                imageFile: $('#morphImageFile').val()
             };
         });
 
@@ -464,6 +538,18 @@
 
         $('#addContainer').click(function(){ $('#containerStage').val(stage); });
 
+        var generalInfoFileField = createFileField('#generalImageFileInput', '#generalImageFile', '#generalImageFilePreview', '#generalImageFileClear');
+        $('#generalInfoDialog').on('dialogopen', function(){
+            if (!$('#generalId').val()) {
+                $('#generalImageFile').val('');
+            }
+            generalInfoFileField.clearInput();
+            generalInfoFileField.refresh();
+        }).on('dialogclose', function(){
+            generalInfoFileField.clearInput();
+            generalInfoFileField.refresh();
+        });
+
         init('#generalInfoDialog','#addGeneralInfo','#saveGeneralInfo','#generalInfoTable', function(){
             return [
                 $('#generalId').val(),
@@ -485,7 +571,8 @@
                 $('#generalVariationRangeNotes').val(),
                 $('#generalInformationAcquisitionDate').val(),
                 $('#generalUsedArchivedInformation').is(':checked'),
-                $('#generalNotes').val()
+                $('#generalNotes').val(),
+                $('#generalImageFile').val()
             ];
         }, function(v){
             $('#generalId').val(v[0].trim());
@@ -506,8 +593,11 @@
             $('#generalDataEvaluationInfo').val(v[15].trim());
             $('#generalVariationRangeNotes').val(v[16].trim());
             $('#generalInformationAcquisitionDate').val(v[17].trim());
-            $('#generalUsedArchivedInformation').prop('checked', v[18].trim().toLowerCase() === 'true');
+            $('#generalUsedArchivedInformation').prop('checked', (v[18] || '').trim().toLowerCase() === 'true');
             $('#generalNotes').val(v[19].trim());
+            $('#generalImageFile').val((v[20] || '').trim());
+            generalInfoFileField.clearInput();
+            generalInfoFileField.refresh();
         }, '/general-info/' + materialId + '/' + stage, function(){
             return {
                 id: $('#generalId').val(),
@@ -529,7 +619,8 @@
                 variationRangeNotes: $('#generalVariationRangeNotes').val(),
                 informationAcquisitionDate: $('#generalInformationAcquisitionDate').val(),
                 usedArchivedInformation: $('#generalUsedArchivedInformation').is(':checked'),
-                notes: $('#generalNotes').val()
+                notes: $('#generalNotes').val(),
+                imageFile: $('#generalImageFile').val()
             };
         });
 
@@ -800,6 +891,18 @@
             };
         });
 
+        var sourceDescriptionFileField = createFileField('#sourceDescriptionImageFileInput', '#sourceDescriptionImageFile', '#sourceDescriptionImageFilePreview', '#sourceDescriptionImageFileClear');
+        $('#sourceDescriptionDialog').on('dialogopen', function(){
+            if (!$('#sourceDescriptionId').val()) {
+                $('#sourceDescriptionImageFile').val('');
+            }
+            sourceDescriptionFileField.clearInput();
+            sourceDescriptionFileField.refresh();
+        }).on('dialogclose', function(){
+            sourceDescriptionFileField.clearInput();
+            sourceDescriptionFileField.refresh();
+        });
+
         init('#sourceDescriptionDialog','#addSourceDescription','#saveSourceDescription','#sourceDescriptionTable', function(){
             return [
                 $('#sourceDescriptionId').val(),
@@ -813,7 +916,8 @@
                 $('#sourceDescriptionShipping').val(),
                 $('#sourceDescriptionReceiving').val(),
                 $('#sourceDescriptionRadiograph').val(),
-                $('#sourceDescriptionNotes').val()
+                $('#sourceDescriptionNotes').val(),
+                $('#sourceDescriptionImageFile').val()
             ];
         }, function(v){
             $('#sourceDescriptionId').val(v[0].trim());
@@ -828,6 +932,9 @@
             $('#sourceDescriptionReceiving').val(v[9].trim());
             $('#sourceDescriptionRadiograph').val(v[10].trim());
             $('#sourceDescriptionNotes').val(v[11].trim());
+            $('#sourceDescriptionImageFile').val((v[12] || '').trim());
+            sourceDescriptionFileField.clearInput();
+            sourceDescriptionFileField.refresh();
         }, '/source-description/' + materialId + '/' + stage, function(){
             return {
                 id: $('#sourceDescriptionId').val(),
@@ -841,7 +948,8 @@
                 shippingHistory: $('#sourceDescriptionShipping').val(),
                 receivingHistory: $('#sourceDescriptionReceiving').val(),
                 radiographOrPhotograph: $('#sourceDescriptionRadiograph').val(),
-                notes: $('#sourceDescriptionNotes').val()
+                notes: $('#sourceDescriptionNotes').val(),
+                imageFile: $('#sourceDescriptionImageFile').val()
             };
         });
     });

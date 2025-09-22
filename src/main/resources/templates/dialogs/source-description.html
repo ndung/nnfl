@@ -49,6 +49,20 @@
             <label class="kt-form-label max-w-56">Notes :</label>
             <input class="kt-input" id="sourceDescriptionNotes" type="text"/>
         </div>
+        <div class="flex items-baseline gap-2.5">
+            <label class="kt-form-label max-w-56">Image/PDF :</label>
+            <div class="flex flex-col gap-1 w-full">
+                <input class="kt-input" id="sourceDescriptionImageFileInput" type="file" accept="image/*,application/pdf"/>
+                <input id="sourceDescriptionImageFile" type="hidden"/>
+                <div class="flex items-center gap-2 text-xs">
+                    <a id="sourceDescriptionImageFilePreview" class="kt-link" href="#" target="_blank"
+                       rel="noopener noreferrer" style="display:none;">View current file</a>
+                    <button type="button" id="sourceDescriptionImageFileClear" class="kt-btn kt-btn-sm kt-btn-light"
+                            style="display:none;">Remove file</button>
+                </div>
+                <span class="text-xs text-gray-500">Supported formats: images or PDF.</span>
+            </div>
+        </div>
         <div class="flex justify-end gap-2">
             <button type="button" id="saveSourceDescription" class="kt-btn kt-btn-primary">Save</button>
         </div>

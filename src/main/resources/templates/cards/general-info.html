@@ -29,6 +29,7 @@
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Acquisition</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Used Archived</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Notes</span></span></th>
+                        <th><span class="kt-table-col"><span class="kt-table-col-label">Image/PDF</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Action</span></span></th>
                     </tr>
                     </thead>
@@ -54,6 +55,13 @@
                         <td><span th:text="${#dates.format(info.informationAcquisitionDate, 'yyyy-MM-dd')}"></span></td>
                         <td><span th:text="${info.usedArchivedInformation}"></span></td>
                         <td><span th:text="${info.notes}"></span></td>
+                        <td>
+                            <span hidden th:text="${info.imageFile}"></span>
+                            <a th:if="${info.imageFile}" th:href="${info.imageFile}" target="_blank" rel="noopener noreferrer"
+                               class="kt-link" aria-label="View attachment">
+                                <i class="ki-filled ki-eye"></i>
+                            </a>
+                        </td>
                         <td class="flex gap-2">
                             <th:block th:if="${info.stage == T(io.sci.nnfl.model.Stage).values()[stage]}">
                                 <button class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost editRow">
