@@ -1,19 +1,19 @@
 package io.sci.nnfl.model.dto;
 
-import io.sci.nnfl.model.MaterialRecord;
+import io.sci.nnfl.model.Material;
 
 import java.util.Locale;
 
 public class MaterialSearchResult {
-    private final MaterialRecord record;
+    private final Material record;
     private final double score;
 
-    public MaterialSearchResult(MaterialRecord record, double score) {
+    public MaterialSearchResult(Material record, double score) {
         this.record = record;
         this.score = score;
     }
 
-    public MaterialRecord getRecord() {
+    public Material getRecord() {
         return record;
     }
 

@@ -1,6 +1,6 @@
 package io.sci.nnfl.web;
 
-import io.sci.nnfl.model.MaterialRecord;
+import io.sci.nnfl.model.Material;
 import io.sci.nnfl.model.SourceDescription;
 import io.sci.nnfl.model.Stage;
 import io.sci.nnfl.service.MaterialRecordService;
@@ -26,7 +26,7 @@ public class SourceDescriptionController extends BaseController {
     public ResponseEntity<Map<String, Object>> save(@PathVariable String materialId,
                                                     @PathVariable Integer stage,
                                                     @RequestBody SourceDescription description) {
-        MaterialRecord record = service.getById(materialId);
+        Material record = service.getById(materialId);
         if (record.getSourceDescriptions() == null) {
             record.setSourceDescriptions(new ArrayList<>());
         }

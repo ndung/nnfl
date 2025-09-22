@@ -1,7 +1,7 @@
 package io.sci.nnfl.web;
 
 import com.google.gson.internal.LinkedTreeMap;
-import io.sci.nnfl.model.MaterialRecord;
+import io.sci.nnfl.model.Material;
 import io.sci.nnfl.model.Stage;
 import io.sci.nnfl.service.MaterialRecordService;
 import lombok.Getter;
@@ -44,8 +44,8 @@ public class MaterialRecordController {
     @GetMapping("/{materialId}/{stage}")
     public String createForm(Model model, @PathVariable("materialId") String materialId,
                              @PathVariable("stage") String stage) {
-        model.addAttribute("material", new MaterialRecord());
-        MaterialRecord material = service.getById(materialId);
+        model.addAttribute("material", new Material());
+        Material material = service.getById(materialId);
         model.addAttribute("material", material);
         model.addAttribute("stage", Integer.parseInt(stage));
         return "material-form";
@@ -64,9 +64,9 @@ public class MaterialRecordController {
     }
 
     @PostMapping
-    public String create(@ModelAttribute MaterialRecord material,
+    public String create(@ModelAttribute Material material,
                          RedirectAttributes ra) {
-        MaterialRecord record = service.getById(material.getId());
+        Material record = service.getById(material.getId());
         if (record == null) {
             material.setCreator(service.getUser());
             material.setCreationDateTime(new Date());

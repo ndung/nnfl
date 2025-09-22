@@ -1,7 +1,7 @@
 package io.sci.nnfl.web;
 
 import io.sci.nnfl.model.Geology;
-import io.sci.nnfl.model.MaterialRecord;
+import io.sci.nnfl.model.Material;
 import io.sci.nnfl.model.Stage;
 import io.sci.nnfl.service.MaterialRecordService;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +26,7 @@ public class GeologyController extends BaseController {
     public ResponseEntity<Map<String, Object>> save(@PathVariable String materialId,
                                                     @PathVariable Integer stage,
                                                     @RequestBody Geology geology) {
-        MaterialRecord record = service.getById(materialId);
+        Material record = service.getById(materialId);
         if (record.getGeology() == null) {
             record.setGeology(new ArrayList<>());
         }

@@ -18,5 +18,6 @@ public class SourceDescription extends Property {
     @Expose private String shippingHistory;
     @Expose private String receivingHistory;
     @Expose private String radiographOrPhotograph;
+    @Expose private String imageFile;
     @Expose private String notes;
 }

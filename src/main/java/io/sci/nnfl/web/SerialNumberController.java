@@ -1,6 +1,6 @@
 package io.sci.nnfl.web;
 
-import io.sci.nnfl.model.MaterialRecord;
+import io.sci.nnfl.model.Material;
 import io.sci.nnfl.model.SerialNumber;
 import io.sci.nnfl.model.Stage;
 import io.sci.nnfl.service.MaterialRecordService;
@@ -26,7 +26,7 @@ public class SerialNumberController extends BaseController {
     public ResponseEntity<Map<String, Object>> save(@PathVariable String materialId,
                                                     @PathVariable Integer stage,
                                                     @RequestBody SerialNumber serial) {
-        MaterialRecord record = service.getById(materialId);
+        Material record = service.getById(materialId);
         if (record.getSerialNumbers() == null) {
             record.setSerialNumbers(new ArrayList<>());
         }

@@ -1,6 +1,6 @@
 package io.sci.nnfl.web;
 
-import io.sci.nnfl.model.MaterialRecord;
+import io.sci.nnfl.model.Material;
 import io.sci.nnfl.model.SourceActivityInfo;
 import io.sci.nnfl.model.Stage;
 import io.sci.nnfl.service.MaterialRecordService;
@@ -26,7 +26,7 @@ public class SourceActivityInfoController extends BaseController {
     public ResponseEntity<Map<String, Object>> save(@PathVariable String materialId,
                                                     @PathVariable Integer stage,
                                                     @RequestBody SourceActivityInfo info) {
-        MaterialRecord record = service.getById(materialId);
+        Material record = service.getById(materialId);
         if (record.getSourceActivityInfo() == null) {
             record.setSourceActivityInfo(new ArrayList<>());
         }

@@ -1,6 +1,6 @@
 package io.sci.nnfl.web;
 
-import io.sci.nnfl.model.MaterialRecord;
+import io.sci.nnfl.model.Material;
 import io.sci.nnfl.model.dto.MaterialSearchResult;
 import io.sci.nnfl.service.MaterialRecordService;
 import io.sci.nnfl.service.MaterialVectorSearchService;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class MatchController {
@@ -46,7 +45,7 @@ public class MatchController {
         List<MaterialSearchResult> results = new ArrayList<>();
         boolean hasRecord = false;
         if (hasQuery) {
-            MaterialRecord record = materialRecordService.getById(materialId);
+            Material record = materialRecordService.getById(materialId);
             if (record != null) {
                 hasRecord = true;
                 MaterialVectorSearchService searchService = searchServiceProvider.getIfAvailable();

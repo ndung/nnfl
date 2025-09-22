@@ -29,4 +29,5 @@ public class GeneralInfo extends Property {
     @Expose private Date informationAcquisitionDate;
     @Expose private Boolean usedArchivedInformation;
     @Expose private String notes;
+    @Expose private String imageFile;
 }

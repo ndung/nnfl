@@ -9,7 +9,7 @@ import dev.langchain4j.store.embedding.EmbeddingStore;
 import dev.langchain4j.store.embedding.EmbeddingSearchRequest;
 import dev.langchain4j.store.embedding.EmbeddingSearchResult;
 import io.sci.nnfl.config.MaterialSearchProperties;
-import io.sci.nnfl.model.MaterialRecord;
+import io.sci.nnfl.model.Material;
 import io.sci.nnfl.model.dto.MaterialSearchResult;
 import io.sci.nnfl.model.repository.MaterialRecordRepository;
 import org.slf4j.Logger;
@@ -46,7 +46,7 @@ public class MaterialVectorSearchService {
         this.embeddingStore = embeddingStore;
     }
 
-    public void indexMaterial(MaterialRecord record) {
+    public void indexMaterial(Material record) {
         if (record == null || !StringUtils.hasText(record.getId())) {
             return;
         }
@@ -108,15 +108,15 @@ public class MaterialVectorSearchService {
                     .map(EmbeddingMatch::embeddingId)
                     .filter(StringUtils::hasText)
                     .toList();
-            Map<String, MaterialRecord> materialsById = repository.findAllById(materialIds).stream()
+            Map<String, Material> materialsById = repository.findAllById(materialIds).stream()
                     .filter(Objects::nonNull)
-                    .collect(Collectors.toMap(MaterialRecord::getId, Function.identity()));
+                    .collect(Collectors.toMap(Material::getId, Function.identity()));
 
             List<MaterialSearchResult> results = new ArrayList<>();
             for (EmbeddingMatch<TextSegment> match : matches) {
                 String materialId = match.embeddingId();
                 double score = match.score() != null ? match.score() : 0.0;
-                MaterialRecord material = materialId != null ? materialsById.get(materialId) : null;
+                Material material = materialId != null ? materialsById.get(materialId) : null;
                 results.add(new MaterialSearchResult(material, score));
             }
             return results;
@@ -126,12 +126,15 @@ public class MaterialVectorSearchService {
         }
     }
 
-    private TextSegment buildSegment(MaterialRecord record) {
+    private TextSegment buildSegment(Material record) {
         String content = record.getData();
         if (!StringUtils.hasText(content)) {
             return null;
         }
         Metadata metadata = Metadata.from("materialId", record.getId());
+        if (record.getName() != null) {
+            metadata.put("materialName", record.getName());
+        }
         if (record.getCreationDateTime() != null) {
             metadata.put("createdAt", DateTimeFormatter.ISO_INSTANT.format(record.getCreationDateTime().toInstant()));
         }

@@ -1,6 +1,0 @@
-package io.sci.nnfl.model;
-
-public enum MaterialStage {
-    GEO_DEPOSITION, MINING_MILLING, CONV_ENR_FUEL, MOX, FRESH_FUEL,
-    SPENT_FUEL, REPROCESSING, HLW, SEALED_SRC, UNSEALED_SRC
-}

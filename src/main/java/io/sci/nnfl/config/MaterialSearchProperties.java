@@ -10,11 +10,11 @@ public class MaterialSearchProperties {
 
     private boolean enabled = true;
     private String collectionName = "material_embeddings";
-    private String indexName = "material_embeddings_index";
+    private String indexName = "material_embeddings_idx";
     private boolean createIndex = true;
     private int maxResults = 5;
     private double minScore = 0.0;
-    private Set<String> metadataFields = new LinkedHashSet<>(Set.of("materialId", "createdAt"));
+    private Set<String> metadataFields = new LinkedHashSet<>(Set.of("materialId", "materialName", "createdAt"));
 
     public boolean isEnabled() {
         return enabled;

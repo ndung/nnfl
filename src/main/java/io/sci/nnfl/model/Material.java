@@ -21,7 +21,7 @@ import java.util.Map;
 @AllArgsConstructor
 @Builder
 @Document(collection = "materials")
-public class MaterialRecord {
+public class Material {
     @Id
     private String id;
     private String name;

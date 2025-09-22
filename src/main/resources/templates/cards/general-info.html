@@ -55,13 +55,15 @@
                         <td><span th:text="${info.usedArchivedInformation}"></span></td>
                         <td><span th:text="${info.notes}"></span></td>
                         <td class="flex gap-2">
-                            <button class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost editRow">
-                                <i class="ki-filled ki-notepad-edit"></i>
-                            </button>
-                            <form th:action="@{|/general-info/${material.id}/${stage}/${info.id}/delete|}" method="post" onsubmit="return confirm('Delete?');">
-                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                                <button class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost"><i class="ki-filled ki-trash"></i></button>
-                            </form>
+                            <th:block th:if="${info.stage == T(io.sci.nnfl.model.Stage).values()[stage]}">
+                                <button class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost editRow">
+                                    <i class="ki-filled ki-notepad-edit"></i>
+                                </button>
+                                <form th:action="@{|/general-info/${material.id}/${stage}/${info.id}/delete|}" method="post" onsubmit="return confirm('Delete?');">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                    <button class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost"><i class="ki-filled ki-trash"></i></button>
+                                </form>
+                            </th:block>
                         </td>
                     </tr>
                     </tbody>

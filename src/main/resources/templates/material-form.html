@@ -74,7 +74,7 @@
             <div th:replace="~{cards/process-info :: processInfoCard}"></div>
         </th:block>
 
-        <th:block th:if="${stage == 0 or stage == 3}">
+        <th:block th:if="${stage == 0 or stage == 3 or stage == 8}">
             <div th:replace="~{cards/container :: containerCard}"></div>
         </th:block>
 

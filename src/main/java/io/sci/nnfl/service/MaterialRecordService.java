@@ -2,7 +2,7 @@ package io.sci.nnfl.service;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.result.UpdateResult;
-import io.sci.nnfl.model.MaterialRecord;
+import io.sci.nnfl.model.Material;
 import io.sci.nnfl.model.dto.MaterialSearchResult;
 import io.sci.nnfl.model.repository.MaterialRecordRepository;
 import org.bson.Document;
@@ -43,18 +43,18 @@ public class MaterialRecordService extends BaseService {
     }
 
     @Transactional(readOnly = true)
-    public List<MaterialRecord> findAll() {
+    public List<Material> findAll() {
         return repository.findAll(Sort.by("creationDate").descending());
     }
 
     @Transactional(readOnly = true)
-    public MaterialRecord getById(String id) {
+    public Material getById(String id) {
         return repository.findById(id).orElse(null);
     }
 
     @Transactional
-    public MaterialRecord save(MaterialRecord record) {
-        MaterialRecord saved = repository.save(record);
+    public Material save(Material record) {
+        Material saved = repository.save(record);
         vectorSearchServiceProvider.ifAvailable(service -> service.indexMaterial(saved));
         return saved;
     }
@@ -71,7 +71,7 @@ public class MaterialRecordService extends BaseService {
                 .and(propertyName+"._id").is(propertyId));
         Update u = new Update().pull(propertyName,
                 new BasicDBObject("_id", propertyId));
-        UpdateResult result = template.updateFirst(q, u, MaterialRecord.class);
+        UpdateResult result = template.updateFirst(q, u, Material.class);
         if (result.getModifiedCount() > 0) {
             repository.findById(materialId)
                     .ifPresent(updated -> vectorSearchServiceProvider.ifAvailable(service -> service.indexMaterial(updated)));
@@ -83,10 +83,10 @@ public class MaterialRecordService extends BaseService {
         if (!StringUtils.hasText(mqlFilter)) {
             return Collections.emptyList();
         }
-        List<MaterialRecord> list = Collections.emptyList();
+        List<Material> list = Collections.emptyList();
         try {
             Document filter = Document.parse(mqlFilter);
-            list = template.find(new BasicQuery(filter), MaterialRecord.class);
+            list = template.find(new BasicQuery(filter), Material.class);
         } catch (RuntimeException searchError) {
             LOGGER.warn("Failed to execute MaterialRecord search with provided filter: {}", mqlFilter, searchError);
         }
@@ -100,16 +100,16 @@ public class MaterialRecordService extends BaseService {
         }
         Optional<String> q = mqlConverter.toJsonFilter(request);
 
-        List<MaterialRecord> list = mqlConverter.toQuery(q)
-                .map(query -> template.find(query, MaterialRecord.class))
+        List<Material> list = mqlConverter.toQuery(q)
+                .map(query -> template.find(query, Material.class))
                 .orElse(Collections.emptyList());
         List<MaterialSearchResult> materialSearchResults = buildSearchResult(list);
         return Pair.of(q, materialSearchResults);
     }
 
-    private List<MaterialSearchResult> buildSearchResult(List<MaterialRecord> list) {
+    private List<MaterialSearchResult> buildSearchResult(List<Material> list) {
         List<MaterialSearchResult> result = new ArrayList<>();
-        for (MaterialRecord record : list) {
+        for (Material record : list) {
             result.add(new MaterialSearchResult(record, 0.0));
         }
         return result;

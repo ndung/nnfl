@@ -1,7 +1,7 @@
 package io.sci.nnfl.web;
 
 import io.sci.nnfl.model.ChemicalForm;
-import io.sci.nnfl.model.MaterialRecord;
+import io.sci.nnfl.model.Material;
 import io.sci.nnfl.model.Stage;
 import io.sci.nnfl.service.MaterialRecordService;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +27,7 @@ public class ChemicalFormController extends BaseController{
     public ResponseEntity<Map<String, Object>> saveForm(@PathVariable("materialId") String materialId,
                                                         @PathVariable("stage") Integer stage,
                                                         @RequestBody ChemicalForm chemicalForm) {
-        MaterialRecord record = service.getById(materialId);
+        Material record = service.getById(materialId);
         if (record.getChemicalForms() == null) {
             record.setChemicalForms(new ArrayList<>());
         }

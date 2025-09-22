@@ -18,4 +18,5 @@ public class Morphology extends Property {
     @Expose private String surfaceFeatures;
     @Expose private String plutoniumHomogeneity;
     @Expose private String notes;
+    @Expose private String imageFile;
 }
