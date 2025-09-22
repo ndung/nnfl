@@ -5,6 +5,7 @@ import io.sci.nnfl.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 @Component
 public class BaseController {
@@ -34,5 +35,12 @@ public class BaseController {
             return userService.getUser(username);
         }
         return null;
+    }
+
+    protected String trimToNull(String value) {
+        if (!StringUtils.hasText(value)) {
+            return null;
+        }
+        return value.trim();
     }
 }

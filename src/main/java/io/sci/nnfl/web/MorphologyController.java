@@ -141,12 +141,5 @@ public class MorphologyController extends BaseController {
         morphology.setNotes(trimToNull(morphology.getNotes()));
         morphology.setImageFile(trimToNull(morphology.getImageFile()));
     }
-
-    private String trimToNull(String value) {
-        if (!StringUtils.hasText(value)) {
-            return null;
-        }
-        return value.trim();
-    }
 }
 
