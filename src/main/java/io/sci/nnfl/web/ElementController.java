@@ -33,6 +33,7 @@ public class ElementController extends BaseController {
         if (stage == null || stage < 0 || stage >= Stage.values().length) {
             return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
         }
+        sanitizeElement(element);
         if (element.getId() == null || element.getId().isEmpty()) {
             element.setId(UUID.randomUUID().toString());
             element.setStage(Stage.values()[stage]);
@@ -50,6 +51,13 @@ public class ElementController extends BaseController {
                          @PathVariable String id) {
         service.removeProperty(materialId, "elemental", id);
         return "redirect:/materials/" + materialId + "/" + stage;
+    }
+
+    private void sanitizeElement(Element element) {
+        element.setElement(trimToNull(element.getElement()));
+        element.setUnit(trimToNull(element.getUnit()));
+        element.setBurnablePoison(trimToNull(element.getBurnablePoison()));
+        element.setNotes(trimToNull(element.getNotes()));
     }
 }
 

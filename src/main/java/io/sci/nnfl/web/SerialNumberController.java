@@ -33,6 +33,7 @@ public class SerialNumberController extends BaseController {
         if (stage == null || stage < 0 || stage >= Stage.values().length) {
             return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
         }
+        sanitizeSerialNumber(serial);
         if (serial.getId() == null || serial.getId().isEmpty()) {
             serial.setId(UUID.randomUUID().toString());
             serial.setStage(Stage.values()[stage]);
@@ -50,6 +51,11 @@ public class SerialNumberController extends BaseController {
                          @PathVariable String id) {
         service.removeProperty(materialId, "serialNumbers", id);
         return "redirect:/materials/" + materialId + "/" + stage;
+    }
+
+    private void sanitizeSerialNumber(SerialNumber serial) {
+        serial.setSerialNumber(trimToNull(serial.getSerialNumber()));
+        serial.setNotes(trimToNull(serial.getNotes()));
     }
 }
 

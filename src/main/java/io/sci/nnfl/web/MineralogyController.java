@@ -33,6 +33,7 @@ public class MineralogyController extends BaseController {
         if (stage == null || stage < 0 || stage >= Stage.values().length) {
             return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
         }
+        sanitizeMineralogy(mineralogy);
         if (mineralogy.getId() == null || mineralogy.getId().isEmpty()) {
             mineralogy.setId(UUID.randomUUID().toString());
             mineralogy.setStage(Stage.values()[stage]);
@@ -50,6 +51,13 @@ public class MineralogyController extends BaseController {
                          @PathVariable String id) {
         service.removeProperty(materialId, "mineralogy", id);
         return "redirect:/materials/" + materialId + "/" + stage;
+    }
+
+    private void sanitizeMineralogy(Mineralogy mineralogy) {
+        mineralogy.setMineralsPresent(trimToNull(mineralogy.getMineralsPresent()));
+        mineralogy.setMineralChemistry(trimToNull(mineralogy.getMineralChemistry()));
+        mineralogy.setVolumePercentages(trimToNull(mineralogy.getVolumePercentages()));
+        mineralogy.setNotes(trimToNull(mineralogy.getNotes()));
     }
 }
 

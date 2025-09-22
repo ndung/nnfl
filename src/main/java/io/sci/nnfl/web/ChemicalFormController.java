@@ -34,6 +34,7 @@ public class ChemicalFormController extends BaseController{
         if (stage==null || stage < 0 || stage>10){
             return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
         }
+        sanitizeChemicalForm(chemicalForm);
         if (chemicalForm.getId() == null || chemicalForm.getId().isEmpty()) {
             chemicalForm.setId(UUID.randomUUID().toString());
             chemicalForm.setStage(Stage.values()[stage]);
@@ -64,5 +65,10 @@ public class ChemicalFormController extends BaseController{
                                      @PathVariable("id") String id) {
         service.removeProperty(materialId, "chemicalForms", id);
         return "redirect:/materials/"+materialId+"/"+stage;
+    }
+
+    private void sanitizeChemicalForm(ChemicalForm chemicalForm) {
+        chemicalForm.setCompoundName(trimToNull(chemicalForm.getCompoundName()));
+        chemicalForm.setNotes(trimToNull(chemicalForm.getNotes()));
     }
 }

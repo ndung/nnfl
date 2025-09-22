@@ -264,7 +264,7 @@
                 id: $('#chemicalId').val(),
                 stage: $('#chemicalStage').val() || stage,
                 compoundName: $('#chemicalName').val(),
-                stoichiometryDeviation: parseFloat($('#chemicalDeviation').val() || 0),
+                stoichiometryDeviation: parseDecimalOrNull($('#chemicalDeviation').val()),
                 notes: $('#chemicalComment').val()
             };
         });
@@ -293,9 +293,9 @@
                 id: $('#uraniumId').val(),
                 stage: $('#uraniumStage').val() || stage,
                 element: $('#uraniumName').val(),
-                concentration: parseFloat($('#uraniumConcentration').val() || 0),
+                concentration: parseDecimalOrNull($('#uraniumConcentration').val()),
                 unit: $('#uraniumUnit').val(),
-                uncertainty: parseFloat($('#uraniumUncertainty').val() || 0),
+                uncertainty: parseDecimalOrNull($('#uraniumUncertainty').val()),
                 burnablePoison: $('#uraniumBurnablePoison').val(),
                 notes: $('#uraniumComment').val()
             };
@@ -323,8 +323,8 @@
                 id: $('#uraniumIsotopeId').val(),
                 stage: $('#uraniumIsotopeStage').val() || stage,
                 name: $('#uraniumIsotopeName').val(),
-                value: parseFloat($('#uraniumIsotopeRatio').val() || 0),
-                uncertainty: parseFloat($('#uraniumIsotopeUncertainty').val() || 0),
+                value: parseDecimalOrNull($('#uraniumIsotopeRatio').val()),
+                uncertainty: parseDecimalOrNull($('#uraniumIsotopeUncertainty').val()),
                 unit: $('#uraniumIsotopeUnit').val(),
                 notes: $('#uraniumIsotopeComment').val()
             };
@@ -352,8 +352,8 @@
                 id: $('#stableIsotopeId').val(),
                 stage: $('#stableIsotopeStage').val() || stage,
                 name: $('#stableIsotopeName').val(),
-                value: parseFloat($('#stableIsotopeRatio').val() || 0),
-                uncertainty: parseFloat($('#stableIsotopeUncertainty').val() || 0),
+                value: parseDecimalOrNull($('#stableIsotopeRatio').val()),
+                uncertainty: parseDecimalOrNull($('#stableIsotopeUncertainty').val()),
                 unit: $('#stableIsotopeUnit').val(),
                 notes: $('#stableIsotopeComment').val()
             };
@@ -381,8 +381,8 @@
                 id: $('#plutoniumIsotopeId').val(),
                 stage: $('#plutoniumIsotopeStage').val() || stage,
                 name: $('#plutoniumIsotopeName').val(),
-                value: parseFloat($('#plutoniumIsotopeRatio').val() || 0),
-                uncertainty: parseFloat($('#plutoniumIsotopeUncertainty').val() || 0),
+                value: parseDecimalOrNull($('#plutoniumIsotopeRatio').val()),
+                uncertainty: parseDecimalOrNull($('#plutoniumIsotopeUncertainty').val()),
                 unit: $('#plutoniumIsotopeUnit').val(),
                 notes: $('#plutoniumIsotopeComment').val()
             };
@@ -410,9 +410,9 @@
                 id: $('#traceElementId').val(),
                 stage: $('#traceElementStage').val() || stage,
                 element: $('#traceElementName').val(),
-                concentration: parseFloat($('#traceElementConcentration').val() || 0),
+                concentration: parseDecimalOrNull($('#traceElementConcentration').val()),
                 unit: $('#traceElementUnit').val(),
-                uncertainty: parseFloat($('#traceElementUncertainty').val() || 0),
+                uncertainty: parseDecimalOrNull($('#traceElementUncertainty').val()),
                 notes: $('#traceElementComment').val()
             };
         });
@@ -442,9 +442,9 @@
                 id: $('#elementId').val(),
                 stage: $('#elementStage').val() || stage,
                 element: $('#elementName').val(),
-                concentration: parseFloat($('#elementConcentration').val() || 0),
+                concentration: parseDecimalOrNull($('#elementConcentration').val()),
                 unit: $('#elementUnit').val(),
-                uncertainty: parseFloat($('#elementUncertainty').val() || 0),
+                uncertainty: parseDecimalOrNull($('#elementUncertainty').val()),
                 burnablePoison: $('#elementBurnablePoison').val(),
                 notes: $('#elementComment').val()
             };
@@ -533,8 +533,8 @@
                 id: $('#uraniumDecayId').val(),
                 stage: $('#uraniumDecayStage').val() || stage,
                 isotopeName: $('#uraniumDecayNuclide').val(),
-                activityBq: parseFloat($('#uraniumDecayActivity').val() || 0),
-                activityUncertaintyBq: parseFloat($('#uraniumDecayUncertainty').val() || 0),
+                activityBq: parseDecimalOrNull($('#uraniumDecayActivity').val()),
+                activityUncertaintyBq: parseDecimalOrNull($('#uraniumDecayUncertainty').val()),
                 notes: $('#uraniumDecayComment').val()
             };
         });
@@ -562,7 +562,7 @@
                 id: $('#containerId').val(),
                 stage: $('#containerStage').val() || stage,
                 type: $('#containerType').val(),
-                volumeValue: parseFloat($('#containerVolume').val() || 0),
+                volumeValue: parseDecimalOrNull($('#containerVolume').val()),
                 volumeUnit: $('#containerUnit').val(),
                 dimensions: $('#containerDimensions').val(),
                 notes: $('#containerNotes').val()
@@ -753,8 +753,8 @@
                 id: $('#isotopeActivityId').val(),
                 stage: $('#isotopeActivityStage').val() || stage,
                 isotopeName: $('#isotopeActivityName').val(),
-                activityBq: parseFloat($('#isotopeActivityValue').val() || 0),
-                activityUncertaintyBq: parseFloat($('#isotopeActivityUncertainty').val() || 0),
+                activityBq: parseDecimalOrNull($('#isotopeActivityValue').val()),
+                activityUncertaintyBq: parseDecimalOrNull($('#isotopeActivityUncertainty').val()),
                 referenceDate: $('#isotopeActivityDate').val(),
                 major: $('#isotopeActivityMajor').is(':checked'),
                 notes: $('#isotopeActivityNotes').val()
@@ -782,7 +782,7 @@
                 stage: $('#mineralogyStage').val() || stage,
                 mineralsPresent: $('#mineralogyMinerals').val(),
                 mineralChemistry: $('#mineralogyChemistry').val(),
-                volumePercentages: parseFloat($('#mineralogyVolume').val() || 0),
+                volumePercentages: parseDecimalOrNull($('#mineralogyVolume').val()),
                 notes: $('#mineralogyNotes').val()
             };
         });
@@ -827,7 +827,7 @@
             return {
                 id: $('#physicalId').val(),
                 stage: $('#physicalStage').val() || stage,
-                densityValue: parseFloat($('#physicalDensityValue').val() || 0),
+                densityValue: parseDecimalOrNull($('#physicalDensityValue').val()),
                 densityUnit: $('#physicalDensityUnit').val(),
                 stateOfMatter: $('#physicalState').val(),
                 mechanicalProperties: $('#physicalMechanical').val(),
@@ -837,7 +837,7 @@
                 coatingInfo: $('#physicalCoating').val(),
                 assemblyStructure: $('#physicalAssembly').val(),
                 surfaceOxideThickness: $('#physicalOxide').val(),
-                massValue: parseFloat($('#physicalMassValue').val() || 0),
+                massValue: parseDecimalOrNull($('#physicalMassValue').val()),
                 massUnit: $('#physicalMassUnit').val(),
                 serialNumbers: $('#physicalSerialNumbers').val(),
                 notes: $('#physicalNotes').val()
@@ -917,9 +917,9 @@
             return {
                 id: $('#sourceActivityId').val(),
                 stage: $('#sourceActivityStage').val() || stage,
-                activityBq: parseFloat($('#sourceActivityValue').val() || 0),
+                activityBq: parseDecimalOrNull($('#sourceActivityValue').val()),
                 referenceDate: $('#sourceActivityDate').val(),
-                neutronIntensityPerSec: parseFloat($('#sourceActivityNeutron').val() || 0),
+                neutronIntensityPerSec: parseDecimalOrNull($('#sourceActivityNeutron').val()),
                 notes: $('#sourceActivityNotes').val()
             };
         });

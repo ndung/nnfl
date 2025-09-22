@@ -33,6 +33,7 @@ public class ProcessInfoController extends BaseController {
         if (stage == null || stage < 0 || stage >= Stage.values().length) {
             return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
         }
+        sanitizeProcessInformation(info);
         if (info.getId() == null || info.getId().isEmpty()) {
             info.setId(UUID.randomUUID().toString());
             info.setStage(Stage.values()[stage]);
@@ -50,6 +51,12 @@ public class ProcessInfoController extends BaseController {
                          @PathVariable String id) {
         service.removeProperty(materialId, "processInformation", id);
         return "redirect:/materials/" + materialId + "/" + stage;
+    }
+
+    private void sanitizeProcessInformation(ProcessInformation info) {
+        info.setProcessTypeOrDescription(trimToNull(info.getProcessTypeOrDescription()));
+        info.setLocationOfProcessingSite(trimToNull(info.getLocationOfProcessingSite()));
+        info.setNotes(trimToNull(info.getNotes()));
     }
 }
 

@@ -33,6 +33,7 @@ public class PhysicalController extends BaseController {
         if (stage == null || stage < 0 || stage >= Stage.values().length) {
             return ResponseEntity.badRequest().body(Map.of("ok", false, "error", "Invalid stage"));
         }
+        sanitizePhysical(physical);
         if (physical.getId() == null || physical.getId().isEmpty()) {
             physical.setId(UUID.randomUUID().toString());
             physical.setStage(Stage.values()[stage]);
@@ -50,6 +51,20 @@ public class PhysicalController extends BaseController {
                          @PathVariable String id) {
         service.removeProperty(materialId, "physicals", id);
         return "redirect:/materials/" + materialId + "/" + stage;
+    }
+
+    private void sanitizePhysical(Physical physical) {
+        physical.setDensityUnit(trimToNull(physical.getDensityUnit()));
+        physical.setStateOfMatter(trimToNull(physical.getStateOfMatter()));
+        physical.setMechanicalProperties(trimToNull(physical.getMechanicalProperties()));
+        physical.setDescription(trimToNull(physical.getDescription()));
+        physical.setDimensions(trimToNull(physical.getDimensions()));
+        physical.setCladdingInfo(trimToNull(physical.getCladdingInfo()));
+        physical.setCoatingInfo(trimToNull(physical.getCoatingInfo()));
+        physical.setAssemblyStructure(trimToNull(physical.getAssemblyStructure()));
+        physical.setSurfaceOxideThickness(trimToNull(physical.getSurfaceOxideThickness()));
+        physical.setSerialNumbers(trimToNull(physical.getSerialNumbers()));
+        physical.setNotes(trimToNull(physical.getNotes()));
     }
 }
 
