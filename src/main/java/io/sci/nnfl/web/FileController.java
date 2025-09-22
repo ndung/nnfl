@@ -20,9 +20,7 @@ public class FileController {
     @GetMapping("/{*key}")
     public ResponseEntity<?> get(@PathVariable("key") String key) throws IOException, URISyntaxException {
         var url = storage.publicUrl(key.substring(1));
-        System.out.println("url: " + url);
         if (url.isPresent()) {
-            System.out.println("uri: " + url.get());
             return ResponseEntity.status(HttpStatus.FOUND).location(url.get()).build();
         }
         return storage.download(key)

@@ -57,7 +57,7 @@
                         <td><span th:text="${info.notes}"></span></td>
                         <td>
                             <span hidden th:text="${info.imageFile}"></span>
-                            <a th:if="${info.imageFile}" th:href="${info.imageFile}" target="_blank" rel="noopener noreferrer"
+                            <a th:if="${info.imageFile}" th:href="${info.fileUrl}" target="_blank" rel="noopener noreferrer"
                                class="kt-link" aria-label="View attachment">
                                 <i class="ki-filled ki-eye"></i>
                             </a>

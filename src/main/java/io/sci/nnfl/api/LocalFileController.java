@@ -27,7 +27,7 @@ public class LocalFileController {
         HttpHeaders headers = new HttpHeaders();
         DataInputStream in;
         try {
-            File file = new File(location+"\\"+fileName);
+            File file = new File(location+"/"+fileName);
             byte[] media = new byte[(int) file.length()];
             BufferedInputStream br = new BufferedInputStream(new FileInputStream(file));
             br.read(media);
@@ -37,29 +37,6 @@ public class LocalFileController {
             return responseEntity;
 
         } catch (Exception e) {
-            ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(null, headers, HttpStatus.BAD_REQUEST);
-            return responseEntity;
-        }
-    }
-
-    @RequestMapping(value = "/images/{subfolder}/{fileName:.+}", method = RequestMethod.GET)
-    public ResponseEntity<byte[]> getFile(@PathVariable("subfolder") String subfolder,
-                                          @PathVariable("fileName") String fileName) {
-        HttpHeaders headers = new HttpHeaders();
-        DataInputStream in;
-
-        try {
-            File file = new File(location + subfolder + "/" + fileName);
-            byte[] media = new byte[(int) file.length()];
-            BufferedInputStream br = new BufferedInputStream(new FileInputStream(file));
-            br.read(media);
-
-            headers.setCacheControl(CacheControl.noCache().getHeaderValue());
-            ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(media, headers, HttpStatus.OK);
-            return responseEntity;
-
-        } catch (Exception e) {
-            e.printStackTrace();
             ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(null, headers, HttpStatus.BAD_REQUEST);
             return responseEntity;
         }

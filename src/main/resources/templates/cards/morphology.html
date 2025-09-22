@@ -39,7 +39,7 @@
                         <td><span th:text="${morph.notes}"></span></td>
                         <td>
                             <span hidden th:text="${morph.imageFile}"></span>
-                            <a th:if="${morph.imageFile}" th:href="${morph.imageFile}" target="_blank" rel="noopener noreferrer"
+                            <a th:if="${morph.imageFile}" th:href="${morph.fileUrl}" target="_blank" rel="noopener noreferrer"
                                class="kt-link" aria-label="View attachment">
                                 <i class="ki-filled ki-eye"></i>
                             </a>

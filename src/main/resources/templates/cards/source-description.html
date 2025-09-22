@@ -41,7 +41,7 @@
                         <td><span th:text="${sd.notes}"></span></td>
                         <td>
                             <span hidden th:text="${sd.imageFile}"></span>
-                            <a th:if="${sd.imageFile}" th:href="${sd.imageFile}" target="_blank" rel="noopener noreferrer"
+                            <a th:if="${sd.imageFile}" th:href="${sd.fileUrl}" target="_blank" rel="noopener noreferrer"
                                class="kt-link" aria-label="View attachment">
                                 <i class="ki-filled ki-eye"></i>
                             </a>

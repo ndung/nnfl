@@ -119,7 +119,7 @@ public class SourceDescriptionController extends BaseController {
         String originalFilename = Optional.ofNullable(file.getOriginalFilename()).orElse("file");
         int dot = originalFilename.lastIndexOf('.');
         String extension = dot >= 0 ? originalFilename.substring(dot) : "";
-        return String.format("materials/%s/%s/%s/%s%s",
+        return String.format("%s-%s-%s-%s%s",
                 materialId,
                 stage.name().toLowerCase(Locale.ROOT),
                 section,

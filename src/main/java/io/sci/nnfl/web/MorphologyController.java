@@ -91,7 +91,7 @@ public class MorphologyController extends BaseController {
         }
         if (file != null && !file.isEmpty()) {
             try {
-                var stored = storage.store(buildStorageKey(materialId, stage, "morphology", morphology.getId(), file), file);
+                var stored = storage.store(buildStorageKey(materialId, stage, "crystallography", morphology.getId(), file), file);
                 morphology.setImageFile(stored.key());
             } catch (IOException | URISyntaxException e) {
                 return ResponseEntity.internalServerError().body(Map.of("ok", false, "error", "Failed to store file"));
@@ -119,7 +119,7 @@ public class MorphologyController extends BaseController {
         String originalFilename = Optional.ofNullable(file.getOriginalFilename()).orElse("file");
         int dot = originalFilename.lastIndexOf('.');
         String extension = dot >= 0 ? originalFilename.substring(dot) : "";
-        return String.format("materials/%s/%s/%s/%s%s",
+        return String.format("%s-%s-%s-%s%s",
                 materialId,
                 stage.name().toLowerCase(Locale.ROOT),
                 section,
