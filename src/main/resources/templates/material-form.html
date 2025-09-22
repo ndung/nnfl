@@ -384,7 +384,6 @@
                 $('#traceElementConcentration').val(),
                 $('#traceElementUnit').val(),
                 $('#traceElementUncertainty').val(),
-                $('#traceElementBurnablePoison').val(),
                 $('#traceElementComment').val()];
         }, function(v){
             $('#traceElementId').val(v[0].trim());
@@ -393,8 +392,7 @@
             $('#traceElementConcentration').val(v[3].trim());
             $('#traceElementUnit').val(v[4].trim());
             $('#traceElementUncertainty').val(v[5].trim());
-            $('#traceElementBurnablePoison').val(v[6].trim());
-            $('#traceElementComment').val(v[7].trim());
+            $('#traceElementComment').val(v[6].trim());
         }, '/trace-element/' + materialId + '/' + stage, function(){
             return {
                 id: $('#traceElementId').val(),
@@ -403,7 +401,6 @@
                 concentration: parseFloat($('#traceElementConcentration').val() || 0),
                 unit: $('#traceElementUnit').val(),
                 uncertainty: parseFloat($('#traceElementUncertainty').val() || 0),
-                burnablePoison: $('#traceElementBurnablePoison').val(),
                 notes: $('#traceElementComment').val()
             };
         });

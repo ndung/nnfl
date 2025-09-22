@@ -37,10 +37,12 @@
             <label class="kt-form-label max-w-56">Surface Features :</label>
             <input class="kt-input" id="morphSurfaceFeatures" type="text"/>
         </div>
-        <div class="flex items-baseline gap-2.5">
-            <label class="kt-form-label max-w-56">Plutonium Homogeneity :</label>
-            <input class="kt-input" id="morphPlutonium" type="text"/>
-        </div>
+        <th:block th:if="${stage==4}">
+            <div class="flex items-baseline gap-2.5">
+                <label class="kt-form-label max-w-56">Plutonium Homogeneity :</label>
+                <input class="kt-input" id="morphPlutonium" type="text"/>
+            </div>
+        </th:block>
         <div class="flex items-baseline gap-2.5">
             <label class="kt-form-label max-w-56">Notes :</label>
             <input class="kt-input" id="morphNotes" type="text"/>
