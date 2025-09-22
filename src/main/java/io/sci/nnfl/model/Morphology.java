@@ -2,6 +2,7 @@ package io.sci.nnfl.model;
 
 import com.google.gson.annotations.Expose;
 import lombok.*;
+import org.springframework.data.annotation.Transient;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -19,4 +20,8 @@ public class Morphology extends Property {
     @Expose private String plutoniumHomogeneity;
     @Expose private String notes;
     @Expose private String imageFile;
+    @Transient
+    public String getFileUrl(){
+        return "http://10.10.253.75/files/"+imageFile;
+    }
 }

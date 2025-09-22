@@ -10,14 +10,12 @@
                     <thead>
                     <tr>
                         <th style="width:0%"><span class="kt-table-col"><span class="kt-table-col-label" hidden>ID</span></span></th>
-                        <th style="width:15%"><span class="kt-table-col"><span class="kt-table-col-label">Stage</span></span></th>
+                        <th style="width:5%"><span class="kt-table-col"><span class="kt-table-col-label">Stage</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Name</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Concentration</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Unit</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Uncertainty</span></span></th>
-                        <th:block th:if="!${stage==1}">
-                            <th><span class="kt-table-col"><span class="kt-table-col-label">Burnable Poison</span></span></th>
-                        </th:block>
+                        <th><span class="kt-table-col"><span class="kt-table-col-label">Burnable Poison</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Notes</span></span></th>
                         <th><span class="kt-table-col"><span class="kt-table-col-label">Action</span></span></th>
                     </tr>
@@ -30,9 +28,7 @@
                         <td><span th:text="${element.concentration}"></span></td>
                         <td><span th:text="${element.unit}"></span></td>
                         <td><span th:text="${element.uncertainty}"></span></td>
-                        <th:block th:if="!${stage==1}">
-                            <td><span th:text="${element.burnablePoison}"></span></td>
-                        </th:block>
+                        <td><span th:text="${element.burnablePoison}"></span></td>
                         <td><span th:text="${element.notes}"></span></td>
                         <td class="flex gap-2">
                             <th:block th:if="${element.stage == T(io.sci.nnfl.model.Stage).values()[stage]}">

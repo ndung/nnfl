@@ -2,6 +2,7 @@ package io.sci.nnfl.model;
 
 import com.google.gson.annotations.Expose;
 import lombok.*;
+import org.springframework.data.annotation.Transient;
 
 import java.util.Date;
 
@@ -30,4 +31,9 @@ public class GeneralInfo extends Property {
     @Expose private Boolean usedArchivedInformation;
     @Expose private String notes;
     @Expose private String imageFile;
+
+    @Transient
+    public String getFileUrl(){
+        return "http://10.10.253.75/files/"+imageFile;
+    }
 }
