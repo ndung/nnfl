@@ -3,25 +3,51 @@
 <body>
 <div class="kt-container-fluid px=0">
     <div class="grid grid-cols-1 gap-5">
-
-        <div class="kt-card kt-card-grid h-full min-w-full">
-            <div class="kt-card-header">
-                <h3 class="kt-card-title">Material details</h3>
-            </div>
-            <div class="kt-card-table">
-                <div class="grid gap-3 p-5 text-sm">
-                    <div class="flex justify-between gap-4">
-                        <span class="font-semibold text-gray-500">Material ID</span>
-                        <span th:text="${material.id}" class="text-right text-base font-medium"></span>
-                    </div>
-                    <div class="flex justify-between gap-4">
-                        <span class="font-semibold text-gray-500">Material Name</span>
-                        <span th:text="${material.name}" class="text-right text-base font-medium"></span>
+        <div class="grid lg:grid-cols-3 gap-y-5 lg:gap-7.5 items-stretch">
+            <div class="lg:col-span-1">
+                <div class="grid grid-cols-1 gap-5 lg:gap-7.5 h-full items-stretch">
+                    <div class="kt-card min-w-full">
+                        <div class="kt-card-header">
+                            <h3 class="kt-card-title">
+                                Material details
+                            </h3>
+                            <button class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost editMaterial">
+                                <i class="ki-filled ki-notepad-edit">
+                                </i>
+                            </button>
+                            <form id="editMaterialForm" th:action="@{|/materials/edit|}" method="post">
+                                <input type="hidden" th:if="${_csrf != null}"
+                                       th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                <input type="hidden" name="id" id="newMaterialId" />
+                                <input type="hidden" name="name" id="newMaterialName" />
+                                <button type="button" id="openEditMaterialDialog"
+                                        class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost"><i class="ki-filled ki-additem"></i></button>
+                            </form>
+                        </div>
+                        <div class="kt-card-table kt-scrollable-x-auto pb-3">
+                            <table class="kt-table align-middle text-sm">
+                                <tr>
+                                    <td class="py-2 text-secondary-foreground font-normal">
+                                        Material ID
+                                    </td>
+                                    <td class="py-2 text-secondary-foreground font-normal">
+                                        <span th:text="${material.id}"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 text-secondary-foreground font-normal">
+                                        Material Name
+                                    </td>
+                                    <td class="py-2 text-secondary-foreground font-normal">
+                                        <span th:text="${material.name}"></span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
         <div th:replace="~{cards/general-info :: generalInfoCard}"></div>
 
         <th:block th:if="${stage == 0 or stage == 1}">
@@ -36,7 +62,8 @@
             <div th:replace="~{cards/source-activity-info :: sourceActivityInfoCard}"></div>
         </th:block>
 
-        <th:block th:if="${stage == 0 or stage == 2 or stage == 3 or stage == 4 or stage == 5 or stage == 6 or stage == 7 or stage == 9 or stage == 10}">
+        <th:block
+                th:if="${stage == 0 or stage == 2 or stage == 3 or stage == 4 or stage == 5 or stage == 6 or stage == 7 or stage == 9 or stage == 10}">
             <div th:replace="~{cards/chemical-form :: chemicalCard}"></div>
         </th:block>
 
@@ -44,7 +71,8 @@
             <div th:replace="~{cards/mineralogy :: mineralogyCard}"></div>
         </th:block>
 
-        <th:block th:if="${stage == 0 or stage == 2 or stage == 3 or stage == 4 or stage == 5 or stage == 6 or stage == 7 or stage == 8}">
+        <th:block
+                th:if="${stage == 0 or stage == 2 or stage == 3 or stage == 4 or stage == 5 or stage == 6 or stage == 7 or stage == 8}">
             <div th:replace="~{cards/physical :: physicalCard}"></div>
         </th:block>
 
@@ -56,7 +84,8 @@
             <div th:replace="~{cards/morphology :: morphologyCard}"></div>
         </th:block>
 
-        <th:block th:if="${stage == 0 or stage == 4 or stage == 5 or stage == 6 or stage == 7 or stage == 8 or stage == 9 or stage == 10}">
+        <th:block
+                th:if="${stage == 0 or stage == 4 or stage == 5 or stage == 6 or stage == 7 or stage == 8 or stage == 9 or stage == 10}">
             <div th:replace="~{cards/element :: elementCard}"></div>
         </th:block>
 
@@ -64,7 +93,8 @@
             <div th:replace="~{cards/uranium :: uraniumCard}"></div>
         </th:block>
 
-        <th:block th:if="${stage == 0 or stage == 1 or stage == 2 or stage == 3 or stage == 4 or stage == 5 or stage == 6 or stage == 7}">
+        <th:block
+                th:if="${stage == 0 or stage == 1 or stage == 2 or stage == 3 or stage == 4 or stage == 5 or stage == 6 or stage == 7}">
             <div th:replace="~{cards/uranium-isotope :: uraniumIsotopeCard}"></div>
         </th:block>
 
@@ -80,7 +110,8 @@
             <div th:replace="~{cards/plutonium-isotope :: plutoniumIsotopeCard}"></div>
         </th:block>
 
-        <th:block th:if="${stage == 0 or stage == 1 or stage == 2 or stage == 3 or stage == 4 or stage == 5 or stage == 6 or stage == 7}">
+        <th:block
+                th:if="${stage == 0 or stage == 1 or stage == 2 or stage == 3 or stage == 4 or stage == 5 or stage == 6 or stage == 7}">
             <div th:replace="~{cards/trace-element :: traceElementCard}"></div>
         </th:block>
 
@@ -124,11 +155,11 @@
 <div th:replace="~{dialogs/source-activity-info :: sourceActivityInfoDialog}"></div>
 <div th:replace="~{dialogs/source-description :: sourceDescriptionDialog}"></div>
 
-<link rel="stylesheet" th:href="@{https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css}" />
+<link rel="stylesheet" th:href="@{https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css}"/>
 <script th:src="@{https://code.jquery.com/jquery-3.7.1.min.js}"></script>
 <script th:src="@{https://code.jquery.com/ui/1.13.2/jquery-ui.js}"></script>
 <script>
-    $(function(){
+    $(function () {
         var materialId = window.location.pathname.split('/')[2];
         var stage = window.location.pathname.split('/')[3];
         var csrfToken = document.querySelector('meta[name="_csrf"]')?.getAttribute('content');
@@ -146,18 +177,23 @@
             return isNaN(parsed) ? null : parsed;
         }
 
-        function init(dialogId, addBtnId, saveBtnId, tableId, getData, setData, endpoint, getJsonData, options){
+        function init(dialogId, addBtnId, saveBtnId, tableId, getData, setData, endpoint, getJsonData, options) {
             options = options || {};
             var currentRow = null;
-            $(dialogId).dialog({ autoOpen:false, modal:true, width:640 });
-            $(addBtnId).click(function(){ currentRow=null; $(dialogId).dialog('open'); });
-            $(tableId).on('click','.editRow', function(){
+            $(dialogId).dialog({autoOpen: false, modal: true, width: 640});
+            $(addBtnId).click(function () {
+                currentRow = null;
+                $(dialogId).dialog('open');
+            });
+            $(tableId).on('click', '.editRow', function () {
                 currentRow = $(this).closest('tr');
-                var values = currentRow.children('td').slice(0,-1).map(function(){ return $(this).text(); }).get();
+                var values = currentRow.children('td').slice(0, -1).map(function () {
+                    return $(this).text();
+                }).get();
                 setData(values);
                 $(dialogId).dialog('open');
             });
-            $(saveBtnId).click(function(){
+            $(saveBtnId).click(function () {
                 var data = getData();
                 var payload = getJsonData ? getJsonData() : data;
                 var fileInput = options.fileInput ? document.querySelector(options.fileInput) : null;
@@ -245,14 +281,14 @@
             $previewLink.hide();
 
             if ($clearButton) {
-                $clearButton.hide().on('click', function(){
+                $clearButton.hide().on('click', function () {
                     $hiddenInput.val('');
                     $fileInput.val('');
                     updateControls();
                 });
             }
 
-            $fileInput.on('change', function(){
+            $fileInput.on('change', function () {
                 updateControls();
             });
 
@@ -260,24 +296,26 @@
 
             return {
                 refresh: updateControls,
-                clearInput: function(){ $fileInput.val(''); }
+                clearInput: function () {
+                    $fileInput.val('');
+                }
             };
         }
 
-        init('#chemicalDialog','#addChemical','#saveChemical','#chemicalTable', function(){
+        init('#chemicalDialog', '#addChemical', '#saveChemical', '#chemicalTable', function () {
             return [
                 $('#chemicalId').val(),
                 $('#chemicalStage').val() || stage,
                 $('#chemicalName').val(),
                 $('#chemicalDeviation').val(),
                 $('#chemicalComment').val()];
-        }, function(v){
+        }, function (v) {
             $('#chemicalId').val(v[0].trim());
             $('#chemicalStage').val(v[1].trim());
             $('#chemicalName').val(v[2].trim());
             $('#chemicalDeviation').val(v[3].trim());
             $('#chemicalComment').val(v[4].trim());
-        }, '/chemical-form/' + materialId + '/' + stage, function(){
+        }, '/chemical-form/' + materialId + '/' + stage, function () {
             return {
                 id: $('#chemicalId').val(),
                 stage: $('#chemicalStage').val() || stage,
@@ -287,7 +325,7 @@
             };
         });
 
-        init('#uraniumDialog','#addUranium','#saveUranium','#uraniumTable', function(){
+        init('#uraniumDialog', '#addUranium', '#saveUranium', '#uraniumTable', function () {
             return [
                 $('#uraniumId').val(),
                 $('#uraniumStage').val() || stage,
@@ -297,7 +335,7 @@
                 $('#uraniumUncertainty').val(),
                 $('#uraniumBurnablePoison').val(),
                 $('#uraniumComment').val()];
-        }, function(v){
+        }, function (v) {
             $('#uraniumId').val(v[0].trim());
             $('#uraniumStage').val(v[1].trim());
             $('#uraniumName').val(v[2].trim());
@@ -306,7 +344,7 @@
             $('#uraniumUncertainty').val(v[5].trim());
             $('#uraniumBurnablePoison').val(v[6].trim());
             $('#uraniumComment').val(v[7].trim());
-        }, '/uranium/' + materialId + '/' + stage, function(){
+        }, '/uranium/' + materialId + '/' + stage, function () {
             return {
                 id: $('#uraniumId').val(),
                 stage: $('#uraniumStage').val() || stage,
@@ -319,7 +357,7 @@
             };
         });
 
-        init('#uraniumIsotopeDialog','#addUraniumIsotope','#saveUraniumIsotope','#uraniumIsotopeTable', function(){
+        init('#uraniumIsotopeDialog', '#addUraniumIsotope', '#saveUraniumIsotope', '#uraniumIsotopeTable', function () {
             return [
                 $('#uraniumIsotopeId').val(),
                 $('#uraniumIsotopeStage').val() || stage,
@@ -328,7 +366,7 @@
                 $('#uraniumIsotopeUncertainty').val(),
                 $('#uraniumIsotopeUnit').val(),
                 $('#uraniumIsotopeComment').val()];
-        }, function(v){
+        }, function (v) {
             $('#uraniumIsotopeId').val(v[0].trim());
             $('#uraniumIsotopeStage').val(v[1].trim());
             $('#uraniumIsotopeName').val(v[2].trim());
@@ -336,7 +374,7 @@
             $('#uraniumIsotopeUncertainty').val(v[4].trim());
             $('#uraniumIsotopeUnit').val(v[5].trim());
             $('#uraniumIsotopeComment').val(v[6].trim());
-        }, '/uranium-isotope/' + materialId + '/' + stage, function(){
+        }, '/uranium-isotope/' + materialId + '/' + stage, function () {
             return {
                 id: $('#uraniumIsotopeId').val(),
                 stage: $('#uraniumIsotopeStage').val() || stage,
@@ -348,7 +386,7 @@
             };
         })
 
-        init('#stableIsotopeDialog','#addStableIsotope','#saveStableIsotope','#stableIsotopeTable', function(){
+        init('#stableIsotopeDialog', '#addStableIsotope', '#saveStableIsotope', '#stableIsotopeTable', function () {
             return [
                 $('#stableIsotopeId').val(),
                 $('#stableIsotopeStage').val() || stage,
@@ -357,7 +395,7 @@
                 $('#stableIsotopeUncertainty').val(),
                 $('#stableIsotopeUnit').val(),
                 $('#stableIsotopeComment').val()];
-        }, function(v){
+        }, function (v) {
             $('#stableIsotopeId').val(v[0].trim());
             $('#stableIsotopeStage').val(v[1].trim());
             $('#stableIsotopeName').val(v[2].trim());
@@ -365,7 +403,7 @@
             $('#stableIsotopeUncertainty').val(v[4].trim());
             $('#stableIsotopeUnit').val(v[5].trim());
             $('#stableIsotopeComment').val(v[6].trim());
-        }, '/stable-isotope/' + materialId + '/' + stage, function(){
+        }, '/stable-isotope/' + materialId + '/' + stage, function () {
             return {
                 id: $('#stableIsotopeId').val(),
                 stage: $('#stableIsotopeStage').val() || stage,
@@ -377,7 +415,7 @@
             };
         });
 
-        init('#plutoniumIsotopeDialog','#addPlutoniumIsotope','#savePlutoniumIsotope','#plutoniumIsotopeTable', function(){
+        init('#plutoniumIsotopeDialog', '#addPlutoniumIsotope', '#savePlutoniumIsotope', '#plutoniumIsotopeTable', function () {
             return [
                 $('#plutoniumIsotopeId').val(),
                 $('#plutoniumIsotopeStage').val() || stage,
@@ -386,7 +424,7 @@
                 $('#plutoniumIsotopeUncertainty').val(),
                 $('#plutoniumIsotopeUnit').val(),
                 $('#plutoniumIsotopeComment').val()];
-        }, function(v){
+        }, function (v) {
             $('#plutoniumIsotopeId').val(v[0].trim());
             $('#plutoniumIsotopeStage').val(v[1].trim());
             $('#plutoniumIsotopeName').val(v[2].trim());
@@ -394,7 +432,7 @@
             $('#plutoniumIsotopeUncertainty').val(v[4].trim());
             $('#plutoniumIsotopeUnit').val(v[5].trim());
             $('#plutoniumIsotopeComment').val(v[6].trim());
-        }, '/plutonium-isotope/' + materialId + '/' + stage, function(){
+        }, '/plutonium-isotope/' + materialId + '/' + stage, function () {
             return {
                 id: $('#plutoniumIsotopeId').val(),
                 stage: $('#plutoniumIsotopeStage').val() || stage,
@@ -406,7 +444,7 @@
             };
         });
 
-        init('#traceElementDialog','#addTraceElement','#saveTraceElement','#traceElementTable', function(){
+        init('#traceElementDialog', '#addTraceElement', '#saveTraceElement', '#traceElementTable', function () {
             return [
                 $('#traceElementId').val(),
                 $('#traceElementStage').val() || stage,
@@ -415,7 +453,7 @@
                 $('#traceElementUnit').val(),
                 $('#traceElementUncertainty').val(),
                 $('#traceElementComment').val()];
-        }, function(v){
+        }, function (v) {
             $('#traceElementId').val(v[0].trim());
             $('#traceElementStage').val(v[1].trim());
             $('#traceElementName').val(v[2].trim());
@@ -423,7 +461,7 @@
             $('#traceElementUnit').val(v[4].trim());
             $('#traceElementUncertainty').val(v[5].trim());
             $('#traceElementComment').val(v[6].trim());
-        }, '/trace-element/' + materialId + '/' + stage, function(){
+        }, '/trace-element/' + materialId + '/' + stage, function () {
             return {
                 id: $('#traceElementId').val(),
                 stage: $('#traceElementStage').val() || stage,
@@ -436,7 +474,7 @@
         });
 
 
-        init('#elementDialog','#addElement','#saveElement','#elementTable', function(){
+        init('#elementDialog', '#addElement', '#saveElement', '#elementTable', function () {
             return [
                 $('#elementId').val(),
                 $('#elementStage').val() || stage,
@@ -446,7 +484,7 @@
                 $('#elementUncertainty').val(),
                 $('#elementBurnablePoison').val(),
                 $('#elementComment').val()];
-        }, function(v){
+        }, function (v) {
             $('#elementId').val(v[0].trim());
             $('#elementStage').val(v[1].trim());
             $('#elementName').val(v[2].trim());
@@ -455,7 +493,7 @@
             $('#elementUncertainty').val(v[5].trim());
             $('#elementBurnablePoison').val(v[6].trim());
             $('#elementComment').val(v[7].trim());
-        }, '/element/' + materialId + '/' + stage, function(){
+        }, '/element/' + materialId + '/' + stage, function () {
             return {
                 id: $('#elementId').val(),
                 stage: $('#elementStage').val() || stage,
@@ -469,18 +507,18 @@
         });
 
         var morphologyFileField = createFileField('#morphImageFileInput', '#morphImageFile', '#morphImageFilePreview', '#morphImageFileClear');
-        $('#morphologyDialog').on('dialogopen', function(){
+        $('#morphologyDialog').on('dialogopen', function () {
             if (!$('#morphId').val()) {
                 $('#morphImageFile').val('');
             }
             morphologyFileField.clearInput();
             morphologyFileField.refresh();
-        }).on('dialogclose', function(){
+        }).on('dialogclose', function () {
             morphologyFileField.clearInput();
             morphologyFileField.refresh();
         });
 
-        init('#morphologyDialog','#addMorphology','#saveMorphology','#morphologyTable', function(){
+        init('#morphologyDialog', '#addMorphology', '#saveMorphology', '#morphologyTable', function () {
             return [
                 $('#morphId').val(),
                 $('#morphStage').val() || stage,
@@ -496,7 +534,7 @@
                 $('#morphImageFile').val(),
                 $('#morphMagnification').val()
             ];
-        }, function(v){
+        }, function (v) {
             $('#morphId').val(v[0].trim());
             $('#morphStage').val(v[1].trim());
             $('#morphLatticeStructure').val(v[2].trim());
@@ -512,7 +550,7 @@
             $('#morphMagnification').val(v[12].trim());
             morphologyFileField.clearInput();
             morphologyFileField.refresh();
-        }, '/morphology/' + materialId + '/' + stage, function(){
+        }, '/morphology/' + materialId + '/' + stage, function () {
             return {
                 id: $('#morphId').val(),
                 stage: $('#morphStage').val() || stage,
@@ -528,9 +566,9 @@
                 imageFile: $('#morphImageFile').val(),
                 magnification: parseDecimalOrNull($('#morphMagnification').val())
             };
-        }, { fileInput: '#morphImageFileInput' });
+        }, {fileInput: '#morphImageFileInput'});
 
-        init('#uraniumDecayDialog','#addUraniumDecay','#saveUraniumDecay','#uraniumDecayTable', function(){
+        init('#uraniumDecayDialog', '#addUraniumDecay', '#saveUraniumDecay', '#uraniumDecayTable', function () {
             return [
                 $('#uraniumDecayId').val(),
                 $('#uraniumDecayStage').val() || stage,
@@ -539,14 +577,14 @@
                 $('#uraniumDecayUncertainty').val(),
                 $('#uraniumDecayComment').val()
             ];
-        }, function(v){
+        }, function (v) {
             $('#uraniumDecayId').val(v[0].trim());
             $('#uraniumDecayStage').val(v[1].trim());
             $('#uraniumDecayNuclide').val(v[2].trim());
             $('#uraniumDecayActivity').val(v[3].trim());
             $('#uraniumDecayUncertainty').val(v[4].trim());
             $('#uraniumDecayComment').val(v[5].trim());
-        }, '/decay/' + materialId + '/' + stage, function(){
+        }, '/decay/' + materialId + '/' + stage, function () {
             return {
                 id: $('#uraniumDecayId').val(),
                 stage: $('#uraniumDecayStage').val() || stage,
@@ -557,7 +595,7 @@
             };
         });
 
-        init('#containerDialog','#addContainer','#saveContainer','#containerTable', function(){
+        init('#containerDialog', '#addContainer', '#saveContainer', '#containerTable', function () {
             return [
                 $('#containerId').val(),
                 $('#containerStage').val() || stage,
@@ -567,7 +605,7 @@
                 $('#containerDimensions').val(),
                 $('#containerNotes').val()
             ];
-        }, function(v){
+        }, function (v) {
             $('#containerId').val(v[0].trim());
             $('#containerStage').val(v[1].trim());
             $('#containerType').val(v[2].trim());
@@ -575,7 +613,7 @@
             $('#containerUnit').val(v[4].trim());
             $('#containerDimensions').val(v[5].trim());
             $('#containerNotes').val(v[6].trim());
-        }, '/container/' + materialId + '/' + stage, function(){
+        }, '/container/' + materialId + '/' + stage, function () {
             return {
                 id: $('#containerId').val(),
                 stage: $('#containerStage').val() || stage,
@@ -587,21 +625,23 @@
             };
         });
 
-        $('#addContainer').click(function(){ $('#containerStage').val(stage); });
+        $('#addContainer').click(function () {
+            $('#containerStage').val(stage);
+        });
 
         var generalInfoFileField = createFileField('#generalImageFileInput', '#generalImageFile', '#generalImageFilePreview', '#generalImageFileClear');
-        $('#generalInfoDialog').on('dialogopen', function(){
+        $('#generalInfoDialog').on('dialogopen', function () {
             if (!$('#generalId').val()) {
                 $('#generalImageFile').val('');
             }
             generalInfoFileField.clearInput();
             generalInfoFileField.refresh();
-        }).on('dialogclose', function(){
+        }).on('dialogclose', function () {
             generalInfoFileField.clearInput();
             generalInfoFileField.refresh();
         });
 
-        init('#generalInfoDialog','#addGeneralInfo','#saveGeneralInfo','#generalInfoTable', function(){
+        init('#generalInfoDialog', '#addGeneralInfo', '#saveGeneralInfo', '#generalInfoTable', function () {
             return [
                 $('#generalId').val(),
                 $('#generalStage').val() || stage,
@@ -625,7 +665,7 @@
                 $('#generalNotes').val(),
                 $('#generalImageFile').val()
             ];
-        }, function(v){
+        }, function (v) {
             $('#generalId').val(v[0].trim());
             $('#generalStage').val(v[1].trim());
             $('#generalDataRecordDate').val(v[2].trim());
@@ -649,7 +689,7 @@
             $('#generalImageFile').val((v[20] || '').trim());
             generalInfoFileField.clearInput();
             generalInfoFileField.refresh();
-        }, '/general-info/' + materialId + '/' + stage, function(){
+        }, '/general-info/' + materialId + '/' + stage, function () {
             return {
                 id: $('#generalId').val(),
                 stage: $('#generalStage').val() || stage,
@@ -673,9 +713,9 @@
                 notes: $('#generalNotes').val(),
                 imageFile: $('#generalImageFile').val()
             };
-        }, { fileInput: '#generalImageFileInput' });
+        }, {fileInput: '#generalImageFileInput'});
 
-        init('#geologyDialog','#addGeology','#saveGeology','#geologyTable', function(){
+        init('#geologyDialog', '#addGeology', '#saveGeology', '#geologyTable', function () {
             return [
                 $('#geologyId').val(),
                 $('#geologyStage').val() || stage,
@@ -686,7 +726,7 @@
                 $('#geologyColour').val(),
                 $('#geologyNotes').val()
             ];
-        }, function(v){
+        }, function (v) {
             $('#geologyId').val(v[0].trim());
             $('#geologyStage').val(v[1].trim());
             $('#geologyLocation').val(v[2].trim());
@@ -695,7 +735,7 @@
             $('#geologyTechnique').val(v[5].trim());
             $('#geologyColour').val(v[6].trim());
             $('#geologyNotes').val(v[7].trim());
-        }, '/geology/' + materialId + '/' + stage, function(){
+        }, '/geology/' + materialId + '/' + stage, function () {
             return {
                 id: $('#geologyId').val(),
                 stage: $('#geologyStage').val() || stage,
@@ -708,7 +748,7 @@
             };
         });
 
-        init('#irradiationDialog','#addIrradiation','#saveIrradiation','#irradiationTable', function(){
+        init('#irradiationDialog', '#addIrradiation', '#saveIrradiation', '#irradiationTable', function () {
             return [
                 $('#irradiationId').val(),
                 $('#irradiationStage').val() || stage,
@@ -720,7 +760,7 @@
                 $('#irradiationDischargeDate').val(),
                 $('#irradiationRadiationLevel').val(),
                 $('#irradiationNotes').val()];
-        }, function(v){
+        }, function (v) {
             $('#irradiationId').val(v[0].trim());
             $('#irradiationStage').val(v[1].trim());
             $('#irradiationReactor').val(v[2].trim());
@@ -731,7 +771,7 @@
             $('#irradiationDischargeDate').val(v[7].trim());
             $('#irradiationRadiationLevel').val(v[8].trim());
             $('#irradiationNotes').val(v[9].trim());
-        }, '/irradiation/' + materialId + '/' + stage, function(){
+        }, '/irradiation/' + materialId + '/' + stage, function () {
             return {
                 id: $('#irradiationId').val(),
                 stage: $('#irradiationStage').val() || stage,
@@ -746,7 +786,7 @@
             };
         });
 
-        init('#isotopeActivityDialog','#addIsotopeActivity','#saveIsotopeActivity','#isotopeActivityTable', function(){
+        init('#isotopeActivityDialog', '#addIsotopeActivity', '#saveIsotopeActivity', '#isotopeActivityTable', function () {
             return [
                 $('#isotopeActivityId').val(),
                 $('#isotopeActivityStage').val() || stage,
@@ -757,7 +797,7 @@
                 $('#isotopeActivityMajor').is(':checked'),
                 $('#isotopeActivityNotes').val()
             ];
-        }, function(v){
+        }, function (v) {
             $('#isotopeActivityId').val(v[0].trim());
             $('#isotopeActivityStage').val(v[1].trim());
             $('#isotopeActivityName').val(v[2].trim());
@@ -766,7 +806,7 @@
             $('#isotopeActivityDate').val(v[5].trim());
             $('#isotopeActivityMajor').prop('checked', v[6].trim().toLowerCase() === 'true');
             $('#isotopeActivityNotes').val(v[7].trim());
-        }, '/isotope-activity/' + materialId + '/' + stage, function(){
+        }, '/isotope-activity/' + materialId + '/' + stage, function () {
             return {
                 id: $('#isotopeActivityId').val(),
                 stage: $('#isotopeActivityStage').val() || stage,
@@ -779,7 +819,7 @@
             };
         });
 
-        init('#mineralogyDialog','#addMineralogy','#saveMineralogy','#mineralogyTable', function(){
+        init('#mineralogyDialog', '#addMineralogy', '#saveMineralogy', '#mineralogyTable', function () {
             return [
                 $('#mineralogyId').val(),
                 $('#mineralogyStage').val() || stage,
@@ -787,14 +827,14 @@
                 $('#mineralogyChemistry').val(),
                 $('#mineralogyVolume').val(),
                 $('#mineralogyNotes').val()];
-        }, function(v){
+        }, function (v) {
             $('#mineralogyId').val(v[0].trim());
             $('#mineralogyStage').val(v[1].trim());
             $('#mineralogyMinerals').val(v[2].trim());
             $('#mineralogyChemistry').val(v[3].trim());
             $('#mineralogyVolume').val(v[4].trim());
             $('#mineralogyNotes').val(v[5].trim());
-        }, '/mineralogy/' + materialId + '/' + stage, function(){
+        }, '/mineralogy/' + materialId + '/' + stage, function () {
             return {
                 id: $('#mineralogyId').val(),
                 stage: $('#mineralogyStage').val() || stage,
@@ -805,7 +845,7 @@
             };
         });
 
-        init('#physicalDialog','#addPhysical','#savePhysical','#physicalTable', function(){
+        init('#physicalDialog', '#addPhysical', '#savePhysical', '#physicalTable', function () {
             return [
                 $('#physicalId').val(),
                 $('#physicalStage').val() || stage,
@@ -824,7 +864,7 @@
                 $('#physicalSerialNumbers').val(),
                 $('#physicalNotes').val()
             ];
-        }, function(v){
+        }, function (v) {
             $('#physicalId').val(v[0].trim());
             $('#physicalStage').val(v[1].trim());
             $('#physicalState').val(v[2].trim());
@@ -841,7 +881,7 @@
             $('#physicalMassUnit').val(v[13].trim());
             $('#physicalSerialNumbers').val(v[14].trim());
             $('#physicalNotes').val(v[15].trim());
-        }, '/physical/' + materialId + '/' + stage, function(){
+        }, '/physical/' + materialId + '/' + stage, function () {
             return {
                 id: $('#physicalId').val(),
                 stage: $('#physicalStage').val() || stage,
@@ -862,7 +902,7 @@
             };
         });
 
-        init('#processInfoDialog','#addProcessInfo','#saveProcessInfo','#processInfoTable', function(){
+        init('#processInfoDialog', '#addProcessInfo', '#saveProcessInfo', '#processInfoTable', function () {
             return [
                 $('#processId').val(),
                 $('#processStage').val() || stage,
@@ -872,7 +912,7 @@
                 $('#processEnd').val(),
                 $('#processNotes').val()
             ];
-        }, function(v){
+        }, function (v) {
             $('#processId').val(v[0].trim());
             $('#processStage').val(v[1].trim());
             $('#processType').val(v[2].trim());
@@ -880,7 +920,7 @@
             $('#processStart').val(v[4].trim());
             $('#processEnd').val(v[5].trim());
             $('#processNotes').val(v[6].trim());
-        }, '/process-info/' + materialId + '/' + stage, function(){
+        }, '/process-info/' + materialId + '/' + stage, function () {
             return {
                 id: $('#processId').val(),
                 stage: $('#processStage').val() || stage,
@@ -892,19 +932,19 @@
             };
         });
 
-        init('#serialNumberDialog','#addSerialNumber','#saveSerialNumber','#serialNumberTable', function(){
+        init('#serialNumberDialog', '#addSerialNumber', '#saveSerialNumber', '#serialNumberTable', function () {
             return [
                 $('#serialNumberId').val(),
                 $('#serialNumberStage').val() || stage,
                 $('#serialNumberValue').val(),
                 $('#serialNumberNotes').val()
             ];
-        }, function(v){
+        }, function (v) {
             $('#serialNumberId').val(v[0].trim());
             $('#serialNumberStage').val(v[1].trim());
             $('#serialNumberValue').val(v[2].trim());
             $('#serialNumberNotes').val(v[3].trim());
-        }, '/serial-number/' + materialId + '/' + stage, function(){
+        }, '/serial-number/' + materialId + '/' + stage, function () {
             return {
                 id: $('#serialNumberId').val(),
                 stage: $('#serialNumberStage').val() || stage,
@@ -913,9 +953,11 @@
             };
         });
 
-        $('#addSerialNumber').click(function(){ $('#serialNumberStage').val(stage); });
+        $('#addSerialNumber').click(function () {
+            $('#serialNumberStage').val(stage);
+        });
 
-        init('#sourceActivityInfoDialog','#addSourceActivityInfo','#saveSourceActivityInfo','#sourceActivityInfoTable', function(){
+        init('#sourceActivityInfoDialog', '#addSourceActivityInfo', '#saveSourceActivityInfo', '#sourceActivityInfoTable', function () {
             return [
                 $('#sourceActivityId').val(),
                 $('#sourceActivityStage').val() || stage,
@@ -924,14 +966,14 @@
                 $('#sourceActivityNeutron').val(),
                 $('#sourceActivityNotes').val()
             ];
-        }, function(v){
+        }, function (v) {
             $('#sourceActivityId').val(v[0].trim());
             $('#sourceActivityStage').val(v[1].trim());
             $('#sourceActivityValue').val(v[2].trim());
             $('#sourceActivityDate').val(v[3].trim());
             $('#sourceActivityNeutron').val(v[4].trim());
             $('#sourceActivityNotes').val(v[5].trim());
-        }, '/source-activity-info/' + materialId + '/' + stage, function(){
+        }, '/source-activity-info/' + materialId + '/' + stage, function () {
             return {
                 id: $('#sourceActivityId').val(),
                 stage: $('#sourceActivityStage').val() || stage,
@@ -943,18 +985,18 @@
         });
 
         var sourceDescriptionFileField = createFileField('#sourceDescriptionImageFileInput', '#sourceDescriptionImageFile', '#sourceDescriptionImageFilePreview', '#sourceDescriptionImageFileClear');
-        $('#sourceDescriptionDialog').on('dialogopen', function(){
+        $('#sourceDescriptionDialog').on('dialogopen', function () {
             if (!$('#sourceDescriptionId').val()) {
                 $('#sourceDescriptionImageFile').val('');
             }
             sourceDescriptionFileField.clearInput();
             sourceDescriptionFileField.refresh();
-        }).on('dialogclose', function(){
+        }).on('dialogclose', function () {
             sourceDescriptionFileField.clearInput();
             sourceDescriptionFileField.refresh();
         });
 
-        init('#sourceDescriptionDialog','#addSourceDescription','#saveSourceDescription','#sourceDescriptionTable', function(){
+        init('#sourceDescriptionDialog', '#addSourceDescription', '#saveSourceDescription', '#sourceDescriptionTable', function () {
             return [
                 $('#sourceDescriptionId').val(),
                 $('#sourceDescriptionStage').val() || stage,
@@ -970,7 +1012,7 @@
                 $('#sourceDescriptionImageFile').val(),
                 $('#sourceDescriptionNotes').val()
             ];
-        }, function(v){
+        }, function (v) {
             $('#sourceDescriptionId').val(v[0].trim());
             $('#sourceDescriptionStage').val(v[1].trim());
             $('#sourceDescriptionType').val(v[2].trim());
@@ -986,7 +1028,7 @@
             $('#sourceDescriptionNotes').val(v[12].trim());
             sourceDescriptionFileField.clearInput();
             sourceDescriptionFileField.refresh();
-        }, '/source-description/' + materialId + '/' + stage, function(){
+        }, '/source-description/' + materialId + '/' + stage, function () {
             return {
                 id: $('#sourceDescriptionId').val(),
                 stage: $('#sourceDescriptionStage').val() || stage,
@@ -1002,7 +1044,7 @@
                 imageFile: $('#sourceDescriptionImageFile').val(),
                 notes: $('#sourceDescriptionNotes').val()
             };
-        }, { fileInput: '#sourceDescriptionImageFileInput' });
+        }, {fileInput: '#sourceDescriptionImageFileInput'});
     });
 </script>
 </body>
