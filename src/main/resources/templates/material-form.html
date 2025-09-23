@@ -4,6 +4,24 @@
 <div class="kt-container-fluid px=0">
     <div class="grid grid-cols-1 gap-5">
 
+        <div class="kt-card kt-card-grid h-full min-w-full">
+            <div class="kt-card-header">
+                <h3 class="kt-card-title">Material details</h3>
+            </div>
+            <div class="kt-card-table">
+                <div class="grid gap-3 p-5 text-sm">
+                    <div class="flex justify-between gap-4">
+                        <span class="font-semibold text-gray-500">Material ID</span>
+                        <span th:text="${material.id}" class="text-right text-base font-medium"></span>
+                    </div>
+                    <div class="flex justify-between gap-4">
+                        <span class="font-semibold text-gray-500">Material Name</span>
+                        <span th:text="${material.name}" class="text-right text-base font-medium"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div th:replace="~{cards/general-info :: generalInfoCard}"></div>
 
         <th:block th:if="${stage == 0 or stage == 1}">
