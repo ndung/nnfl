@@ -58,8 +58,39 @@ public class MaterialRecordController {
     }
 
     @PostMapping("/{id}/edit")
-    public String edit(@PathVariable("id") String id, RedirectAttributes ra) {
-        service.delete(id);
+    public String edit(@PathVariable("id") String id,
+                       @RequestParam("materialId") String newId,
+                       @RequestParam("materialName") String newName,
+                       @RequestParam(value = "stage", required = false) String stage,
+                       RedirectAttributes ra) {
+        Material material = service.getById(id);
+        if (material == null) {
+            ra.addFlashAttribute("materialNotFound", true);
+            return "redirect:/materials";
+        }
+
+        boolean idChanged = !Objects.equals(id, newId);
+        if (idChanged) {
+            Material existing = service.getById(newId);
+            if (existing != null) {
+                ra.addFlashAttribute("materialExist", true);
+                if (stage != null && !stage.isBlank()) {
+                    return "redirect:/materials/" + id + "/" + stage;
+                }
+                return "redirect:/materials";
+            }
+            service.delete(id);
+            material.setId(newId);
+        }
+
+        material.setName(newName);
+        service.save(material);
+        ra.addFlashAttribute("materialUpdated", true);
+
+        String targetId = idChanged ? newId : id;
+        if (stage != null && !stage.isBlank()) {
+            return "redirect:/materials/" + targetId + "/" + stage;
+        }
         return "redirect:/materials";
     }
 
