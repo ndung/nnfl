@@ -949,8 +949,8 @@
                 $('#sourceDescriptionShipping').val(),
                 $('#sourceDescriptionReceiving').val(),
                 $('#sourceDescriptionRadiograph').val(),
-                $('#sourceDescriptionNotes').val(),
-                $('#sourceDescriptionImageFile').val()
+                $('#sourceDescriptionImageFile').val(),
+                $('#sourceDescriptionNotes').val()
             ];
         }, function(v){
             $('#sourceDescriptionId').val(v[0].trim());
@@ -964,8 +964,8 @@
             $('#sourceDescriptionShipping').val(v[8].trim());
             $('#sourceDescriptionReceiving').val(v[9].trim());
             $('#sourceDescriptionRadiograph').val(v[10].trim());
-            $('#sourceDescriptionNotes').val(v[11].trim());
-            $('#sourceDescriptionImageFile').val((v[12] || '').trim());
+            $('#sourceDescriptionImageFile').val((v[11] || '').trim());
+            $('#sourceDescriptionNotes').val(v[12].trim());
             sourceDescriptionFileField.clearInput();
             sourceDescriptionFileField.refresh();
         }, '/source-description/' + materialId + '/' + stage, function(){
@@ -981,8 +981,8 @@
                 shippingHistory: $('#sourceDescriptionShipping').val(),
                 receivingHistory: $('#sourceDescriptionReceiving').val(),
                 radiographOrPhotograph: $('#sourceDescriptionRadiograph').val(),
-                notes: $('#sourceDescriptionNotes').val(),
-                imageFile: $('#sourceDescriptionImageFile').val()
+                imageFile: $('#sourceDescriptionImageFile').val(),
+                notes: $('#sourceDescriptionNotes').val()
             };
         }, { fileInput: '#sourceDescriptionImageFileInput' });
     });

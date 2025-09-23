@@ -12,7 +12,6 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 public class Morphology extends Property {
-    @Expose private BigDecimal magnification;
     @Expose private String latticeStructure;
     @Expose private String aspectRatio;
     @Expose private String porosity;
@@ -23,6 +22,7 @@ public class Morphology extends Property {
     @Expose private String plutoniumHomogeneity;
     @Expose private String notes;
     @Expose private String imageFile;
+    @Expose private BigDecimal magnification;
     @Transient
     public String getFileUrl(){
         return "http://10.10.253.75/files/"+imageFile;
