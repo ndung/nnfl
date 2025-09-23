@@ -11,18 +11,10 @@
                             <h3 class="kt-card-title">
                                 Material details
                             </h3>
-                            <button class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost editMaterial">
+                            <button type="button" class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost editMaterial">
                                 <i class="ki-filled ki-notepad-edit">
                                 </i>
                             </button>
-                            <form id="editMaterialForm" th:action="@{|/materials/edit|}" method="post">
-                                <input type="hidden" th:if="${_csrf != null}"
-                                       th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                                <input type="hidden" name="id" id="newMaterialId" />
-                                <input type="hidden" name="name" id="newMaterialName" />
-                                <button type="button" id="openEditMaterialDialog"
-                                        class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost"><i class="ki-filled ki-additem"></i></button>
-                            </form>
                         </div>
                         <div class="kt-card-table kt-scrollable-x-auto pb-3">
                             <table class="kt-table align-middle text-sm">
@@ -31,7 +23,7 @@
                                         Material ID
                                     </td>
                                     <td class="py-2 text-secondary-foreground font-normal">
-                                        <span th:text="${material.id}"></span>
+                                        <span id="materialIdValue" th:text="${material.id}"></span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -39,7 +31,7 @@
                                         Material Name
                                     </td>
                                     <td class="py-2 text-secondary-foreground font-normal">
-                                        <span th:text="${material.name}"></span>
+                                        <span id="materialNameValue" th:text="${material.name}"></span>
                                     </td>
                                 </tr>
                             </table>
@@ -134,6 +126,30 @@
     </div>
 </div>
 
+<div id="editMaterialDialog" title="Edit material" style="display:none;">
+    <form id="editMaterialForm" th:action="@{|/materials/${material.id}/edit|}" method="post">
+        <div class="grid gap-3 text-xs">
+            <input type="hidden" th:if="${_csrf != null}"
+                   th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <input type="hidden" name="stage" th:value="${stage}"/>
+            <div class="flex items-baseline gap-2.5">
+                <label class="kt-form-label max-w-56" for="materialIdInput">Material ID :</label>
+                <input class="kt-input" id="materialIdInput" name="materialId" type="text"
+                       th:value="${material.id}" required/>
+            </div>
+            <div class="flex items-baseline gap-2.5">
+                <label class="kt-form-label max-w-56" for="materialNameInput">Material Name :</label>
+                <input class="kt-input" id="materialNameInput" name="materialName" type="text"
+                       th:value="${material.name}" required/>
+            </div>
+            <div class="flex justify-end gap-2">
+                <button type="button" id="cancelEditMaterial" class="kt-btn">Cancel</button>
+                <button type="submit" class="kt-btn kt-btn-primary">Save</button>
+            </div>
+        </div>
+    </form>
+</div>
+
 <div th:replace="~{dialogs/chemical-form :: chemicalDialog}"></div>
 <div th:replace="~{dialogs/uranium :: uraniumDialog}"></div>
 <div th:replace="~{dialogs/uranium-isotope :: uraniumIsotopeDialog}"></div>
@@ -164,6 +180,33 @@
         var stage = window.location.pathname.split('/')[3];
         var csrfToken = document.querySelector('meta[name="_csrf"]')?.getAttribute('content');
         var csrfHeader = document.querySelector('meta[name="_csrf_header"]')?.getAttribute('content');
+
+        var $editMaterialDialog = $('#editMaterialDialog').dialog({autoOpen: false, modal: true, width: 480});
+        var $editMaterialForm = $('#editMaterialForm');
+
+        $('#cancelEditMaterial').on('click', function () {
+            $editMaterialDialog.dialog('close');
+        });
+
+        $('.editMaterial').on('click', function (event) {
+            event.preventDefault();
+            var currentId = $('#materialIdValue').text().trim();
+            var currentName = $('#materialNameValue').text().trim();
+            $('#materialIdInput').val(currentId);
+            $('#materialNameInput').val(currentName);
+            $editMaterialDialog.data('original-id', currentId);
+            var action = '/materials/' + encodeURIComponent(currentId) + '/edit';
+            $editMaterialForm.attr('action', action);
+            $editMaterialDialog.dialog('open');
+        });
+
+        $editMaterialForm.on('submit', function () {
+            var originalId = $editMaterialDialog.data('original-id');
+            if (originalId) {
+                var action = '/materials/' + encodeURIComponent(originalId) + '/edit';
+                $editMaterialForm.attr('action', action);
+            }
+        });
 
         function parseDecimalOrNull(value) {
             if (value === undefined || value === null) {
