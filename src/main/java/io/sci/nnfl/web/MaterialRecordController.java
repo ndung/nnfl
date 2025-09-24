@@ -54,6 +54,7 @@ public class MaterialRecordController {
     @PostMapping("/{id}/delete")
     public String delete(@PathVariable("id") String id, RedirectAttributes ra) {
         service.delete(id);
+        ra.addFlashAttribute("materialDeleted", true);
         return "redirect:/materials";
     }
 

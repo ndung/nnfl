@@ -6,6 +6,10 @@
         <div class="grid lg:grid-cols-3 gap-y-5 lg:gap-7.5 items-stretch">
             <div class="lg:col-span-1">
                 <div class="grid grid-cols-1 gap-5 lg:gap-7.5 h-full items-stretch">
+                    <!-- Alerts -->
+                    <div class="kt-badge kt-badge-sm kt-badge-success kt-badge-outline" th:if="${materialUpdated}">
+                        Material record updated successfully.
+                    </div>
                     <div class="kt-card min-w-full">
                         <div class="kt-card-header">
                             <h3 class="kt-card-title">
@@ -143,7 +147,6 @@
                        th:value="${material.name}" required/>
             </div>
             <div class="flex justify-end gap-2">
-                <button type="button" id="cancelEditMaterial" class="kt-btn">Cancel</button>
                 <button type="submit" class="kt-btn kt-btn-primary">Save</button>
             </div>
         </div>
@@ -183,10 +186,6 @@
 
         var $editMaterialDialog = $('#editMaterialDialog').dialog({autoOpen: false, modal: true, width: 480});
         var $editMaterialForm = $('#editMaterialForm');
-
-        $('#cancelEditMaterial').on('click', function () {
-            $editMaterialDialog.dialog('close');
-        });
 
         $('.editMaterial').on('click', function (event) {
             event.preventDefault();
